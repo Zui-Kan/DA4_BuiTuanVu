@@ -1,5 +1,5 @@
 body{
-    height: 4000px;
+    width: 100%;
 }
 a{
     text-decoration: none;
@@ -10,7 +10,9 @@ header{
     display: flex;
     height: 70px;
     overflow: hidden;
-    position: fixed;
+    position:fixed;   
+    z-index: 999;
+    background-color: #fff;
     box-shadow: 0px 0px 4px rgba(122, 121, 121, 0.326);
     padding: 10px 40px;
 }
@@ -40,4 +42,8 @@ header{
 }
 
 
+.container{
+    width: 100%;
+    padding-top: 90px;
+}
 
