@@ -9,16 +9,15 @@
     <link rel="stylesheet" href="../GLOBAL/reponsive.css">
     
     <link rel="stylesheet" href="../USER-CSS/Index.css">
-    <link rel="stylesheet" href="/USER-CSS/Login_Singup.css">
+    <link rel="stylesheet" href="/USER-CSS/Login_Signup.css">
 
 </head>
-<body  ng-app="WebBanXe" ng-controller="User_Index">
+<body  ng-app="WebBanXe" ng-controller="User_Index" >
 
     <!-- đây là đầu trang -->
     <header  >
         <div class="header-logo"><img src="../IMAGE/logo-carmudi.webp" alt=""></div>
 
- 
             <ul class="menus">
                 <li><a href="#">Mua xe</a></li>
                 <li><a href="#">Bán xe</a></li>
@@ -43,24 +42,26 @@
                     <button ng-click="btn_login_Singup(2)">Đăng ký</button>
                 </div>
             
-            
+           
         </div>
     </header >
 
     <!-- Đây là thân trang -->
         <div class="container">
-            <div ng-include="Login_Singup" ng-controller="User_Login_Singup"></div>
+            <div ng-include="Login_Signup" ng-controller="User_Login_Signup"></div>
         </div>
-  
-
     <!-- đây là cuối trang -->
     <footer>
 
     </footer>
 
+    <div class="loader" ng-show="showLoader">
+        <div class="justify-content-center jimu-primary-loading"></div>
+      </div>
+    
     <script src="/GLOBAL/angular.js"></script>
     <script src="/USER-JS/Index.js"></script>
-    <script src="/USER-JS/Login_Singup.js"></script>
+    <script src="/USER-JS/Login_Signup.js"></script>
 
 </body>
 </html>

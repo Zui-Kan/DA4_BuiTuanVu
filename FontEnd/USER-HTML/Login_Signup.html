@@ -1,0 +1,50 @@
+<div class="container_login_signup">
+
+  <!-- form đăng nhập-->
+<div class="form-container" ng-show="showLoginForm">
+    <p class="title">Login</p>
+    <form class="form">
+      <input type="email" class="input" placeholder="Email">
+      <input type="password" class="input" placeholder="Password">
+      <p class="page-link">
+        <span class="page-link-label">Forgot Password?</span>
+      </p>
+      <button class="form-btn">Log in</button>
+    </form>
+    <p class="sign-up-label">
+      Don't have an account?<span class="sign-up-link" ng-click="btn_showsignup()">Sign up</span>
+    </p>
+    <div class="buttons-container">
+      <div class="apple-login-button">
+       <img src="/IMAGE/icons8_apple_logo.svg" alt="">
+        <span>Log in with Apple</span>
+      </div>
+      <div class="google-login-button">
+       <img src="/IMAGE/icons8_google.svg" alt="">
+        
+     
+        <span>Log in with Google</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- form đăng ký tài khoản -->
+  <div class="form-container" ng-show="showSignupForm">
+    <p class="title">Sign up</p>
+    <form class="form">
+      <input type="email" class="input" placeholder="Email">
+      <input type="text" class="input" placeholder="FullName">
+      <input type="password" class="input" placeholder="Password">
+      <input type="password" class="input" placeholder="Comfirm Password">
+
+      <button class="form-btn">Log in</button>
+    </form>
+    <p class="sign-up-label">
+        Already have an acount? <span class="sign-up-link" ng-click="btn_showlogin()">Login</span>
+    </p>
+ 
+  </div>
+
+</div>
+

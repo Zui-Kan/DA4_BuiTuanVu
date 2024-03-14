@@ -1,18 +1,34 @@
 var app = angular.module("WebBanXe", []);
-app.controller("User_Index", function ($scope, $http, $timeout) {
+app.controller("User_Index", function ($scope, $http, $timeout, $location, $rootScope) {
 
-    $scope.Login_Singup = '';
+    // Biến cờ để theo dõi trạng thái của dữ liệu
+    $scope.showLoader = true;
+
+    $timeout(function() {
+        $scope.showLoader = false;
+    }, 1000);
+
     $scope.btn_login_Singup = function(loai){
         if(loai == 1){
-        console.log("chon 1");
-            $scope.Login_Singup = "http://127.0.0.1:5500/USER-HTML/Login_Singup.html?page=login";
+    $scope.showLoader = true;
+
+               $timeout(function() {
+                   $scope.showLoader = false;
+                $scope.Login_Signup = "/USER-HTML/Login_Signup.html";
+                $rootScope.biengiatri = 1;
+                },500);
+
+        
         }
         if(loai == 2){
-            console.log("chon 2");
+            $scope.showLoader = true;
 
-            $scope.Login_Singup = '/USER-HTML/Login_Singup.html?page=singup&loai=' + loai;
+            $timeout(function() {
+                $scope.showLoader = false;
+                $scope.Login_Signup = '/USER-HTML/Login_Signup.html';
+                $rootScope.biengiatri = 2;
+             },500);
+
         }
-    }
-
-
-})
+    };
+});
