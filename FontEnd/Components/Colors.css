@@ -1,0 +1,51 @@
+.blue-bc {
+  background-color: #256ff4;
+  color: white;
+}
+.blue-bc:hover {
+  background-color: #1f5ac7;
+}
+.blue-c {
+  color: #256ff4;
+}
+.white-bc {
+  background-color: #fff;
+  color: rgb(30, 33, 50);
+}
+.white-bc:hover {
+  background-color: #a2a2a2;
+}
+
+.black-bc {
+  background-color: rgb(30, 33, 50);
+  color: white;
+}
+.black-c {
+  color: rgb(30, 33, 50);
+}
+
+.gray-bc {
+  background-color: #d7d7d77d;
+}
+
+.orange-bc {
+  background-color: rgb(242, 134, 59);
+  color: #ffff;
+}
+.orange-bc:hover {
+  background-color: rgba(206, 115, 51, 0.979);
+  color: #ffff;
+}
+
+.blueDark-c {
+  color: rgb(49, 64, 111);
+}
+
+.green-bc {
+  background-color: #008550;
+  color: #fff;
+}
+.red-bc {
+  background-color: #ba2121;
+}
+

@@ -14,7 +14,7 @@ app.controller("User_Index", function ($scope, $http, $timeout, $location, $root
 
                $timeout(function() {
                    $scope.showLoader = false;
-                $scope.Login_Signup = "/USER-HTML/Login_Signup.html";
+                $scope.Login_Signup = "http://127.0.0.1:5500/FontEnd/USER-HTML/Login_Signup.html";
                 $rootScope.biengiatri = 1;
                 },500);
 
@@ -25,7 +25,7 @@ app.controller("User_Index", function ($scope, $http, $timeout, $location, $root
 
             $timeout(function() {
                 $scope.showLoader = false;
-                $scope.Login_Signup = '/USER-HTML/Login_Signup.html';
+                $scope.Login_Signup = 'http://127.0.0.1:5500/FontEnd/USER-HTML/Login_Signup.html';
                 $rootScope.biengiatri = 2;
              },500);
 

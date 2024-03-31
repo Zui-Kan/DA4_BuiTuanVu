@@ -1,67 +1,1260 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Index</title>
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../Components/Reset.css" />
+    <link rel="stylesheet" href="../Components/Colors.css" />
+    <link rel="stylesheet" href="../Components/reponsive.css" />
+    <link rel="stylesheet" href="../Components/Tag.css">
+    <link rel="stylesheet" href="../USER-CSS/Index.css" />
+    <link rel="stylesheet" href="/USER-CSS/Login_Signup.css" />
+  </head>
+  <body ng-app="WebBanXe" ng-controller="User_Index">
+    <!-- start header -->
+    <header>
+      <div class="header-logo">
+        <a href="#">
+          <img src="../IMAGE/logo_vinfast.png" alt="" />
+        </a>
+      </div>
 
-    <link rel="stylesheet" href="../GLOBAL/reset.css">
-    <link rel="stylesheet" href="../GLOBAL/reponsive.css">
-    
-    <link rel="stylesheet" href="../USER-CSS/Index.css">
-    <link rel="stylesheet" href="/USER-CSS/Login_Signup.css">
-
-</head>
-<body  ng-app="WebBanXe" ng-controller="User_Index" >
-
-    <!-- đây là đầu trang -->
-    <header  >
-        <div class="header-logo"><img src="../IMAGE/logo-carmudi.webp" alt=""></div>
-
-            <ul class="menus">
-                <li><a href="#">Mua xe</a></li>
-                <li><a href="#">Bán xe</a></li>
-                <li><a href="#">Giới thiệu</a></li>
-                <li><a href="#">Diễn đàn</a></li>
-                
+      <div class="hearder-menu_items">
+        <div class="menu-item blue-c">
+          Mua xe
+          <div class="submenu black-c">
+            <ul>
+              <li class="submenu-item_title">HÃNG XE PHỔ BIẾN</li>
+              <li class="submenu-item"><a href="#">Toyota</a></li>
+              <li class="submenu-item"><a href="#">Honda</a></li>
+              <li class="submenu-item"><a href="#">Mercedes-Benz</a></li>
+              <li class="submenu-item"><a href="#">Fprd</a></li>
+              <li class="submenu-item"><a href="#">BMW</a></li>
+              <li class="submenu-item"><a href="#">Huyndai</a></li>
+              <li class="submenu-item"><a href="#">Kia</a></li>
+              <li class="submenu-item"><a href="#">Mazda</a></li>
+              <li class="submenu-item"><a href="#">Vinfast</a></li>
             </ul>
 
+            <ul>
+              <li class="submenu-item_title">DÒNG XE PHỔ BIẾN</li>
+              <li class="submenu-item">
+                <a href="#">Mercedes-Benz GL Class</a>
+              </li>
+              <li class="submenu-item">
+                <a href="#">Mercedes-Benz E Class</a>
+              </li>
+              <li class="submenu-item">
+                <a href="#">Mitsubishi Xpander Cross</a>
+              </li>
+              <li class="submenu-item"><a href="#">Toyota Fortuner</a></li>
+              <li class="submenu-item">
+                <a href="#">Mercedes-Benz S Class</a>
+              </li>
+              <li class="submenu-item"><a href="#">Hyundai Santafe</a></li>
+              <li class="submenu-item"><a href="#">Toyota Corolla Cross</a></li>
+              <li class="submenu-item"><a href="#">Ford Everest</a></li>
+              <li class="submenu-item"><a href="#">Toyota Vios</a></li>
+            </ul>
+            <ul>
+              <li class="submenu-item_title">GIÁ XE</li>
+              <li class="submenu-item"><a href="#">Dưới 500 triệu</a></li>
+              <li class="submenu-item"><a href="#">Từ 500 - 700 triệu</a></li>
+              <li class="submenu-item"><a href="#">Từ 700 - 1 tỷ</a></li>
+              <li class="submenu-item"><a href="#">Trên 1 tỷ</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-item">Bán xe</div>
+        <div class="menu-item">Giới thiệu</div>
+        <div class="menu-item">Tin tức</div>
+      </div>
 
-        <div class="header-userTask">
-                <div class="userTask-btn_postNews">
-                    <button >
-                        Đăng tin</button>
+      <div class="header-controls">
+        <button class="control-login orange-bc">
+          <img src="../IMAGE/icons8_car.svg" alt="#" />ĐĂNG TIN
+        </button>
+
+        <div class="control-taskuser">
+          <img class="taskuser-img" src="../IMAGE/icons8_user.svg" alt="#" />
+          Tài khoản
+          <img
+            class="taskuser-img"
+            src="../IMAGE/icons8_chevron_down.svg"
+            alt=""
+          />
+          <div class="taskuser-detail">
+            <button class="taskuser-detail_login">Đăng nhập</button>
+            <button class="taskuser-detail_signup">Đăng ký</button>
+          </div>
+        </div>
+
+        <div class="control-taskuser_on">
+          <img class="taskuser-avt" src="../IMAGE/icons8_user.svg" alt="#" />
+          Nguyễn Văn A
+          <img
+            class="taskuser-img"
+            src="../IMAGE/icons8_chevron_down.svg"
+            alt=""
+          />
+          <div class="taskuser-detail">
+            <button class="taskuser-detail_out">Đăng xuất</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- end header -->
+    <!-- start slider -->
+    <div class="slider">
+      <div
+        id="carouselExampleIndicators"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1772&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              class="d-block w-100 slider-img"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              class="d-block w-100 slider-img"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              class="d-block w-100 slider-img"
+              alt="..."
+            />
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <!-- end slider -->
+    <main>
+        <!-- start list card car -->
+        <div class="row">
+          <div class="col-3">
+            <!-- start filters -->
+            <div class="filters">
+              <div class="filter-title blueDark-c">BỘ LỌC</div>
+              <!-- filter 1 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/brand.svg"
+                    alt=""
+                  />
                 </div>
+                <div class="col-9 blueDark-c">Hãng xe, dòng xe</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+              <div class="filter-brands" style="  display: none;">
+              <div class="row filter-sub">
+                <div class="col-1">
+                  <label class="custom-checkbox">
+                    <input name="dummy" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="col blueDark-c">Audi</div>
+              </div>
+              <div class="row filter-sub">
+                <div class="col-1">
+                  <label class="custom-checkbox">
+                    <input name="dummy" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="col blueDark-c">Audi</div>
+              </div><div class="row filter-sub">
+                <div class="col-1">
+                  <label class="custom-checkbox">
+                    <input name="dummy" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="col blueDark-c">Audi</div>
+              </div><div class="row filter-sub">
+                <div class="col-1">
+                  <label class="custom-checkbox">
+                    <input name="dummy" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="col blueDark-c">Audi</div>
+              </div><div class="row filter-sub">
+                <div class="col-1">
+                  <label class="custom-checkbox">
+                    <input name="dummy" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="col blueDark-c">Audi</div>
+              </div><div class="row filter-sub">
+                <div class="col-1">
+                  <label class="custom-checkbox">
+                    <input name="dummy" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="col blueDark-c">Audi</div>
+              </div><div class="row filter-sub">
+                <div class="col-1">
+                  <label class="custom-checkbox">
+                    <input name="dummy" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="col blueDark-c">Audi</div>
+              </div>
 
-                <div class="userTask-btn_login">
-                    <button ng-click="btn_login_Singup(1)">Đăng nhập</button>
+            </div>
+
+              <!-- filter 2 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/location.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-9 blueDark-c">Địa điểm</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+              <div class="filter-location" style="display: none;">
+                <!-- ------ -->
+                <div class="row filter-sub">
+                  <div class="col-1">
+                    <label class="custom-checkbox">
+                      <input name="dummy" type="checkbox">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="col blueDark-c">Hà Nội</div>
+                </div>
+                  <!-- ------ -->
+                  <div class="row filter-sub">
+                    <div class="col-1">
+                      <label class="custom-checkbox">
+                        <input name="dummy" type="checkbox">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                    <div class="col blueDark-c">Hà Nội</div>
+                  </div>
+                    <!-- ------ -->
+                <div class="row filter-sub">
+                  <div class="col-1">
+                    <label class="custom-checkbox">
+                      <input name="dummy" type="checkbox">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="col blueDark-c">Hà Nội</div>
+                </div>
+                  <!-- ------ -->
+                  <div class="row filter-sub">
+                    <div class="col-1">
+                      <label class="custom-checkbox">
+                        <input name="dummy" type="checkbox">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                    <div class="col blueDark-c">Hà Nội</div>
+                  </div>
+              </div>
+              <!-- filter 3 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/price.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-9 blueDark-c">Giá</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+              <!-- filter 4 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/year.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-9 blueDark-c">Năm sản xuất</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+              <!-- filter 5 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/mileage.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-9 blueDark-c">Số KM</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+              <!-- filter 6 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/bodyType.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-9 blueDark-c">Kiểu dáng</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+              <!-- filter 7 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/fuel.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-9 blueDark-c">Nhiên liệu</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+              <!-- filter 8 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/transmission.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-9 blueDark-c">Hộp số</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+              <!-- filter 9 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/color.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-9 blueDark-c">Màu sắc</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+              <!-- filter 10 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/seatCapacity.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-9 blueDark-c">Số chỗ ngồi</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+              
+              <!-- filter 11 -->
+              <div class="row filter-row">
+                <div class="col-1">
+                  <img
+                    src="https://www.carmudi.vn/images/xe-oto/svg/madeBy.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="col-9 blueDark-c">Đăng bởi</div>
+                <div class="col">
+                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                </div>
+              </div>
+
+
+            </div>
+            <!-- end filters -->
+
+
+            <div class="advertise">
+              
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="timkiems">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20px"
+                height="20px"
+                viewBox="0 0 30 30"
+              >
+                <path
+                  d="M13 3C7.4889971 3 3 7.4889971 3 13C3 18.511003 7.4889971 23 13 23C15.396508 23 17.597385 22.148986 19.322266 20.736328L25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969L20.736328 19.322266C22.148986 17.597385 23 15.396508 23 13C23 7.4889971 18.511003 3 13 3 z M 13 5C17.430123 5 21 8.5698774 21 13C21 17.430123 17.430123 21 13 21C8.5698774 21 5 17.430123 5 13C5 8.5698774 8.5698774 5 13 5 z"
+                  fill="#2D2B2D"
+                />
+              </svg>
+              <input
+                type="text"
+                name="timkiem"
+                id="edt_timkiem_trangchu_muaxe"
+                placeholder="Tìm kiếm theo tên xe"
+              />
+            </div>
+
+            <!-- start card car -->
+            <div class="row">
+
+
+              <div class="col-4">
+                <a href="#" class="card">
+                  <div class="hinhanh-card">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="https://plus.unsplash.com/premium_photo-1682125729312-78f16e6e6f38?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="tieude-card">
+                    🚘Mercedes E200 Model 2020 siêu lướt .
+                  </div>
+                  <div class="thongtinxe-card">
+                    <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_nam.svg" alt="">
+                      <div id="doixe_thongtinxe-card"></div>
+                      2023
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xemoi.svg" alt="">
+                      <div id="hinhthuc_thongtinxe-card"></div>
+                      Xe mới
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xang.svg" alt="">
+                      <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_tudong.svg" alt="">
+                      <div id="hopso_thongtinxe-card">Tự động</div>
+                    </div>
+                  </div>
+                  <div id="giaxe-card">1 tỷ 289 triệu</div>
+                </a>
+              </div>
+
+              <div class="col-4">
+                <a href="#" class="card">
+                  <div class="hinhanh-card">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="https://plus.unsplash.com/premium_photo-1682125729312-78f16e6e6f38?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="tieude-card">
+                    🚘Mercedes E200 Model 2020 siêu lướt .
+                  </div>
+                  <div class="thongtinxe-card">
+                    <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_nam.svg" alt="">
+                      <div id="doixe_thongtinxe-card"></div>
+                      2023
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xemoi.svg" alt="">
+                      <div id="hinhthuc_thongtinxe-card"></div>
+                      Xe mới
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xang.svg" alt="">
+                      <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_tudong.svg" alt="">
+                      <div id="hopso_thongtinxe-card">Tự động</div>
+                    </div>
+                  </div>
+                  <div id="giaxe-card">1 tỷ 289 triệu</div>
+                </a>
+              </div>
+
+              <div class="col-4">
+                <a href="#" class="card">
+                  <div class="hinhanh-card">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="https://plus.unsplash.com/premium_photo-1682125729312-78f16e6e6f38?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="tieude-card">
+                    🚘Mercedes E200 Model 2020 siêu lướt .
+                  </div>
+                  <div class="thongtinxe-card">
+                    <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_nam.svg" alt="">
+                      <div id="doixe_thongtinxe-card"></div>
+                      2023
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xemoi.svg" alt="">
+                      <div id="hinhthuc_thongtinxe-card"></div>
+                      Xe mới
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xang.svg" alt="">
+                      <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_tudong.svg" alt="">
+                      <div id="hopso_thongtinxe-card">Tự động</div>
+                    </div>
+                  </div>
+                  <div id="giaxe-card">1 tỷ 289 triệu</div>
+                </a>
+              </div>
+
+              <div class="col-4">
+                <a href="#" class="card">
+                  <div class="hinhanh-card">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="https://plus.unsplash.com/premium_photo-1682125729312-78f16e6e6f38?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="tieude-card">
+                    🚘Mercedes E200 Model 2020 siêu lướt .
+                  </div>
+                  <div class="thongtinxe-card">
+                    <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_nam.svg" alt="">
+                      <div id="doixe_thongtinxe-card"></div>
+                      2023
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xemoi.svg" alt="">
+                      <div id="hinhthuc_thongtinxe-card"></div>
+                      Xe mới
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xang.svg" alt="">
+                      <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_tudong.svg" alt="">
+                      <div id="hopso_thongtinxe-card">Tự động</div>
+                    </div>
+                  </div>
+                  <div id="giaxe-card">1 tỷ 289 triệu</div>
+                </a>
+              </div>
+
+              <div class="col-4">
+                <a href="#" class="card">
+                  <div class="hinhanh-card">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="https://plus.unsplash.com/premium_photo-1682125729312-78f16e6e6f38?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="tieude-card">
+                    🚘Mercedes E200 Model 2020 siêu lướt .
+                  </div>
+                  <div class="thongtinxe-card">
+                    <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_nam.svg" alt="">
+                      <div id="doixe_thongtinxe-card"></div>
+                      2023
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xemoi.svg" alt="">
+                      <div id="hinhthuc_thongtinxe-card"></div>
+                      Xe mới
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xang.svg" alt="">
+                      <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_tudong.svg" alt="">
+                      <div id="hopso_thongtinxe-card">Tự động</div>
+                    </div>
+                  </div>
+                  <div id="giaxe-card">1 tỷ 289 triệu</div>
+                </a>
+              </div>
+
+              <div class="col-4">
+                <a href="#" class="card">
+                  <div class="hinhanh-card">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="https://plus.unsplash.com/premium_photo-1682125729312-78f16e6e6f38?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="tieude-card">
+                    🚘Mercedes E200 Model 2020 siêu lướt .
+                  </div>
+                  <div class="thongtinxe-card">
+                    <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_nam.svg" alt="">
+                      <div id="doixe_thongtinxe-card"></div>
+                      2023
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xemoi.svg" alt="">
+                      <div id="hinhthuc_thongtinxe-card"></div>
+                      Xe mới
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xang.svg" alt="">
+                      <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_tudong.svg" alt="">
+                      <div id="hopso_thongtinxe-card">Tự động</div>
+                    </div>
+                  </div>
+                  <div id="giaxe-card">1 tỷ 289 triệu</div>
+                </a>
+              </div>
+
+              <div class="col-4">
+                <a href="#" class="card">
+                  <div class="hinhanh-card">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="https://plus.unsplash.com/premium_photo-1682125729312-78f16e6e6f38?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="tieude-card">
+                    🚘Mercedes E200 Model 2020 siêu lướt .
+                  </div>
+                  <div class="thongtinxe-card">
+                    <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_nam.svg" alt="">
+                      <div id="doixe_thongtinxe-card"></div>
+                      2023
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xemoi.svg" alt="">
+                      <div id="hinhthuc_thongtinxe-card"></div>
+                      Xe mới
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xang.svg" alt="">
+                      <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_tudong.svg" alt="">
+                      <div id="hopso_thongtinxe-card">Tự động</div>
+                    </div>
+                  </div>
+                  <div id="giaxe-card">1 tỷ 289 triệu</div>
+                </a>
+              </div>
+              <div class="col-4">
+                <a href="#" class="card">
+                  <div class="hinhanh-card">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="https://plus.unsplash.com/premium_photo-1682125729312-78f16e6e6f38?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="tieude-card">
+                    🚘Mercedes E200 Model 2020 siêu lướt .
+                  </div>
+                  <div class="thongtinxe-card">
+                    <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_nam.svg" alt="">
+                      <div id="doixe_thongtinxe-card"></div>
+                      2023
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xemoi.svg" alt="">
+                      <div id="hinhthuc_thongtinxe-card"></div>
+                      Xe mới
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xang.svg" alt="">
+                      <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_tudong.svg" alt="">
+                      <div id="hopso_thongtinxe-card">Tự động</div>
+                    </div>
+                  </div>
+                  <div id="giaxe-card">1 tỷ 289 triệu</div>
+                </a>
+              </div>
+              <div class="col-4">
+                <a href="#" class="card">
+                  <div class="hinhanh-card">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="https://plus.unsplash.com/premium_photo-1682125729312-78f16e6e6f38?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100 card-list_img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="tieude-card">
+                    🚘Mercedes E200 Model 2020 siêu lướt .
+                  </div>
+                  <div class="thongtinxe-card">
+                    <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_nam.svg" alt="">
+                      <div id="doixe_thongtinxe-card"></div>
+                      2023
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xemoi.svg" alt="">
+                      <div id="hinhthuc_thongtinxe-card"></div>
+                      Xe mới
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_xang.svg" alt="">
+                      <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                    </div>
+                    <div class="thongtinxe-card_chung">
+                      <img src="../IMAGE/icon_card_tudong.svg" alt="">
+                      <div id="hopso_thongtinxe-card">Tự động</div>
+                    </div>
+                  </div>
+                  <div id="giaxe-card">1 tỷ 289 triệu</div>
+                </a>
+              </div>
+          </div>
+          <!-- end card car -->
+            </div>
+
+            <div class="news">
+              <div class="row">
+                <div class="col news-title blueDark-c">TIN TỨC</div>
+                <hr>
+              </div>
+            <div class="row">
+                <div class="col-4">
+                  <div class="card">
+                    <div class="khunganh">
+                      <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="card-image">
+                    </div>
+          
+                    <div class="card-content">
+                      <h3 class="card-title">
+                        <a href="">Công bố giải tuần cuối (từ 24/4 đến 02/5) dành cho Hội nhóm dự
+                          thi Khoảnh khắc VinFast</a>
+                      </h3>
+                      <div class="card-post">
+                        <p>
+                          Trong tuần cuối của cuộc thi Khoảnh khắc đáng nhớ cùng VinFast,
+                          hội chủ xe Fadil Hải Phòng tiếp tục dẫn đầu đường đua dành cho
+                          hội nhóm tập thể. Sau khi đánh giá, tổng kết các bài dự thi, Ban
+                          tổ chức công bố Hội nhóm có nhiều bài dự thi hợp lệ nhất tuần
+                          qua là: Hội Fadil Hải Phòng Đây là lần thứ ba liên tiếp, Hội
+                          Fadil Hải Phòng đoạt giải thường tuần. Ban tổ chức xin chúc mừng
+                          Hội Fadil Hải Phòng và sẽ trực tiếp liên hệ với đại diện hội
+                          đoạt giải để hướng dẫn các bước nhận giải tiếp theo. Cuộc thi
+                          Khoảnh khắc đáng nhớ cùng VinFast sẽ công bố hội nhóm nào dành
+                          giải tập thể chung cuộc trong lễ trao giải dự kiến tổ chức vào
+                          đầu tháng 5 này tại Hà Nội. Theo thể lệ, các hội nhóm chủ xe
+                          VinFast có nhiều bài dự thi hợp lệ nhất trong mỗi tuần sẽ thắng
+                          giải tập thể tuần trị giá 10.000.000 đồng (Hội Fadil Hải Phòng
+                          đoạt giải cả 3 tuần), và chung cuộc cả tháng sẽ thắng giải tập
+                          thể trị giá 20.000.000 đồng. Cuộc thi “Khoảnh khắc
+                        </p>
+                      </div>
+                      <div class="card-footer">
+                        <div class="card-user">
+                          <a href="#">
+                            <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                            <p>Admin</p></a>
+                          <div class="card-time">5 giờ, 15 phút trước</div>
+                          <div class="card-comment">
+                            <img src="../IMAGE/icon_comment.tintuc.svg" alt="">
+                            <span>60</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="card">
+                    <div class="khunganh">
+                      <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="card-image">
+                    </div>
+          
+                    <div class="card-content">
+                      <h3 class="card-title">
+                        <a href="">Công bố giải tuần cuối (từ 24/4 đến 02/5) dành cho Hội nhóm dự
+                          thi Khoảnh khắc VinFast</a>
+                      </h3>
+                      <div class="card-post">
+                        <p>
+                          Trong tuần cuối của cuộc thi Khoảnh khắc đáng nhớ cùng VinFast,
+                          hội chủ xe Fadil Hải Phòng tiếp tục dẫn đầu đường đua dành cho
+                          hội nhóm tập thể. Sau khi đánh giá, tổng kết các bài dự thi, Ban
+                          tổ chức công bố Hội nhóm có nhiều bài dự thi hợp lệ nhất tuần
+                          qua là: Hội Fadil Hải Phòng Đây là lần thứ ba liên tiếp, Hội
+                          Fadil Hải Phòng đoạt giải thường tuần. Ban tổ chức xin chúc mừng
+                          Hội Fadil Hải Phòng và sẽ trực tiếp liên hệ với đại diện hội
+                          đoạt giải để hướng dẫn các bước nhận giải tiếp theo. Cuộc thi
+                          Khoảnh khắc đáng nhớ cùng VinFast sẽ công bố hội nhóm nào dành
+                          giải tập thể chung cuộc trong lễ trao giải dự kiến tổ chức vào
+                          đầu tháng 5 này tại Hà Nội. Theo thể lệ, các hội nhóm chủ xe
+                          VinFast có nhiều bài dự thi hợp lệ nhất trong mỗi tuần sẽ thắng
+                          giải tập thể tuần trị giá 10.000.000 đồng (Hội Fadil Hải Phòng
+                          đoạt giải cả 3 tuần), và chung cuộc cả tháng sẽ thắng giải tập
+                          thể trị giá 20.000.000 đồng. Cuộc thi “Khoảnh khắc
+                        </p>
+                      </div>
+                      <div class="card-footer">
+                        <div class="card-user">
+                          <a href="#">
+                            <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                            <p>Admin</p></a>
+                          <div class="card-time">5 giờ, 15 phút trước</div>
+                          <div class="card-comment">
+                            <img src="../IMAGE/icon_comment.tintuc.svg" alt="">
+                            <span>60</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
-
-                <div class="userTask-btn_register">
-                    <button ng-click="btn_login_Singup(2)">Đăng ký</button>
+                <div class="col-4">
+                  <div class="card">
+                    <div class="khunganh">
+                      <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="card-image">
+                    </div>
+          
+                    <div class="card-content">
+                      <h3 class="card-title">
+                        <a href="">Công bố giải tuần cuối (từ 24/4 đến 02/5) dành cho Hội nhóm dự
+                          thi Khoảnh khắc VinFast</a>
+                      </h3>
+                      <div class="card-post">
+                        <p>
+                          Trong tuần cuối của cuộc thi Khoảnh khắc đáng nhớ cùng VinFast,
+                          hội chủ xe Fadil Hải Phòng tiếp tục dẫn đầu đường đua dành cho
+                          hội nhóm tập thể. Sau khi đánh giá, tổng kết các bài dự thi, Ban
+                          tổ chức công bố Hội nhóm có nhiều bài dự thi hợp lệ nhất tuần
+                          qua là: Hội Fadil Hải Phòng Đây là lần thứ ba liên tiếp, Hội
+                          Fadil Hải Phòng đoạt giải thường tuần. Ban tổ chức xin chúc mừng
+                          Hội Fadil Hải Phòng và sẽ trực tiếp liên hệ với đại diện hội
+                          đoạt giải để hướng dẫn các bước nhận giải tiếp theo. Cuộc thi
+                          Khoảnh khắc đáng nhớ cùng VinFast sẽ công bố hội nhóm nào dành
+                          giải tập thể chung cuộc trong lễ trao giải dự kiến tổ chức vào
+                          đầu tháng 5 này tại Hà Nội. Theo thể lệ, các hội nhóm chủ xe
+                          VinFast có nhiều bài dự thi hợp lệ nhất trong mỗi tuần sẽ thắng
+                          giải tập thể tuần trị giá 10.000.000 đồng (Hội Fadil Hải Phòng
+                          đoạt giải cả 3 tuần), và chung cuộc cả tháng sẽ thắng giải tập
+                          thể trị giá 20.000.000 đồng. Cuộc thi “Khoảnh khắc
+                        </p>
+                      </div>
+                      <div class="card-footer">
+                        <div class="card-user">
+                          <a href="#">
+                            <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                            <p>Admin</p></a>
+                          <div class="card-time">5 giờ, 15 phút trước</div>
+                          <div class="card-comment">
+                            <img src="../IMAGE/icon_comment.tintuc.svg" alt="">
+                            <span>60</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            
-           
-        </div>
-    </header >
 
-    <!-- Đây là thân trang -->
-        <div class="container">
-            <div ng-include="Login_Signup" ng-controller="User_Login_Signup"></div>
-        </div>
-    <!-- đây là cuối trang -->
-    <footer>
+              </div>
+            </div>
+          </div>
 
-    </footer>
 
-    <div class="loader" ng-show="showLoader">
-        <div class="justify-content-center jimu-primary-loading"></div>
-      </div>
+
     
-    <script src="/GLOBAL/angular.js"></script>
-    <script src="/USER-JS/Index.js"></script>
-    <script src="/USER-JS/Login_Signup.js"></script>
 
-</body>
+        <!-- end list card car -->
+      </div>
+    </main>
+
+    <!-- start footer -->
+    <footer>
+      <div class="duongline"></div>
+
+      <div class="footer-container">
+        <div class="footer-logo">
+          <img
+            style="width: 80px; height: 80px"
+            src="../IMAGE/LOGO2.png"
+            alt=""
+            class="logo"
+          />
+        </div>
+        <div class="thongtin-vinfasts">
+          <div class="thongtin-vinfast">
+            <ul>
+              <h1>Cộng đồng VinFast Toàn cầu.</h1>
+              <li>
+                <span class="elementor-icon-list-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M7.35272 8.59903C8.12106 8.10861 8.8181 7.66565 9.51373 7.22042C10.1017 6.84451 10.6869 6.46483 11.2762 6.09192C11.6755 5.8388 11.7887 5.9066 11.7894 6.3925C11.7908 7.24227 11.7901 8.09279 11.7901 8.97269C12.1166 8.97269 12.4221 8.97269 12.7472 8.97269C12.8213 7.68297 12.894 6.41134 12.9674 5.1397C13.0115 4.37808 13.0618 3.61721 13.0961 2.85483C13.108 2.59718 13.217 2.49925 13.4429 2.5C14.3958 2.50226 15.348 2.50302 16.3009 2.5C16.5477 2.49925 16.6498 2.61828 16.6638 2.88421C16.826 5.88023 16.9924 8.87626 17.1615 11.8723C17.2671 13.7443 17.3769 15.6171 17.4887 17.4892C17.5251 18.0956 17.5048 18.125 16.9371 18.125C12.104 18.125 7.27092 18.125 2.43782 18.125C1.8869 18.125 1.88131 18.119 1.88131 17.5095C1.88131 14.8442 1.8862 12.1789 1.87502 9.51359C1.87362 9.20999 1.96311 9.03823 2.2085 8.89133C3.75848 7.96321 5.29937 7.01853 6.84585 6.08288C7.25134 5.83729 7.35062 5.90434 7.35202 6.40908C7.35481 7.10742 7.35272 7.80652 7.35272 8.59903ZM4.15419 13.2343C5.15395 13.2343 6.12504 13.2343 7.11152 13.2343C7.11152 12.5842 7.11152 11.9552 7.11152 11.3156C6.11595 11.3156 5.14626 11.3156 4.15419 11.3156C4.15419 11.9559 4.15419 12.5759 4.15419 13.2343ZM11.4196 11.3224C10.4142 11.3224 9.43613 11.3224 8.46573 11.3224C8.46573 11.98 8.46573 12.6106 8.46573 13.2343C9.4634 13.2343 10.4331 13.2343 11.4196 13.2343C11.4196 12.5932 11.4196 11.9725 11.4196 11.3224Z"
+                      fill="#3C3C3C"
+                    ></path>
+                  </svg>
+                </span>
+                <h3>Công ty Cổ phần Sản xuất và Kinh doanh VinFast</h3>
+              </li>
+              <li>
+                <span class="elementor-icon-list-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M15.0606 9.0778L15.055 9.07661C15.3787 8.36845 15.5632 7.58403 15.5632 6.75416C15.5628 3.66032 13.0546 1.15293 9.96159 1.15332C6.86775 1.15332 4.36035 3.66151 4.36035 6.75495C4.36035 7.58482 4.54529 8.36925 4.86894 9.0774L4.86341 9.07859L4.92704 9.19793C4.98947 9.32755 5.05705 9.45401 5.12937 9.5777L9.96238 18.6533L14.7938 9.5769C14.8665 9.45321 14.9337 9.32636 14.9973 9.19635L15.0606 9.0778Z"
+                      fill="#3C3C3C"
+                    ></path>
+                    <path
+                      d="M12.8951 6.69121C12.8951 8.31104 11.5815 9.625 9.96172 9.625C8.34189 9.625 7.02832 8.31144 7.02832 6.69161C7.02832 5.07138 8.34149 3.75781 9.96132 3.75781C11.5812 3.75781 12.8947 5.07099 12.8951 6.69121Z"
+                      fill="white"
+                    ></path>
+                  </svg>
+                </span>
+                <h3>
+                  Khu Kinh tế Đình Vũ - Cát Hải, Thị trấn Cát Hải, Huyện Cát
+                  Hải, TP. Hải Phòng
+                </h3>
+              </li>
+              <li>
+                <span class="elementor-icon-list-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="21"
+                    viewBox="0 0 20 21"
+                    fill="none"
+                  >
+                    <path
+                      d="M9.99967 10.4997C11.8413 10.4997 13.333 9.00801 13.333 7.16634C13.333 5.32467 11.8413 3.83301 9.99967 3.83301C8.15801 3.83301 6.66634 5.32467 6.66634 7.16634C6.66634 9.00801 8.15801 10.4997 9.99967 10.4997ZM9.99967 12.1663C7.77467 12.1663 3.33301 13.283 3.33301 15.4997V17.1663H16.6663V15.4997C16.6663 13.283 12.2247 12.1663 9.99967 12.1663Z"
+                      fill="#3C3C3C"
+                    ></path>
+                  </svg>
+                </span>
+                <h3>Chịu trách nhiệm nội dung: Phạm Minh Ngọc</h3>
+              </li>
+              <li>
+                <span class="elementor-icon-list-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="21"
+                    height="20"
+                    viewBox="0 0 21 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M11.333 7.50033H15.9163L11.333 2.91699V7.50033ZM5.49967 1.66699H12.1663L17.1663 6.66699V16.667C17.1663 17.109 16.9907 17.5329 16.6782 17.8455C16.3656 18.1581 15.9417 18.3337 15.4997 18.3337H5.49967C5.05765 18.3337 4.63372 18.1581 4.32116 17.8455C4.0086 17.5329 3.83301 17.109 3.83301 16.667V3.33366C3.83301 2.40866 4.57467 1.66699 5.49967 1.66699ZM9.83301 15.3837L13.7913 11.4253L12.8163 10.2503L9.83301 13.2337L8.50801 11.917L7.54134 12.8837L9.83301 15.3837Z"
+                      fill="#3C3C3C"
+                    ></path>
+                  </svg>
+                </span>
+                <h3>
+                  Giấy phép thiết lập MXH số: 463/GP-BTTTT, ký ngày 21/09/2022
+                </h3>
+              </li>
+              <li>
+                <a href="#">Website chính thức của thương hiệu VinFast</a>
+              </li>
+            </ul>
+            <div class="dambaothuonghieu">
+              © 2023 VinFast Community Website.
+            </div>
+          </div>
+          <div class="list-quydinh">
+            <ul>
+              <li>
+                <a href="#">
+                  <span class="elementor-icon-list-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                    >
+                      <path
+                        d="M9.94043 0.0137919C9.76077 -0.0664186 9.4913 0.227687 9.40147 0.267792C9.31164 0.294529 8.978 0.348002 8.67003 0.655476C8.32356 1.01642 6.11641 4.46547 5.59028 5.10716C5.30797 5.45474 5.07699 5.76221 5 5.76221C4.93584 5.76221 4.69203 5.45474 4.40972 5.10716C3.88359 4.46547 1.67644 1.01642 1.32997 0.655476C1.03483 0.348002 0.688353 0.294529 0.598527 0.267792C0.508701 0.241055 0.239226 -0.0664186 0.0595739 0.0137919C-0.0815811 0.080634 0.0724031 0.388108 0.0724031 0.388108C0.136564 0.575265 0.906504 2.46021 1.66361 4.19811C2.35655 5.77558 3.011 7.12579 3.26764 7.66053C4.28139 9.7861 4.85885 10 5 10C5.14116 10 5.70578 9.77274 6.73236 7.66053C6.989 7.12579 7.64345 5.77558 8.33639 4.19811C9.10633 2.46021 9.87626 0.575265 9.92759 0.388108C9.92759 0.388108 10.0816 0.080634 9.94043 0.0137919ZM9.68378 0.45495C9.35014 0.856002 6.96334 6.01621 6.42438 6.96537C5.87259 7.92789 5.19248 9.10431 5.01283 9.10431C4.82035 9.09095 4.14023 7.92789 3.60128 6.96537C3.06232 6.01621 0.675521 0.842634 0.341882 0.45495C0.252056 0.348002 0.0339086 0.134108 0.110902 0.0940024C0.226393 0.0271603 0.495868 0.348002 0.649855 0.388108C0.816675 0.428213 0.95783 0.441581 1.22731 0.70895C1.52245 0.989686 2.04858 1.89874 2.98533 3.3559C3.57562 4.26495 4.06324 4.97347 4.33272 5.33442C4.66636 5.78895 4.91017 6.00284 5.01283 6.00284C5.11549 6.00284 5.34647 5.78895 5.69294 5.33442C5.96242 4.97347 6.45005 4.27832 7.04033 3.3559C7.97709 1.89874 8.50321 1.00305 8.79835 0.70895C9.06783 0.441581 9.22182 0.428213 9.3758 0.388108C9.54262 0.348002 9.8121 0.0271603 9.91476 0.0940024C9.99175 0.134108 9.77361 0.348002 9.68378 0.45495Z"
+                        fill="#3C3C3C"
+                      ></path>
+                      <path
+                        d="M9.14493 0.735205C9.02944 0.949099 8.51615 1.97847 7.87454 3.18162C7.15593 4.53184 6.32183 6.05583 6.14218 6.36331C5.82137 6.92478 5.19259 7.87394 5.00011 7.87394C4.80762 7.86057 4.16601 6.91141 3.85803 6.36331C3.69121 6.0692 2.84428 4.53184 2.12567 3.18162C1.48406 1.97847 0.983602 0.949099 0.855279 0.735205C0.726957 0.494573 0.778288 0.4411 1.0221 0.735205C1.39424 1.17636 2.2925 2.79394 2.2925 2.79394C2.2925 2.79394 3.83237 5.48099 4.07618 5.84194C4.30716 6.17615 4.80762 6.85794 4.98727 6.87131C5.16693 6.85794 5.66739 6.17615 5.89837 5.84194C6.14218 5.48099 7.68205 2.79394 7.68205 2.79394C7.68205 2.79394 8.58031 1.17636 8.95245 0.735205C9.22192 0.4411 9.26042 0.494573 9.14493 0.735205Z"
+                        fill="#3C3C3C"
+                      ></path>
+                    </svg>
+                  </span>
+                  Quy định hoạt động
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="elementor-icon-list-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                    >
+                      <path
+                        d="M9.94043 0.0137919C9.76077 -0.0664186 9.4913 0.227687 9.40147 0.267792C9.31164 0.294529 8.978 0.348002 8.67003 0.655476C8.32356 1.01642 6.11641 4.46547 5.59028 5.10716C5.30797 5.45474 5.07699 5.76221 5 5.76221C4.93584 5.76221 4.69203 5.45474 4.40972 5.10716C3.88359 4.46547 1.67644 1.01642 1.32997 0.655476C1.03483 0.348002 0.688353 0.294529 0.598527 0.267792C0.508701 0.241055 0.239226 -0.0664186 0.0595739 0.0137919C-0.0815811 0.080634 0.0724031 0.388108 0.0724031 0.388108C0.136564 0.575265 0.906504 2.46021 1.66361 4.19811C2.35655 5.77558 3.011 7.12579 3.26764 7.66053C4.28139 9.7861 4.85885 10 5 10C5.14116 10 5.70578 9.77274 6.73236 7.66053C6.989 7.12579 7.64345 5.77558 8.33639 4.19811C9.10633 2.46021 9.87626 0.575265 9.92759 0.388108C9.92759 0.388108 10.0816 0.080634 9.94043 0.0137919ZM9.68378 0.45495C9.35014 0.856002 6.96334 6.01621 6.42438 6.96537C5.87259 7.92789 5.19248 9.10431 5.01283 9.10431C4.82035 9.09095 4.14023 7.92789 3.60128 6.96537C3.06232 6.01621 0.675521 0.842634 0.341882 0.45495C0.252056 0.348002 0.0339086 0.134108 0.110902 0.0940024C0.226393 0.0271603 0.495868 0.348002 0.649855 0.388108C0.816675 0.428213 0.95783 0.441581 1.22731 0.70895C1.52245 0.989686 2.04858 1.89874 2.98533 3.3559C3.57562 4.26495 4.06324 4.97347 4.33272 5.33442C4.66636 5.78895 4.91017 6.00284 5.01283 6.00284C5.11549 6.00284 5.34647 5.78895 5.69294 5.33442C5.96242 4.97347 6.45005 4.27832 7.04033 3.3559C7.97709 1.89874 8.50321 1.00305 8.79835 0.70895C9.06783 0.441581 9.22182 0.428213 9.3758 0.388108C9.54262 0.348002 9.8121 0.0271603 9.91476 0.0940024C9.99175 0.134108 9.77361 0.348002 9.68378 0.45495Z"
+                        fill="#3C3C3C"
+                      ></path>
+                      <path
+                        d="M9.14493 0.735205C9.02944 0.949099 8.51615 1.97847 7.87454 3.18162C7.15593 4.53184 6.32183 6.05583 6.14218 6.36331C5.82137 6.92478 5.19259 7.87394 5.00011 7.87394C4.80762 7.86057 4.16601 6.91141 3.85803 6.36331C3.69121 6.0692 2.84428 4.53184 2.12567 3.18162C1.48406 1.97847 0.983602 0.949099 0.855279 0.735205C0.726957 0.494573 0.778288 0.4411 1.0221 0.735205C1.39424 1.17636 2.2925 2.79394 2.2925 2.79394C2.2925 2.79394 3.83237 5.48099 4.07618 5.84194C4.30716 6.17615 4.80762 6.85794 4.98727 6.87131C5.16693 6.85794 5.66739 6.17615 5.89837 5.84194C6.14218 5.48099 7.68205 2.79394 7.68205 2.79394C7.68205 2.79394 8.58031 1.17636 8.95245 0.735205C9.22192 0.4411 9.26042 0.494573 9.14493 0.735205Z"
+                        fill="#3C3C3C"
+                      ></path>
+                    </svg>
+                  </span>
+                  Chính sách bảo mật
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="elementor-icon-list-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                    >
+                      <path
+                        d="M9.94043 0.0137919C9.76077 -0.0664186 9.4913 0.227687 9.40147 0.267792C9.31164 0.294529 8.978 0.348002 8.67003 0.655476C8.32356 1.01642 6.11641 4.46547 5.59028 5.10716C5.30797 5.45474 5.07699 5.76221 5 5.76221C4.93584 5.76221 4.69203 5.45474 4.40972 5.10716C3.88359 4.46547 1.67644 1.01642 1.32997 0.655476C1.03483 0.348002 0.688353 0.294529 0.598527 0.267792C0.508701 0.241055 0.239226 -0.0664186 0.0595739 0.0137919C-0.0815811 0.080634 0.0724031 0.388108 0.0724031 0.388108C0.136564 0.575265 0.906504 2.46021 1.66361 4.19811C2.35655 5.77558 3.011 7.12579 3.26764 7.66053C4.28139 9.7861 4.85885 10 5 10C5.14116 10 5.70578 9.77274 6.73236 7.66053C6.989 7.12579 7.64345 5.77558 8.33639 4.19811C9.10633 2.46021 9.87626 0.575265 9.92759 0.388108C9.92759 0.388108 10.0816 0.080634 9.94043 0.0137919ZM9.68378 0.45495C9.35014 0.856002 6.96334 6.01621 6.42438 6.96537C5.87259 7.92789 5.19248 9.10431 5.01283 9.10431C4.82035 9.09095 4.14023 7.92789 3.60128 6.96537C3.06232 6.01621 0.675521 0.842634 0.341882 0.45495C0.252056 0.348002 0.0339086 0.134108 0.110902 0.0940024C0.226393 0.0271603 0.495868 0.348002 0.649855 0.388108C0.816675 0.428213 0.95783 0.441581 1.22731 0.70895C1.52245 0.989686 2.04858 1.89874 2.98533 3.3559C3.57562 4.26495 4.06324 4.97347 4.33272 5.33442C4.66636 5.78895 4.91017 6.00284 5.01283 6.00284C5.11549 6.00284 5.34647 5.78895 5.69294 5.33442C5.96242 4.97347 6.45005 4.27832 7.04033 3.3559C7.97709 1.89874 8.50321 1.00305 8.79835 0.70895C9.06783 0.441581 9.22182 0.428213 9.3758 0.388108C9.54262 0.348002 9.8121 0.0271603 9.91476 0.0940024C9.99175 0.134108 9.77361 0.348002 9.68378 0.45495Z"
+                        fill="#3C3C3C"
+                      ></path>
+                      <path
+                        d="M9.14493 0.735205C9.02944 0.949099 8.51615 1.97847 7.87454 3.18162C7.15593 4.53184 6.32183 6.05583 6.14218 6.36331C5.82137 6.92478 5.19259 7.87394 5.00011 7.87394C4.80762 7.86057 4.16601 6.91141 3.85803 6.36331C3.69121 6.0692 2.84428 4.53184 2.12567 3.18162C1.48406 1.97847 0.983602 0.949099 0.855279 0.735205C0.726957 0.494573 0.778288 0.4411 1.0221 0.735205C1.39424 1.17636 2.2925 2.79394 2.2925 2.79394C2.2925 2.79394 3.83237 5.48099 4.07618 5.84194C4.30716 6.17615 4.80762 6.85794 4.98727 6.87131C5.16693 6.85794 5.66739 6.17615 5.89837 5.84194C6.14218 5.48099 7.68205 2.79394 7.68205 2.79394C7.68205 2.79394 8.58031 1.17636 8.95245 0.735205C9.22192 0.4411 9.26042 0.494573 9.14493 0.735205Z"
+                        fill="#3C3C3C"
+                      ></path>
+                    </svg>
+                  </span>
+                  Bảng quyền lợi thành viên
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="elementor-icon-list-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                    >
+                      <path
+                        d="M9.94043 0.0137919C9.76077 -0.0664186 9.4913 0.227687 9.40147 0.267792C9.31164 0.294529 8.978 0.348002 8.67003 0.655476C8.32356 1.01642 6.11641 4.46547 5.59028 5.10716C5.30797 5.45474 5.07699 5.76221 5 5.76221C4.93584 5.76221 4.69203 5.45474 4.40972 5.10716C3.88359 4.46547 1.67644 1.01642 1.32997 0.655476C1.03483 0.348002 0.688353 0.294529 0.598527 0.267792C0.508701 0.241055 0.239226 -0.0664186 0.0595739 0.0137919C-0.0815811 0.080634 0.0724031 0.388108 0.0724031 0.388108C0.136564 0.575265 0.906504 2.46021 1.66361 4.19811C2.35655 5.77558 3.011 7.12579 3.26764 7.66053C4.28139 9.7861 4.85885 10 5 10C5.14116 10 5.70578 9.77274 6.73236 7.66053C6.989 7.12579 7.64345 5.77558 8.33639 4.19811C9.10633 2.46021 9.87626 0.575265 9.92759 0.388108C9.92759 0.388108 10.0816 0.080634 9.94043 0.0137919ZM9.68378 0.45495C9.35014 0.856002 6.96334 6.01621 6.42438 6.96537C5.87259 7.92789 5.19248 9.10431 5.01283 9.10431C4.82035 9.09095 4.14023 7.92789 3.60128 6.96537C3.06232 6.01621 0.675521 0.842634 0.341882 0.45495C0.252056 0.348002 0.0339086 0.134108 0.110902 0.0940024C0.226393 0.0271603 0.495868 0.348002 0.649855 0.388108C0.816675 0.428213 0.95783 0.441581 1.22731 0.70895C1.52245 0.989686 2.04858 1.89874 2.98533 3.3559C3.57562 4.26495 4.06324 4.97347 4.33272 5.33442C4.66636 5.78895 4.91017 6.00284 5.01283 6.00284C5.11549 6.00284 5.34647 5.78895 5.69294 5.33442C5.96242 4.97347 6.45005 4.27832 7.04033 3.3559C7.97709 1.89874 8.50321 1.00305 8.79835 0.70895C9.06783 0.441581 9.22182 0.428213 9.3758 0.388108C9.54262 0.348002 9.8121 0.0271603 9.91476 0.0940024C9.99175 0.134108 9.77361 0.348002 9.68378 0.45495Z"
+                        fill="#3C3C3C"
+                      ></path>
+                      <path
+                        d="M9.14493 0.735205C9.02944 0.949099 8.51615 1.97847 7.87454 3.18162C7.15593 4.53184 6.32183 6.05583 6.14218 6.36331C5.82137 6.92478 5.19259 7.87394 5.00011 7.87394C4.80762 7.86057 4.16601 6.91141 3.85803 6.36331C3.69121 6.0692 2.84428 4.53184 2.12567 3.18162C1.48406 1.97847 0.983602 0.949099 0.855279 0.735205C0.726957 0.494573 0.778288 0.4411 1.0221 0.735205C1.39424 1.17636 2.2925 2.79394 2.2925 2.79394C2.2925 2.79394 3.83237 5.48099 4.07618 5.84194C4.30716 6.17615 4.80762 6.85794 4.98727 6.87131C5.16693 6.85794 5.66739 6.17615 5.89837 5.84194C6.14218 5.48099 7.68205 2.79394 7.68205 2.79394C7.68205 2.79394 8.58031 1.17636 8.95245 0.735205C9.22192 0.4411 9.26042 0.494573 9.14493 0.735205Z"
+                        fill="#3C3C3C"
+                      ></path>
+                    </svg>
+                  </span>
+                  Câu hỏi thường gặp
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="lienhehotro">
+            <ul>
+              <li>
+                <a href="#">
+                  <i class="fa-solid fa-phone" style="color: #3c3c3c"></i>
+                  <span>1900 23 23 89</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i aria-hidden="true" class="fas fa-envelope"></i>
+                  <span>support.vn@vinfastauto.com</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- end start -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
