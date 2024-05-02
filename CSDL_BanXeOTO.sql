@@ -3,7 +3,6 @@ GO
 USE DA3_BANXEOTO
 GO
 
-
 -- Bảng chứa thông tin về người dùng
 CREATE TABLE TaiKhoan (
     MaTaiKhoan INT PRIMARY KEY IDENTITY,
@@ -11,7 +10,8 @@ CREATE TABLE TaiKhoan (
     Email VARCHAR(255),
     SDT varchar(20),
 	MatKhau varchar(100),
-	Quyen int
+	Quyen int,
+    AnhDaiDien nvarchar(250)
 );
 
 -- Bảng chứa thông tin về loại xe
