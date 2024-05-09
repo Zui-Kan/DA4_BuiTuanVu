@@ -25,3 +25,16 @@ $(document).ready(function () {
     focusOnSelect: true,
   });
 });
+
+function displaySelectedColor_ngoai(optionId) {
+  var selectedOption = document.getElementById(optionId);
+  if (selectedOption.checked) {
+    $("#selected_ngoai_color").text(" - " + selectedOption.value);
+  }
+}
+function displaySelectedColor_noi(optionId) {
+  var selectedOption = document.getElementById(optionId);
+  if (selectedOption.checked) {
+    $("#selected_noi_color").text(" - " + selectedOption.value);
+  }
+}

@@ -18,10 +18,8 @@
     />
 
     <link rel="stylesheet" href="../Components/Colors.css" />
-    <link rel="stylesheet" href="../USER-CSS/style_cb.css" type="text/css" />
     <link rel="stylesheet" href="../USER-CSS/Index.css" />
     <link rel="stylesheet" href="../Components/Tag.css" />
-    <link rel="stylesheet" href="../USER-CSS/owl-carousel.css" />
 
     <link
       rel="stylesheet"
@@ -151,22 +149,83 @@
                 />
                 Hãng xe: Vinfast
               </div>
-              <div class="pro-colors">
-                <div class="color-title blueDark-c">Màu sắc</div>
+
+              <div class="pro-versions">
+                <div class="version-title blueDark-c">Phiên bản</div>
                 <div class="row">
-                  <div class="col-3 pro-color blue-bc"></div>
-                  <div class="col-3 pro-color red-bc"></div>
-                  <div class="col-3 pro-color white-bc"></div>
-                  <div class="col-3 pro-color black-bc"></div>
-                  <div class="col-3 pro-color green-bc"></div>
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="phienban"
+                    id="phienban1"
+                    value="Plus"
+                    autocomplete="off"
+                  />
+                  <label class="pro-version" for="phienban1"> Plus </label>
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="phienban"
+                    id="phienban2"
+                    value="Eco"
+                    autocomplete="off"
+                  />
+                  <label class="pro-version" for="phienban2"> Eco </label>
                 </div>
               </div>
-              <div class="pro-version">
-                <div class="version-title blueDark-c">Phiên bản</div>
-                <button>Cơ bản</button>
-                <button>Cao cấp</button>
-                <button>Đặc biệt</button>
+              <div class="pro-colors ngoaithat">
+                <div class="color-title blueDark-c">Ngoại thất <span id="selected_ngoai_color"></div>
+                <div class="row">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="ngoai_color"
+                    id="ngoai_option7"
+                    value="Màu vàng"
+                    autocomplete="off"
+                    onchange="displaySelectedColor_ngoai('ngoai_option7')"
+
+                  />
+                  <label class="pro-color" for="ngoai_option7">
+                    <img src="/IMAGE/color/NgoaiThat/CE11.jpg" alt="#" />
+                  </label>
+
+                  <input
+                  type="radio"
+                  class="btn-check"
+                  name="ngoai_color"
+                  id="ngoai_option8"
+                  value="Màu cam"
+                  autocomplete="off"
+                  onchange="displaySelectedColor_ngoai('ngoai_option8')"
+
+                  />
+                  <label class="pro-color" for="ngoai_option8">
+                    <img src="/IMAGE/color/NgoaiThat/CE14.jpg" alt="#" />
+                  </label>
+                </div>
               </div>
+    
+              <div class="pro-colors noithat">
+                <div class="color-title blueDark-c">Nội thất  <span id="selected_noi_color"></span></div>
+                <div class="row">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="noi_color"
+                    id="noithat1"
+                    value="Màu vàng"
+                    autocomplete="off"
+                  onchange="displaySelectedColor_noi('noithat1')"
+
+                  />
+                  <label class="pro-color" for="noithat1">
+                    <img src="/IMAGE/color/NoiThat/CI12.jpg" alt="#" />
+                  </label>
+                </div>
+              </div>
+
               <hr />
               <div class="pro-control">
                 <div class="row">
@@ -225,9 +284,11 @@
           </div>
           <div class="col-lg-12">
             <div class="product__details__tab">
-              <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><h4 class="blueDark-c">MÔ TẢ</h4></li>
-              </ul>
+              <div class="mota-tieude-noidung">
+                <hr>
+                <div class="tieude-noidung blueDark-c">MÔ TẢ</div>
+                <hr>
+              </div>
               <div class="tab-content">
                 <div class="tab-pane active" id="tabs-1" role="tabpanel">
                   <div class="product__details__tab__desc">

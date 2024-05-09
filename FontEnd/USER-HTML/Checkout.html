@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/Components/Colors.css" />
+    <link rel="stylesheet" href="/USER-CSS/Cart.css" />
+    <link rel="stylesheet" href="/USER-CSS/Checkout.css" />
+  </head>
+
+  <body style="background: #f2f1f6">
+    <header>
+      <!-- place navbar here -->
+    </header>
+    <main>
+      <div class="checkout">
+        <div class="checkout-header">
+          <div class="checkout-header_icon">
+            <img src="/IMAGE/icons8_credit_card_interest.svg" alt="#" />
+          </div>
+          <div class="checkout-header_title">Đặt hàng</div>
+          <div class="checkout-header_note">
+            Vui lòng kiểm tra thông tin Khách hàng, thông tin Giỏ hàng trước khi
+            Đặt hàng
+          </div>
+        </div>
+        <div class="checkout-control">
+          <div class="row">
+            <div class="checkout-control_left col-8">
+              <div class="control-title">Thông tin khách hàng</div>
+              <div class="left-inps">
+                <!-- input họ và tên  -->
+                <div class="left-inp row">
+                  <div class="inps-item col-12">
+                    <div class="inps_title">Họ và tên</div>
+                    <div class="inps_inp">
+                      <input
+                        class="inp"
+                        type="text"
+                        name="inp_fullName"
+                        id="inp_fullName"
+                        placeholder="Vui lòng nhập họ và tên..."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- input giới tính và số điện thoại -->
+                <div class="left-inp row">
+                  <div class="inps-item col-6">
+                    <div class="inps_title">Giới tính</div>
+                    <div class="inps_inp">
+                      <select class="inp" name="inp_sex" id="inp_sex">
+                        <option selected>Vùi lòng chọn giới tính...</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                        <option value="Khác">Khác</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="inps-item col-6">
+                    <div class="inps_title">Số điện thoại</div>
+                    <div class="inps_inp">
+                      <input
+                        class="inp"
+                        type="number"
+                        name="inp_phoneNumber"
+                        id="inp_phoneNumber"
+                        placeholder="Vui lòng nhập số điện thoại..."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- input email -->
+                <div class="left-inp row">
+                  <div class="inps-item col-12">
+                    <div class="inps_title">Địa chỉ Email</div>
+                    <div class="inps_inp">
+                      <input
+                        class="inp"
+                        type="text"
+                        name="inp_email"
+                        id="inp_email"
+                        placeholder="Vui lòng nhập địa chỉ Email..."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- input địa chỉ -->
+                <div class="left-inp row">
+                  <div class="inps-item col-12">
+                    <div class="inps_title">Địa chỉ</div>
+                    <div class="inps_inp">
+                      <input
+                        class="inp"
+                        type="text"
+                        name="inp_address"
+                        id="inp_address"
+                        placeholder="Vui lòng nhập địa chỉ..."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- input địa chỉ -->
+                <div class="left-inp row">
+                  <div class="inps-item col-6">
+                    <div class="inps_title">Ngày sinh</div>
+                    <div class="inps_inp">
+                      <input
+                        class="inp"
+                        type="date"
+                        name="inp_dateOfBirth"
+                        id="inp_dateOfBirth"
+                        placeholder="Vui lòng nhập ngày sinh..."
+                      />
+                    </div>
+                  </div>
+                  <div class="inps-item col-6">
+                    <div class="inps_title">CMND</div>
+                    <div class="inps_inp">
+                      <input
+                        class="inp"
+                        type="number"
+                        name="inp_CMND"
+                        id="inp_CMND"
+                        placeholder="Vui lòng nhập chứng minh nhân dân..."
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="control-title">Hình thức nhận xe</div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                />
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Nhận tại cửa hàng
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault2"
+                  checked
+                />
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Nhận tại địa chỉ khách hàng
+                </label>
+              </div>
+              <!-- input email -->
+              <div class="left-inp row">
+                <div class="inps-item col-12">
+                  <div class="inps_title">Chọn địa chỉ cửa hàng</div>
+                  <div class="inps_inp">
+                    <select
+                      class="inp"
+                      name="inp_storeAddress"
+                      id="inp_storeAddress"
+                    >
+                      <option selected>
+                        Vùi lòng chọn địa chỉ cửa hàng...
+                      </option>
+                      <option
+                        value="Vinfast - Tầng L1, TTTM Vincom Center Phạm Ngọc Thạch, Số 2 Phạm Ngọc Thạch, Phường Trung Tự, Quận Đống Đa, Hà Nội"
+                      >
+                        Vinfast - Tầng L1, TTTM Vincom Center Phạm Ngọc Thạch,
+                        Số 2 Phạm Ngọc Thạch, Phường Trung Tự, Quận Đống Đa, Hà
+                        Nội
+                      </option>
+                      <option
+                        value="Vinfast - 118 khu Miếu Thờ, Đường QL3, xã Tiên Dược, huyện Sóc Sơn, Hà Nội"
+                      >
+                        Vinfast - 118 khu Miếu Thờ, Đường QL3, xã Tiên Dược,
+                        huyện Sóc Sơn, Hà Nội
+                      </option>
+                      <option
+                        value="Vinfast - 155-157 Tô Hiệu, Hiến Nam, Hưng Yên"
+                      >
+                        Vinfast - 155-157 Tô Hiệu, Hiến Nam, Hưng Yên
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+              <button type="button" class="btn-order blue-bc">Đặt hàng</button>
+            </div>
+            <div class="checkout-control_right col-4">
+              <div class="control-right_title">
+                <div class="control-title">Giỏ hàng</div>
+                <div class="totle-cart">4</div>
+              </div>
+
+              <div class="right-carts">
+                <div class="right-cart">
+                  <div class="cart-information">
+                    <div class="cart-title">Vinfast VF8 - Plus</div>
+                    <div class="cart-detail">
+                      <p>Ngoại thất: Crimson Red</p>
+                      <p>Nội thất: Granite Black</p>
+                    </div>
+                    <div class="cart-priceTotal">500 triệu x 3</div>
+                  </div>
+                  <div class="cart-amountMoney">1 tỷ 500 triệu</div>
+                </div>
+                <div class="cart-totalPayment">
+                  <div class="totalPayment-title">Tổng thành tiền</div>
+                  <div class="totalPayment-total">2 tỷ 500 triệu</div>
+                </div>
+
+                <div class="cart-btn_discountCode">
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Mã khuyến mã"
+                      aria-describedby="button-addon2"
+                    />
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      id="button-addon2"
+                    >
+                      Xác nhận
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
