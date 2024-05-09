@@ -14,8 +14,8 @@
 }
 
 .custom-checkbox .checkmark {
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
   border: 2px solid #333;
   border-radius: 4px;
   display: flex;
@@ -34,8 +34,8 @@
 }
 
 .custom-checkbox input[type="checkbox"]:checked + .checkmark {
-  background-color: #333;
-  border-color: #333;
+  background-color: #2159d2;
+  border-color: #2159d2;
   transform: scale(1.1) rotateZ(360deg) rotateY(360deg);
 }
 
@@ -63,6 +63,13 @@
   transition: background-color 1.3s, border-color 1.3s, color 1.3s,
     transform 0.3s;
 }
+
+/* ---------html của checkbox
+<label class="custom-checkbox">
+  <input name="dummy" type="checkbox">
+  <span class="checkmark"></span>
+</label>
+ */
 /* end checkbox   */
 
 .center-t {

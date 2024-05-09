@@ -1,34 +1,26 @@
-var app = angular.module("WebBanXe", []);
-app.controller("User_Index", function ($scope, $http, $timeout, $location, $rootScope) {
+$(document).ready(function () {
+  // trang detail
+  $(".topCars").slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    prevArrow:
+      '  <button type="button" class="slick-prev pull-left"><img src="/Components/CardCategory/icons8_back_4.svg" alt="#" /></button>',
+    nextArrow:
+      '<button type="button" class="slick-next pull-right"><img src="/Components/CardCategory/icons8_forward_3.svg" alt="#" /></button>',
+  });
 
-    // Biến cờ để theo dõi trạng thái của dữ liệu
-    $scope.showLoader = true;
+  $(".index-abs_toptimkiem").slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    prevArrow:
+      '  <button type="button" class="slick-prev pull-left"><img src="/Components/CardCategory/icons8_back_4.svg" alt="#" /></button>',
+    nextArrow:
+      '<button type="button" class="slick-next pull-right"><img src="/Components/CardCategory/icons8_forward_3.svg" alt="#" /></button>',
+  });
 
-    $timeout(function() {
-        $scope.showLoader = false;
-    }, 1000);
-
-    $scope.btn_login_Singup = function(loai){
-        if(loai == 1){
-    $scope.showLoader = true;
-
-               $timeout(function() {
-                   $scope.showLoader = false;
-                $scope.Login_Signup = "http://127.0.0.1:5500/FontEnd/USER-HTML/Login_Signup.html";
-                $rootScope.biengiatri = 1;
-                },500);
-
-        
-        }
-        if(loai == 2){
-            $scope.showLoader = true;
-
-            $timeout(function() {
-                $scope.showLoader = false;
-                $scope.Login_Signup = 'http://127.0.0.1:5500/FontEnd/USER-HTML/Login_Signup.html';
-                $rootScope.biengiatri = 2;
-             },500);
-
-        }
-    };
+  //end trang detail
 });

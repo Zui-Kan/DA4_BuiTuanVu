@@ -13,29 +13,24 @@
 .card_product:hover {
   box-shadow: 0 0 20px rgba(142, 142, 142, 0.381);
 }
-.hover-img {
-  display: none;
-}
 
 .hinhanh-card {
   width: 100%;
-  height: 170px;
+  height: 190px;
   overflow: hidden;
 }
-.card_product:hover .hover-img {
-  display: block;
-}
+
 .card_product:hover .default-img {
-  display: none;
+  transform: scale(1.07);
 }
-.hover-img,
 .default-img {
   width: 100%;
   height: 100%;
+  transition: transform 0.2s ease-in-out;
   object-fit: cover;
 }
 
-#tieude-card {
+.tieude-card {
   line-height: 20px;
   margin: 10px;
   font-size: 18px;
@@ -60,11 +55,12 @@
   align-items: center;
 }
 
-#giaxe-card {
+.giaxe-card {
   font-size: 20px;
   color: rgb(239, 76, 73);
   font-weight: 700;
-  margin: 0px 0px 5px 15px;
+  /* margin: 0px 0px 5px 15px; */
+  margin: 15px;
 }
 
 .card_product:hover .chucnang-card .row {

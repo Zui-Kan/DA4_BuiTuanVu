@@ -3,30 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index</title>
-    <!-- Bootstrap CSS v5.2.1 -->
+    <title>Giỏ hàng</title>
+
+    <link rel="stylesheet" href="../Components/Reset.css" />
+    <link rel="stylesheet" href="../Components/Colors.css" />
+    <link rel="stylesheet" href="../Components/Tag.css" />
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../Components/Reset.css" />
-    <link rel="stylesheet" href="../Components/Colors.css" />
-    <link rel="stylesheet" href="../Components/reponsive.css" />
-    <link rel="stylesheet" href="../Components/Tag.css" />
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.css" />
-
-    <link rel="stylesheet" href="css/themify-icons.css" />
-    <!-- Nice Select CSS -->
-
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../USER-CSS/Cart.css" />
     <link rel="stylesheet" href="../USER-CSS/Index.css" />
-    `
   </head>
-  <body>
+  <body style="background: #f6f6f6">
     <!-- start header -->
     <header>
       <div class="header-logo">
@@ -87,7 +79,7 @@
       </div>
 
       <div class="header-controls">
-        <button class="control-login orange-bc">
+        <button class="control-login blue-bc">
           <img src="../IMAGE/icons8_car.svg" alt="#" />ĐĂNG TIN
         </button>
 
@@ -121,466 +113,128 @@
     </header>
     <!-- end header -->
     <main>
-      <!-- Shopping Cart -->
-
-      <div class="shopping-cart section">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <!-- Shopping Summery -->
-              <table class="table shopping-summery">
-                <thead>
-                  <tr class="main-hading">
-                    <th>PRODUCT</th>
-                    <th>NAME</th>
-                    <th class="text-center">UNIT PRICE</th>
-                    <th class="text-center">QUANTITY</th>
-                    <th class="text-center">TOTAL</th>
-                    <th class="text-center">
-                      <i class="ti-trash remove-icon"></i>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="image" data-title="No">
-                      <img src="https://via.placeholder.com/100x100" alt="#" />
-                    </td>
-                    <td class="product-des" data-title="Description">
-                      <p class="product-name"><a href="#">Women Dress</a></p>
-                      <p class="product-des">
-                        Maboriosam in a tonto nesciung eget distingy
-                        magndapibus.
-                      </p>
-                    </td>
-                    <td class="price" data-title="Price">
-                      <span>$110.00 </span>
-                    </td>
-                    <td class="qty" data-title="Qty">
-                      <!-- Input Order -->
-                      <div class="input-group">
-                        <div class="button minus">
-                          <button
-                            type="button"
-                            class="btn btn-primary btn-number"
-                            disabled="disabled"
-                            data-type="minus"
-                            data-field="quant[1]"
-                          >
-                            <i class="ti-minus"></i>
-                          </button>
-                        </div>
-                        <input
-                          type="text"
-                          name="quant[1]"
-                          class="input-number"
-                          data-min="1"
-                          data-max="100"
-                          value="1"
-                        />
-                        <div class="button plus">
-                          <button
-                            type="button"
-                            class="btn btn-primary btn-number"
-                            data-type="plus"
-                            data-field="quant[1]"
-                          >
-                            <i class="ti-plus"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <!--/ End Input Order -->
-                    </td>
-                    <td class="total-amount" data-title="Total">
-                      <span>$220.88</span>
-                    </td>
-                    <td class="action" data-title="Remove">
-                      <a href="#"><i class="ti-trash remove-icon"></i></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="image" data-title="No">
-                      <img src="https://via.placeholder.com/100x100" alt="#" />
-                    </td>
-                    <td class="product-des" data-title="Description">
-                      <p class="product-name"><a href="#">Women Dress</a></p>
-                      <p class="product-des">
-                        Maboriosam in a tonto nesciung eget distingy
-                        magndapibus.
-                      </p>
-                    </td>
-                    <td class="price" data-title="Price">
-                      <span>$110.00 </span>
-                    </td>
-                    <td class="qty" data-title="Qty">
-                      <!-- Input Order -->
-                      <div class="input-group">
-                        <div class="button minus">
-                          <button
-                            type="button"
-                            class="btn btn-primary btn-number"
-                            disabled="disabled"
-                            data-type="minus"
-                            data-field="quant[2]"
-                          >
-                            <i class="ti-minus"></i>
-                          </button>
-                        </div>
-                        <input
-                          type="text"
-                          name="quant[2]"
-                          class="input-number"
-                          data-min="1"
-                          data-max="100"
-                          value="2"
-                        />
-                        <div class="button plus">
-                          <button
-                            type="button"
-                            class="btn btn-primary btn-number"
-                            data-type="plus"
-                            data-field="quant[2]"
-                          >
-                            <i class="ti-plus"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <!--/ End Input Order -->
-                    </td>
-                    <td class="total-amount" data-title="Total">
-                      <span>$220.88</span>
-                    </td>
-                    <td class="action" data-title="Remove">
-                      <a href="#"><i class="ti-trash remove-icon"></i></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="image" data-title="No">
-                      <img src="https://via.placeholder.com/100x100" alt="#" />
-                    </td>
-                    <td class="product-des" data-title="Description">
-                      <p class="product-name"><a href="#">Women Dress</a></p>
-                      <p class="product-des">
-                        Maboriosam in a tonto nesciung eget distingy
-                        magndapibus.
-                      </p>
-                    </td>
-                    <td class="price" data-title="Price">
-                      <span>$110.00 </span>
-                    </td>
-                    <td class="qty" data-title="Qty">
-                      <!-- Input Order -->
-                      <div class="input-group">
-                        <div class="button minus">
-                          <button
-                            type="button"
-                            class="btn btn-primary btn-number"
-                            disabled="disabled"
-                            data-type="minus"
-                            data-field="quant[3]"
-                          >
-                            <i class="ti-minus"></i>
-                          </button>
-                        </div>
-                        <input
-                          type="text"
-                          name="quant[3]"
-                          class="input-number"
-                          data-min="1"
-                          data-max="100"
-                          value="3"
-                        />
-                        <div class="button plus">
-                          <button
-                            type="button"
-                            class="btn btn-primary btn-number"
-                            data-type="plus"
-                            data-field="quant[3]"
-                          >
-                            <i class="ti-plus"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <!--/ End Input Order -->
-                    </td>
-                    <td class="total-amount" data-title="Total">
-                      <span>$220.88</span>
-                    </td>
-                    <td class="action" data-title="Remove">
-                      <a href="#"><i class="ti-trash remove-icon"></i></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <!--/ End Shopping Summery -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <!-- Total Amount -->
-              <div class="total-amount">
-                <div class="row">
-                  <div class="col-lg-8 col-md-5 col-12">
-                    <div class="left">
-                      <div class="coupon">
-                        <form action="#" target="_blank">
-                          <input
-                            name="Coupon"
-                            placeholder="Enter Your Coupon"
-                          />
-                          <button class="btn">Apply</button>
-                        </form>
-                      </div>
-                      <div class="checkbox">
-                        <label class="checkbox-inline" for="2"
-                          ><input name="news" id="2" type="checkbox" /> Shipping
-                          (+10$)</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-md-7 col-12">
-                    <div class="right">
-                      <ul>
-                        <li>Cart Subtotal<span>$330.00</span></li>
-                        <li>Shipping<span>Free</span></li>
-                        <li>You Save<span>$20.00</span></li>
-                        <li class="last">You Pay<span>$310.00</span></li>
-                      </ul>
-                      <div class="button5">
-                        <a href="#" class="btn">Checkout</a>
-                        <a href="#" class="btn">Continue shopping</a>
-                      </div>
-                    </div>
-                  </div>
+      <div class="shopping-cart">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">
+                <label class="custom-checkbox">
+                  <input name="dummy" type="checkbox" />
+                  <span class="checkmark"></span>
+                </label>
+              </th>
+              <th scope="col">Ảnh</th>
+              <th scope="col">Thông tin</th>
+              <th scope="col">Đơn giá</th>
+              <th scope="col">Số lượng</th>
+              <th scope="col">Số tiền</th>
+              <th scope="col">
+                <button type="button" class="btn-xoatat">Xoá tất</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <label class="custom-checkbox">
+                  <input name="dummy" type="checkbox" />
+                  <span class="checkmark"></span>
+                </label>
+              </td>
+              <td>
+                <div class="khung-img-cart">
+                  <img class="img-cart" src="/IMAGE/oto/2.jpg" alt="" />
                 </div>
-              </div>
-              <!--/ End Total Amount -->
+              </td>
+
+              <td>
+                <div class="thongtinsanpham">
+                  <div>
+                    Sản phẩm 1 Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm
+                    1
+                  </div>
+                  <div>Màu sắc: Đỏ</div>
+                  <div>Phiên bản: Đặc biệt</div>
+                </div>
+              </td>
+              <td>100.000.000 VNĐ</td>
+
+              <td>
+                <div class="inp-soluong">
+                  <button class="btn-secondary decrease-btn">-</button>
+                  <input
+                    type="number"
+                    class="quantity-input"
+                    value="1"
+                    min="1"
+                  />
+                  <button class="btn-secondary increase-btn">+</button>
+                </div>
+              </td>
+              <td>100.000.000 VNĐ</td>
+              <td><button type="button">Xoá</button></td>
+            </tr>
+            <tr>
+              <td>
+                <label class="custom-checkbox">
+                  <input name="dummy" type="checkbox" />
+                  <span class="checkmark"></span>
+                </label>
+              </td>
+              <td>
+                <div class="khung-img-cart">
+                  <img class="img-cart" src="/IMAGE/oto/2.jpg" alt="" />
+                </div>
+              </td>
+
+              <td>
+                <div class="cart-thongtin">
+                  <a class="thongtin-title">
+                    Sản phẩm 1 Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm
+                    1
+                  </a>
+                  <div>Màu sắc: Đỏ</div>
+                  <div>Phiên bản: Đặc biệt</div>
+                </div>
+              </td>
+              <td>100.000.000 VNĐ</td>
+
+              <td>
+                <div class="inp-soluong">
+                  <button class="btn-secondary decrease-btn">-</button>
+                  <input
+                    type="number"
+                    class="quantity-input"
+                    value="1"
+                    min="1"
+                  />
+                  <button class="btn-secondary increase-btn">+</button>
+                </div>
+              </td>
+              <td>100.000.000 VNĐ</td>
+              <td><button type="button" class="btn-xoa">Xoá</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="total-amount">
+          <div class="total-thongtin">
+            <div class="giatien">
+              <div>Tổng thanh toán (2 sản phẩm):</div>
+              <div class="total-giatien">200.000 VNĐ</div>
             </div>
+            <div class="vat">Đã bao gồm VAT [nếu có]</div>
           </div>
+
+          <button class="btn-thanhtoan">Thanh toán</button>
         </div>
       </div>
-      <!--/ End Shopping Cart -->
     </main>
 
     <!-- start footer -->
-    <footer>
-      <div class="duongline"></div>
-
-      <div class="footer-container">
-        <div class="footer-logo">
-          <img
-            style="width: 80px; height: 80px"
-            src="../IMAGE/LOGO2.png"
-            alt=""
-            class="logo"
-          />
-        </div>
-        <div class="thongtin-vinfasts">
-          <div class="thongtin-vinfast">
-            <ul>
-              <h1>Cộng đồng VinFast Toàn cầu.</h1>
-              <li>
-                <span class="elementor-icon-list-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <path
-                      d="M7.35272 8.59903C8.12106 8.10861 8.8181 7.66565 9.51373 7.22042C10.1017 6.84451 10.6869 6.46483 11.2762 6.09192C11.6755 5.8388 11.7887 5.9066 11.7894 6.3925C11.7908 7.24227 11.7901 8.09279 11.7901 8.97269C12.1166 8.97269 12.4221 8.97269 12.7472 8.97269C12.8213 7.68297 12.894 6.41134 12.9674 5.1397C13.0115 4.37808 13.0618 3.61721 13.0961 2.85483C13.108 2.59718 13.217 2.49925 13.4429 2.5C14.3958 2.50226 15.348 2.50302 16.3009 2.5C16.5477 2.49925 16.6498 2.61828 16.6638 2.88421C16.826 5.88023 16.9924 8.87626 17.1615 11.8723C17.2671 13.7443 17.3769 15.6171 17.4887 17.4892C17.5251 18.0956 17.5048 18.125 16.9371 18.125C12.104 18.125 7.27092 18.125 2.43782 18.125C1.8869 18.125 1.88131 18.119 1.88131 17.5095C1.88131 14.8442 1.8862 12.1789 1.87502 9.51359C1.87362 9.20999 1.96311 9.03823 2.2085 8.89133C3.75848 7.96321 5.29937 7.01853 6.84585 6.08288C7.25134 5.83729 7.35062 5.90434 7.35202 6.40908C7.35481 7.10742 7.35272 7.80652 7.35272 8.59903ZM4.15419 13.2343C5.15395 13.2343 6.12504 13.2343 7.11152 13.2343C7.11152 12.5842 7.11152 11.9552 7.11152 11.3156C6.11595 11.3156 5.14626 11.3156 4.15419 11.3156C4.15419 11.9559 4.15419 12.5759 4.15419 13.2343ZM11.4196 11.3224C10.4142 11.3224 9.43613 11.3224 8.46573 11.3224C8.46573 11.98 8.46573 12.6106 8.46573 13.2343C9.4634 13.2343 10.4331 13.2343 11.4196 13.2343C11.4196 12.5932 11.4196 11.9725 11.4196 11.3224Z"
-                      fill="#3C3C3C"
-                    ></path>
-                  </svg>
-                </span>
-                <h3>Công ty Cổ phần Sản xuất và Kinh doanh VinFast</h3>
-              </li>
-              <li>
-                <span class="elementor-icon-list-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <path
-                      d="M15.0606 9.0778L15.055 9.07661C15.3787 8.36845 15.5632 7.58403 15.5632 6.75416C15.5628 3.66032 13.0546 1.15293 9.96159 1.15332C6.86775 1.15332 4.36035 3.66151 4.36035 6.75495C4.36035 7.58482 4.54529 8.36925 4.86894 9.0774L4.86341 9.07859L4.92704 9.19793C4.98947 9.32755 5.05705 9.45401 5.12937 9.5777L9.96238 18.6533L14.7938 9.5769C14.8665 9.45321 14.9337 9.32636 14.9973 9.19635L15.0606 9.0778Z"
-                      fill="#3C3C3C"
-                    ></path>
-                    <path
-                      d="M12.8951 6.69121C12.8951 8.31104 11.5815 9.625 9.96172 9.625C8.34189 9.625 7.02832 8.31144 7.02832 6.69161C7.02832 5.07138 8.34149 3.75781 9.96132 3.75781C11.5812 3.75781 12.8947 5.07099 12.8951 6.69121Z"
-                      fill="white"
-                    ></path>
-                  </svg>
-                </span>
-                <h3>
-                  Khu Kinh tế Đình Vũ - Cát Hải, Thị trấn Cát Hải, Huyện Cát
-                  Hải, TP. Hải Phòng
-                </h3>
-              </li>
-              <li>
-                <span class="elementor-icon-list-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="21"
-                    viewBox="0 0 20 21"
-                    fill="none"
-                  >
-                    <path
-                      d="M9.99967 10.4997C11.8413 10.4997 13.333 9.00801 13.333 7.16634C13.333 5.32467 11.8413 3.83301 9.99967 3.83301C8.15801 3.83301 6.66634 5.32467 6.66634 7.16634C6.66634 9.00801 8.15801 10.4997 9.99967 10.4997ZM9.99967 12.1663C7.77467 12.1663 3.33301 13.283 3.33301 15.4997V17.1663H16.6663V15.4997C16.6663 13.283 12.2247 12.1663 9.99967 12.1663Z"
-                      fill="#3C3C3C"
-                    ></path>
-                  </svg>
-                </span>
-                <h3>Chịu trách nhiệm nội dung: Phạm Minh Ngọc</h3>
-              </li>
-              <li>
-                <span class="elementor-icon-list-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="21"
-                    height="20"
-                    viewBox="0 0 21 20"
-                    fill="none"
-                  >
-                    <path
-                      d="M11.333 7.50033H15.9163L11.333 2.91699V7.50033ZM5.49967 1.66699H12.1663L17.1663 6.66699V16.667C17.1663 17.109 16.9907 17.5329 16.6782 17.8455C16.3656 18.1581 15.9417 18.3337 15.4997 18.3337H5.49967C5.05765 18.3337 4.63372 18.1581 4.32116 17.8455C4.0086 17.5329 3.83301 17.109 3.83301 16.667V3.33366C3.83301 2.40866 4.57467 1.66699 5.49967 1.66699ZM9.83301 15.3837L13.7913 11.4253L12.8163 10.2503L9.83301 13.2337L8.50801 11.917L7.54134 12.8837L9.83301 15.3837Z"
-                      fill="#3C3C3C"
-                    ></path>
-                  </svg>
-                </span>
-                <h3>
-                  Giấy phép thiết lập MXH số: 463/GP-BTTTT, ký ngày 21/09/2022
-                </h3>
-              </li>
-              <li>
-                <a href="#">Website chính thức của thương hiệu VinFast</a>
-              </li>
-            </ul>
-            <div class="dambaothuonghieu">
-              © 2023 VinFast Community Website.
-            </div>
-          </div>
-          <div class="list-quydinh">
-            <ul>
-              <li>
-                <a href="#">
-                  <span class="elementor-icon-list-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                    >
-                      <path
-                        d="M9.94043 0.0137919C9.76077 -0.0664186 9.4913 0.227687 9.40147 0.267792C9.31164 0.294529 8.978 0.348002 8.67003 0.655476C8.32356 1.01642 6.11641 4.46547 5.59028 5.10716C5.30797 5.45474 5.07699 5.76221 5 5.76221C4.93584 5.76221 4.69203 5.45474 4.40972 5.10716C3.88359 4.46547 1.67644 1.01642 1.32997 0.655476C1.03483 0.348002 0.688353 0.294529 0.598527 0.267792C0.508701 0.241055 0.239226 -0.0664186 0.0595739 0.0137919C-0.0815811 0.080634 0.0724031 0.388108 0.0724031 0.388108C0.136564 0.575265 0.906504 2.46021 1.66361 4.19811C2.35655 5.77558 3.011 7.12579 3.26764 7.66053C4.28139 9.7861 4.85885 10 5 10C5.14116 10 5.70578 9.77274 6.73236 7.66053C6.989 7.12579 7.64345 5.77558 8.33639 4.19811C9.10633 2.46021 9.87626 0.575265 9.92759 0.388108C9.92759 0.388108 10.0816 0.080634 9.94043 0.0137919ZM9.68378 0.45495C9.35014 0.856002 6.96334 6.01621 6.42438 6.96537C5.87259 7.92789 5.19248 9.10431 5.01283 9.10431C4.82035 9.09095 4.14023 7.92789 3.60128 6.96537C3.06232 6.01621 0.675521 0.842634 0.341882 0.45495C0.252056 0.348002 0.0339086 0.134108 0.110902 0.0940024C0.226393 0.0271603 0.495868 0.348002 0.649855 0.388108C0.816675 0.428213 0.95783 0.441581 1.22731 0.70895C1.52245 0.989686 2.04858 1.89874 2.98533 3.3559C3.57562 4.26495 4.06324 4.97347 4.33272 5.33442C4.66636 5.78895 4.91017 6.00284 5.01283 6.00284C5.11549 6.00284 5.34647 5.78895 5.69294 5.33442C5.96242 4.97347 6.45005 4.27832 7.04033 3.3559C7.97709 1.89874 8.50321 1.00305 8.79835 0.70895C9.06783 0.441581 9.22182 0.428213 9.3758 0.388108C9.54262 0.348002 9.8121 0.0271603 9.91476 0.0940024C9.99175 0.134108 9.77361 0.348002 9.68378 0.45495Z"
-                        fill="#3C3C3C"
-                      ></path>
-                      <path
-                        d="M9.14493 0.735205C9.02944 0.949099 8.51615 1.97847 7.87454 3.18162C7.15593 4.53184 6.32183 6.05583 6.14218 6.36331C5.82137 6.92478 5.19259 7.87394 5.00011 7.87394C4.80762 7.86057 4.16601 6.91141 3.85803 6.36331C3.69121 6.0692 2.84428 4.53184 2.12567 3.18162C1.48406 1.97847 0.983602 0.949099 0.855279 0.735205C0.726957 0.494573 0.778288 0.4411 1.0221 0.735205C1.39424 1.17636 2.2925 2.79394 2.2925 2.79394C2.2925 2.79394 3.83237 5.48099 4.07618 5.84194C4.30716 6.17615 4.80762 6.85794 4.98727 6.87131C5.16693 6.85794 5.66739 6.17615 5.89837 5.84194C6.14218 5.48099 7.68205 2.79394 7.68205 2.79394C7.68205 2.79394 8.58031 1.17636 8.95245 0.735205C9.22192 0.4411 9.26042 0.494573 9.14493 0.735205Z"
-                        fill="#3C3C3C"
-                      ></path>
-                    </svg>
-                  </span>
-                  Quy định hoạt động
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span class="elementor-icon-list-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                    >
-                      <path
-                        d="M9.94043 0.0137919C9.76077 -0.0664186 9.4913 0.227687 9.40147 0.267792C9.31164 0.294529 8.978 0.348002 8.67003 0.655476C8.32356 1.01642 6.11641 4.46547 5.59028 5.10716C5.30797 5.45474 5.07699 5.76221 5 5.76221C4.93584 5.76221 4.69203 5.45474 4.40972 5.10716C3.88359 4.46547 1.67644 1.01642 1.32997 0.655476C1.03483 0.348002 0.688353 0.294529 0.598527 0.267792C0.508701 0.241055 0.239226 -0.0664186 0.0595739 0.0137919C-0.0815811 0.080634 0.0724031 0.388108 0.0724031 0.388108C0.136564 0.575265 0.906504 2.46021 1.66361 4.19811C2.35655 5.77558 3.011 7.12579 3.26764 7.66053C4.28139 9.7861 4.85885 10 5 10C5.14116 10 5.70578 9.77274 6.73236 7.66053C6.989 7.12579 7.64345 5.77558 8.33639 4.19811C9.10633 2.46021 9.87626 0.575265 9.92759 0.388108C9.92759 0.388108 10.0816 0.080634 9.94043 0.0137919ZM9.68378 0.45495C9.35014 0.856002 6.96334 6.01621 6.42438 6.96537C5.87259 7.92789 5.19248 9.10431 5.01283 9.10431C4.82035 9.09095 4.14023 7.92789 3.60128 6.96537C3.06232 6.01621 0.675521 0.842634 0.341882 0.45495C0.252056 0.348002 0.0339086 0.134108 0.110902 0.0940024C0.226393 0.0271603 0.495868 0.348002 0.649855 0.388108C0.816675 0.428213 0.95783 0.441581 1.22731 0.70895C1.52245 0.989686 2.04858 1.89874 2.98533 3.3559C3.57562 4.26495 4.06324 4.97347 4.33272 5.33442C4.66636 5.78895 4.91017 6.00284 5.01283 6.00284C5.11549 6.00284 5.34647 5.78895 5.69294 5.33442C5.96242 4.97347 6.45005 4.27832 7.04033 3.3559C7.97709 1.89874 8.50321 1.00305 8.79835 0.70895C9.06783 0.441581 9.22182 0.428213 9.3758 0.388108C9.54262 0.348002 9.8121 0.0271603 9.91476 0.0940024C9.99175 0.134108 9.77361 0.348002 9.68378 0.45495Z"
-                        fill="#3C3C3C"
-                      ></path>
-                      <path
-                        d="M9.14493 0.735205C9.02944 0.949099 8.51615 1.97847 7.87454 3.18162C7.15593 4.53184 6.32183 6.05583 6.14218 6.36331C5.82137 6.92478 5.19259 7.87394 5.00011 7.87394C4.80762 7.86057 4.16601 6.91141 3.85803 6.36331C3.69121 6.0692 2.84428 4.53184 2.12567 3.18162C1.48406 1.97847 0.983602 0.949099 0.855279 0.735205C0.726957 0.494573 0.778288 0.4411 1.0221 0.735205C1.39424 1.17636 2.2925 2.79394 2.2925 2.79394C2.2925 2.79394 3.83237 5.48099 4.07618 5.84194C4.30716 6.17615 4.80762 6.85794 4.98727 6.87131C5.16693 6.85794 5.66739 6.17615 5.89837 5.84194C6.14218 5.48099 7.68205 2.79394 7.68205 2.79394C7.68205 2.79394 8.58031 1.17636 8.95245 0.735205C9.22192 0.4411 9.26042 0.494573 9.14493 0.735205Z"
-                        fill="#3C3C3C"
-                      ></path>
-                    </svg>
-                  </span>
-                  Chính sách bảo mật
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span class="elementor-icon-list-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                    >
-                      <path
-                        d="M9.94043 0.0137919C9.76077 -0.0664186 9.4913 0.227687 9.40147 0.267792C9.31164 0.294529 8.978 0.348002 8.67003 0.655476C8.32356 1.01642 6.11641 4.46547 5.59028 5.10716C5.30797 5.45474 5.07699 5.76221 5 5.76221C4.93584 5.76221 4.69203 5.45474 4.40972 5.10716C3.88359 4.46547 1.67644 1.01642 1.32997 0.655476C1.03483 0.348002 0.688353 0.294529 0.598527 0.267792C0.508701 0.241055 0.239226 -0.0664186 0.0595739 0.0137919C-0.0815811 0.080634 0.0724031 0.388108 0.0724031 0.388108C0.136564 0.575265 0.906504 2.46021 1.66361 4.19811C2.35655 5.77558 3.011 7.12579 3.26764 7.66053C4.28139 9.7861 4.85885 10 5 10C5.14116 10 5.70578 9.77274 6.73236 7.66053C6.989 7.12579 7.64345 5.77558 8.33639 4.19811C9.10633 2.46021 9.87626 0.575265 9.92759 0.388108C9.92759 0.388108 10.0816 0.080634 9.94043 0.0137919ZM9.68378 0.45495C9.35014 0.856002 6.96334 6.01621 6.42438 6.96537C5.87259 7.92789 5.19248 9.10431 5.01283 9.10431C4.82035 9.09095 4.14023 7.92789 3.60128 6.96537C3.06232 6.01621 0.675521 0.842634 0.341882 0.45495C0.252056 0.348002 0.0339086 0.134108 0.110902 0.0940024C0.226393 0.0271603 0.495868 0.348002 0.649855 0.388108C0.816675 0.428213 0.95783 0.441581 1.22731 0.70895C1.52245 0.989686 2.04858 1.89874 2.98533 3.3559C3.57562 4.26495 4.06324 4.97347 4.33272 5.33442C4.66636 5.78895 4.91017 6.00284 5.01283 6.00284C5.11549 6.00284 5.34647 5.78895 5.69294 5.33442C5.96242 4.97347 6.45005 4.27832 7.04033 3.3559C7.97709 1.89874 8.50321 1.00305 8.79835 0.70895C9.06783 0.441581 9.22182 0.428213 9.3758 0.388108C9.54262 0.348002 9.8121 0.0271603 9.91476 0.0940024C9.99175 0.134108 9.77361 0.348002 9.68378 0.45495Z"
-                        fill="#3C3C3C"
-                      ></path>
-                      <path
-                        d="M9.14493 0.735205C9.02944 0.949099 8.51615 1.97847 7.87454 3.18162C7.15593 4.53184 6.32183 6.05583 6.14218 6.36331C5.82137 6.92478 5.19259 7.87394 5.00011 7.87394C4.80762 7.86057 4.16601 6.91141 3.85803 6.36331C3.69121 6.0692 2.84428 4.53184 2.12567 3.18162C1.48406 1.97847 0.983602 0.949099 0.855279 0.735205C0.726957 0.494573 0.778288 0.4411 1.0221 0.735205C1.39424 1.17636 2.2925 2.79394 2.2925 2.79394C2.2925 2.79394 3.83237 5.48099 4.07618 5.84194C4.30716 6.17615 4.80762 6.85794 4.98727 6.87131C5.16693 6.85794 5.66739 6.17615 5.89837 5.84194C6.14218 5.48099 7.68205 2.79394 7.68205 2.79394C7.68205 2.79394 8.58031 1.17636 8.95245 0.735205C9.22192 0.4411 9.26042 0.494573 9.14493 0.735205Z"
-                        fill="#3C3C3C"
-                      ></path>
-                    </svg>
-                  </span>
-                  Bảng quyền lợi thành viên
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span class="elementor-icon-list-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                    >
-                      <path
-                        d="M9.94043 0.0137919C9.76077 -0.0664186 9.4913 0.227687 9.40147 0.267792C9.31164 0.294529 8.978 0.348002 8.67003 0.655476C8.32356 1.01642 6.11641 4.46547 5.59028 5.10716C5.30797 5.45474 5.07699 5.76221 5 5.76221C4.93584 5.76221 4.69203 5.45474 4.40972 5.10716C3.88359 4.46547 1.67644 1.01642 1.32997 0.655476C1.03483 0.348002 0.688353 0.294529 0.598527 0.267792C0.508701 0.241055 0.239226 -0.0664186 0.0595739 0.0137919C-0.0815811 0.080634 0.0724031 0.388108 0.0724031 0.388108C0.136564 0.575265 0.906504 2.46021 1.66361 4.19811C2.35655 5.77558 3.011 7.12579 3.26764 7.66053C4.28139 9.7861 4.85885 10 5 10C5.14116 10 5.70578 9.77274 6.73236 7.66053C6.989 7.12579 7.64345 5.77558 8.33639 4.19811C9.10633 2.46021 9.87626 0.575265 9.92759 0.388108C9.92759 0.388108 10.0816 0.080634 9.94043 0.0137919ZM9.68378 0.45495C9.35014 0.856002 6.96334 6.01621 6.42438 6.96537C5.87259 7.92789 5.19248 9.10431 5.01283 9.10431C4.82035 9.09095 4.14023 7.92789 3.60128 6.96537C3.06232 6.01621 0.675521 0.842634 0.341882 0.45495C0.252056 0.348002 0.0339086 0.134108 0.110902 0.0940024C0.226393 0.0271603 0.495868 0.348002 0.649855 0.388108C0.816675 0.428213 0.95783 0.441581 1.22731 0.70895C1.52245 0.989686 2.04858 1.89874 2.98533 3.3559C3.57562 4.26495 4.06324 4.97347 4.33272 5.33442C4.66636 5.78895 4.91017 6.00284 5.01283 6.00284C5.11549 6.00284 5.34647 5.78895 5.69294 5.33442C5.96242 4.97347 6.45005 4.27832 7.04033 3.3559C7.97709 1.89874 8.50321 1.00305 8.79835 0.70895C9.06783 0.441581 9.22182 0.428213 9.3758 0.388108C9.54262 0.348002 9.8121 0.0271603 9.91476 0.0940024C9.99175 0.134108 9.77361 0.348002 9.68378 0.45495Z"
-                        fill="#3C3C3C"
-                      ></path>
-                      <path
-                        d="M9.14493 0.735205C9.02944 0.949099 8.51615 1.97847 7.87454 3.18162C7.15593 4.53184 6.32183 6.05583 6.14218 6.36331C5.82137 6.92478 5.19259 7.87394 5.00011 7.87394C4.80762 7.86057 4.16601 6.91141 3.85803 6.36331C3.69121 6.0692 2.84428 4.53184 2.12567 3.18162C1.48406 1.97847 0.983602 0.949099 0.855279 0.735205C0.726957 0.494573 0.778288 0.4411 1.0221 0.735205C1.39424 1.17636 2.2925 2.79394 2.2925 2.79394C2.2925 2.79394 3.83237 5.48099 4.07618 5.84194C4.30716 6.17615 4.80762 6.85794 4.98727 6.87131C5.16693 6.85794 5.66739 6.17615 5.89837 5.84194C6.14218 5.48099 7.68205 2.79394 7.68205 2.79394C7.68205 2.79394 8.58031 1.17636 8.95245 0.735205C9.22192 0.4411 9.26042 0.494573 9.14493 0.735205Z"
-                        fill="#3C3C3C"
-                      ></path>
-                    </svg>
-                  </span>
-                  Câu hỏi thường gặp
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="lienhehotro">
-            <ul>
-              <li>
-                <a href="#">
-                  <i class="fa-solid fa-phone" style="color: #3c3c3c"></i>
-                  <span>1900 23 23 89</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i aria-hidden="true" class="fas fa-envelope"></i>
-                  <span>support.vn@vinfastauto.com</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <footer></footer>
     <!-- end start -->
+    <script src="/USER-JS/Cart.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -592,9 +246,5 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
-    <!-- Jquery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.0.js"></script>
-    <script src="js/nicesellect.js"></script>
   </body>
 </html>

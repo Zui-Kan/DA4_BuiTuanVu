@@ -13,13 +13,19 @@
     />
     <link rel="stylesheet" href="../Components/Reset.css" />
     <link rel="stylesheet" href="../Components/Colors.css" />
-    <link rel="stylesheet" href="../Components/reponsive.css" />
-    <link rel="stylesheet" href="../Components/Tag.css">
+    <link rel="stylesheet" href="../Components/Tag.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+
+    <link rel="stylesheet" href="/Components/CardCategory/CardCategory.css" />
     <link rel="stylesheet" href="../USER-CSS/Index.css" />
     <link rel="stylesheet" href="../Components/CardProduct/CardProduct.css" />
-    <link rel="stylesheet" href="/USER-CSS/Login_Signup.css" />
   </head>
-  <body ng-app="WebBanXe" ng-controller="User_Index">
+
+  <body style="background: #f2f1f6">
     <!-- start header -->
     <header>
       <div class="header-logo">
@@ -113,8 +119,9 @@
       </div>
     </header>
     <!-- end header -->
+
     <!-- start slider -->
-    <div class="slider">
+    <div class="slider" style="background: #ffff">
       <div
         id="carouselExampleIndicators"
         class="carousel slide"
@@ -186,710 +193,806 @@
       </div>
     </div>
     <!-- end slider -->
+
     <main>
-        <!-- start list card car -->
+      <!-- Start Category -->
+      <div class="Category">
         <div class="row">
-          <div class="col-3">
-            <!-- start filters -->
-            <div class="filters">
-              <div class="filter-title blueDark-c">BỘ LỌC</div>
-              <!-- filter 1 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/brand.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Hãng xe, dòng xe</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-              <div class="filter-brands" style="  display: none;">
-              <div class="row filter-sub">
-                <div class="col-1">
-                  <label class="custom-checkbox">
-                    <input name="dummy" type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="col blueDark-c">Audi</div>
-              </div>
-              <div class="row filter-sub">
-                <div class="col-1">
-                  <label class="custom-checkbox">
-                    <input name="dummy" type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="col blueDark-c">Audi</div>
-              </div><div class="row filter-sub">
-                <div class="col-1">
-                  <label class="custom-checkbox">
-                    <input name="dummy" type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="col blueDark-c">Audi</div>
-              </div><div class="row filter-sub">
-                <div class="col-1">
-                  <label class="custom-checkbox">
-                    <input name="dummy" type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="col blueDark-c">Audi</div>
-              </div><div class="row filter-sub">
-                <div class="col-1">
-                  <label class="custom-checkbox">
-                    <input name="dummy" type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="col blueDark-c">Audi</div>
-              </div><div class="row filter-sub">
-                <div class="col-1">
-                  <label class="custom-checkbox">
-                    <input name="dummy" type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="col blueDark-c">Audi</div>
-              </div><div class="row filter-sub">
-                <div class="col-1">
-                  <label class="custom-checkbox">
-                    <input name="dummy" type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="col blueDark-c">Audi</div>
-              </div>
-
+          <div class="col news-title blueDark-c">HÃNG XE</div>
+        </div>
+        <div class="category-cards">
+          <!-- category card 1 -->
+          <a href="#" class="category-card">
+            <div class="img-cate">
+              <img src="/IMAGE/logo_vinfast.png" alt="" />
             </div>
+            <div class="name-category">Vinfast</div>
+          </a>
+          <!-- end card -->
 
-              <!-- filter 2 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/location.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Địa điểm</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-              <div class="filter-location" style="display: none;">
-                <!-- ------ -->
-                <div class="row filter-sub">
-                  <div class="col-1">
-                    <label class="custom-checkbox">
-                      <input name="dummy" type="checkbox">
-                      <span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <div class="col blueDark-c">Hà Nội</div>
-                </div>
-                  <!-- ------ -->
-                  <div class="row filter-sub">
-                    <div class="col-1">
-                      <label class="custom-checkbox">
-                        <input name="dummy" type="checkbox">
-                        <span class="checkmark"></span>
-                      </label>
-                    </div>
-                    <div class="col blueDark-c">Hà Nội</div>
-                  </div>
-                    <!-- ------ -->
-                <div class="row filter-sub">
-                  <div class="col-1">
-                    <label class="custom-checkbox">
-                      <input name="dummy" type="checkbox">
-                      <span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <div class="col blueDark-c">Hà Nội</div>
-                </div>
-                  <!-- ------ -->
-                  <div class="row filter-sub">
-                    <div class="col-1">
-                      <label class="custom-checkbox">
-                        <input name="dummy" type="checkbox">
-                        <span class="checkmark"></span>
-                      </label>
-                    </div>
-                    <div class="col blueDark-c">Hà Nội</div>
-                  </div>
-              </div>
-              <!-- filter 3 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/price.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Giá</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-              <!-- filter 4 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/year.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Năm sản xuất</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-              <!-- filter 5 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/mileage.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Số KM</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-              <!-- filter 6 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/bodyType.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Kiểu dáng</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-              <!-- filter 7 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/fuel.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Nhiên liệu</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-              <!-- filter 8 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/transmission.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Hộp số</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-              <!-- filter 9 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/color.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Màu sắc</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-              <!-- filter 10 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/seatCapacity.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Số chỗ ngồi</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-              
-              <!-- filter 11 -->
-              <div class="row filter-row">
-                <div class="col-1">
-                  <img
-                    src="https://www.carmudi.vn/images/xe-oto/svg/madeBy.svg"
-                    alt=""
-                  />
-                </div>
-                <div class="col-9 blueDark-c">Đăng bởi</div>
-                <div class="col">
-                  <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
-                </div>
-              </div>
-
-
-            </div>
-            <!-- end filters -->
-
-
-            <div class="advertise">
-              
-            </div>
-          </div>
-          <div class="col-9">
-            <div class="timkiems">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20px"
-                height="20px"
-                viewBox="0 0 30 30"
-              >
-                <path
-                  d="M13 3C7.4889971 3 3 7.4889971 3 13C3 18.511003 7.4889971 23 13 23C15.396508 23 17.597385 22.148986 19.322266 20.736328L25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969L20.736328 19.322266C22.148986 17.597385 23 15.396508 23 13C23 7.4889971 18.511003 3 13 3 z M 13 5C17.430123 5 21 8.5698774 21 13C21 17.430123 17.430123 21 13 21C8.5698774 21 5 17.430123 5 13C5 8.5698774 8.5698774 5 13 5 z"
-                  fill="#2D2B2D"
-                />
-              </svg>
-              <input
-                type="text"
-                name="timkiem"
-                id="edt_timkiem_trangchu_muaxe"
-                placeholder="Tìm kiếm theo tên xe"
+          <!-- category card 1 -->
+          <div class="category-card">
+            <div class="img-cate">
+              <img
+                src="https://1000logos.net/wp-content/uploads/2021/03/Ford-logo-768x432.png"
+                alt=""
               />
             </div>
-
-            <!-- start list card car -->
-            <div class="row">
-
-              <!-- start card car 1 -->
-              <div class="col-4">
-                <a href="#" class="card card_product">
-                  <div class="hinhanh-card">
-                    <img class="default-img" src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg" alt="no">
-                    <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-                  </div>
-                  
-                  <div id="tieude-card">
-                    🚘Mercedes E200 Model 2020 siêu lướt .
-                  </div>
-                  <div class="thongtinxe-card">
-                    <div class="doixe_thongtinxe-card thongtinxe-card_chung">
-                      <img src="../IMAGE/icon_card_nam.svg" alt="">
-                      <div id="doixe_thongtinxe-card"></div>
-                      2023
-                    </div>
-                    <div class="thongtinxe-card_chung">
-                      <img src="../IMAGE/icon_card_xemoi.svg" alt="">
-                      <div id="hinhthuc_thongtinxe-card"></div>
-                      Xe mới
-                    </div>
-                    <div class="thongtinxe-card_chung">
-                      <img src="../IMAGE/icon_card_xang.svg" alt="">
-                      <div id="nhienlieu_thongtinxe-card">Xăng</div>
-                    </div>
-                    <div class="thongtinxe-card_chung">
-                      <img src="../IMAGE/icon_card_tudong.svg" alt="">
-                      <div id="hopso_thongtinxe-card">Tự động</div>
-                    </div>
-                  </div>
-                  <div id="giaxe-card">1 tỷ 289 triệu</div>
-
-                  <div class="chucnang-card">
-                    <div class="row">
-                      <div class="col"><button type="submit" class="chucnang-card_themgiohang">Thêm giỏ hàng</button></div>
-                      <div class="col" > <button type="submit" class="chucnang-card_muangay">Mua ngay</button></div>
-                    </div>
-                  </div>
-
-                </a>
-              </div>
-
-            <!-- start card car 1 -->
-            <div class="col-4">
-              <a href="#" class="card card_product">
-                <div class="hinhanh-card">
-                  <img class="default-img" src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg" alt="no">
-                  <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-                </div>
-                
-                <div id="tieude-card">
-                  🚘Mercedes E200 Model 2020 siêu lướt .
-                </div>
-                <div class="thongtinxe-card">
-                  <div class="doixe_thongtinxe-card thongtinxe-card_chung">
-                    <img src="../IMAGE/icon_card_nam.svg" alt="">
-                    <div id="doixe_thongtinxe-card"></div>
-                    2023
-                  </div>
-                  <div class="thongtinxe-card_chung">
-                    <img src="../IMAGE/icon_card_xemoi.svg" alt="">
-                    <div id="hinhthuc_thongtinxe-card"></div>
-                    Xe mới
-                  </div>
-                  <div class="thongtinxe-card_chung">
-                    <img src="../IMAGE/icon_card_xang.svg" alt="">
-                    <div id="nhienlieu_thongtinxe-card">Xăng</div>
-                  </div>
-                  <div class="thongtinxe-card_chung">
-                    <img src="../IMAGE/icon_card_tudong.svg" alt="">
-                    <div id="hopso_thongtinxe-card">Tự động</div>
-                  </div>
-                </div>
-                <div id="giaxe-card">1 tỷ 289 triệu</div>
-
-                <div class="chucnang-card">
-                  <div class="row">
-                    <div class="col"><button type="submit" class="chucnang-card_themgiohang">Thêm giỏ hàng</button></div>
-                    <div class="col" > <button type="submit" class="chucnang-card_muangay">Mua ngay</button></div>
-                  </div>
-                </div>
-
-              </a>
-            </div>
-
-             <!-- start card car 1 -->
-             <div class="col-4">
-              <a href="#" class="card card_product">
-                <div class="hinhanh-card">
-                  <img class="default-img" src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg" alt="no">
-                  <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-                </div>
-                
-                <div id="tieude-card">
-                  🚘Mercedes E200 Model 2020 siêu lướt .
-                </div>
-                <div class="thongtinxe-card">
-                  <div class="doixe_thongtinxe-card thongtinxe-card_chung">
-                    <img src="../IMAGE/icon_card_nam.svg" alt="">
-                    <div id="doixe_thongtinxe-card"></div>
-                    2023
-                  </div>
-                  <div class="thongtinxe-card_chung">
-                    <img src="../IMAGE/icon_card_xemoi.svg" alt="">
-                    <div id="hinhthuc_thongtinxe-card"></div>
-                    Xe mới
-                  </div>
-                  <div class="thongtinxe-card_chung">
-                    <img src="../IMAGE/icon_card_xang.svg" alt="">
-                    <div id="nhienlieu_thongtinxe-card">Xăng</div>
-                  </div>
-                  <div class="thongtinxe-card_chung">
-                    <img src="../IMAGE/icon_card_tudong.svg" alt="">
-                    <div id="hopso_thongtinxe-card">Tự động</div>
-                  </div>
-                </div>
-                <div id="giaxe-card">1 tỷ 289 triệu</div>
-
-                <div class="chucnang-card">
-                  <div class="row">
-                    <div class="col"><button type="submit" class="chucnang-card_themgiohang">Thêm giỏ hàng</button></div>
-                    <div class="col" > <button type="submit" class="chucnang-card_muangay">Mua ngay</button></div>
-                  </div>
-                </div>
-
-              </a>
-            </div>
- <!-- start card car 1 -->
- <div class="col-4">
-  <a href="#" class="card card_product">
-    <div class="hinhanh-card">
-      <img class="default-img" src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg" alt="no">
-      <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-    </div>
-    
-    <div id="tieude-card">
-      🚘Mercedes E200 Model 2020 siêu lướt .
-    </div>
-    <div class="thongtinxe-card">
-      <div class="doixe_thongtinxe-card thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_nam.svg" alt="">
-        <div id="doixe_thongtinxe-card"></div>
-        2023
-      </div>
-      <div class="thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_xemoi.svg" alt="">
-        <div id="hinhthuc_thongtinxe-card"></div>
-        Xe mới
-      </div>
-      <div class="thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_xang.svg" alt="">
-        <div id="nhienlieu_thongtinxe-card">Xăng</div>
-      </div>
-      <div class="thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_tudong.svg" alt="">
-        <div id="hopso_thongtinxe-card">Tự động</div>
-      </div>
-    </div>
-    <div id="giaxe-card">1 tỷ 289 triệu</div>
-
-    <div class="chucnang-card">
-      <div class="row">
-        <div class="col"><button type="submit" class="chucnang-card_themgiohang">Thêm giỏ hàng</button></div>
-        <div class="col" > <button type="submit" class="chucnang-card_muangay">Mua ngay</button></div>
-      </div>
-    </div>
-
-  </a>
-</div>
- <!-- start card car 1 -->
- <div class="col-4">
-  <a href="#" class="card card_product">
-    <div class="hinhanh-card">
-      <img class="default-img" src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg" alt="no">
-      <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-    </div>
-    
-    <div id="tieude-card">
-      🚘Mercedes E200 Model 2020 siêu lướt .
-    </div>
-    <div class="thongtinxe-card">
-      <div class="doixe_thongtinxe-card thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_nam.svg" alt="">
-        <div id="doixe_thongtinxe-card"></div>
-        2023
-      </div>
-      <div class="thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_xemoi.svg" alt="">
-        <div id="hinhthuc_thongtinxe-card"></div>
-        Xe mới
-      </div>
-      <div class="thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_xang.svg" alt="">
-        <div id="nhienlieu_thongtinxe-card">Xăng</div>
-      </div>
-      <div class="thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_tudong.svg" alt="">
-        <div id="hopso_thongtinxe-card">Tự động</div>
-      </div>
-    </div>
-    <div id="giaxe-card">1 tỷ 289 triệu</div>
-
-    <div class="chucnang-card">
-      <div class="row">
-        <div class="col"><button type="submit" class="chucnang-card_themgiohang">Thêm giỏ hàng</button></div>
-        <div class="col" > <button type="submit" class="chucnang-card_muangay">Mua ngay</button></div>
-      </div>
-    </div>
-
-  </a>
-</div>
- <!-- start card car 1 -->
- <div class="col-4">
-  <a href="#" class="card card_product">
-    <div class="hinhanh-card">
-      <img class="default-img" src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg" alt="no">
-      <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-    </div>
-    
-    <div id="tieude-card">
-      🚘Mercedes E200 Model 2020 siêu lướt .
-    </div>
-    <div class="thongtinxe-card">
-      <div class="doixe_thongtinxe-card thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_nam.svg" alt="">
-        <div id="doixe_thongtinxe-card"></div>
-        2023
-      </div>
-      <div class="thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_xemoi.svg" alt="">
-        <div id="hinhthuc_thongtinxe-card"></div>
-        Xe mới
-      </div>
-      <div class="thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_xang.svg" alt="">
-        <div id="nhienlieu_thongtinxe-card">Xăng</div>
-      </div>
-      <div class="thongtinxe-card_chung">
-        <img src="../IMAGE/icon_card_tudong.svg" alt="">
-        <div id="hopso_thongtinxe-card">Tự động</div>
-      </div>
-    </div>
-    <div id="giaxe-card">1 tỷ 289 triệu</div>
-
-    <div class="chucnang-card">
-      <div class="row">
-        <div class="col"><button type="submit" class="chucnang-card_themgiohang">Thêm giỏ hàng</button></div>
-        <div class="col" > <button type="submit" class="chucnang-card_muangay">Mua ngay</button></div>
-      </div>
-    </div>
-
-  </a>
-</div>
-
-
+            <div class="name-category">Ford</div>
           </div>
-          <!-- end list card car -->
-
-
-
+          <!-- end card -->
+          <!-- category card 1 -->
+          <div class="category-card">
+            <div class="img-cate">
+              <img
+                src="https://1000logos.net/wp-content/uploads/2022/01/logo-GMC-768x489.png"
+                alt=""
+              />
             </div>
+            <div class="name-category">GMC</div>
+          </div>
+          <!-- end card -->
+          <!-- category card 1 -->
+          <div class="category-card">
+            <div class="img-cate">
+              <img
+                src="https://static.wixstatic.com/media/9d8ed5_2266182b65e74f40a1c6bbb587f8aee6~mv2.png/v1/fill/w_750,h_500,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/9d8ed5_2266182b65e74f40a1c6bbb587f8aee6~mv2.png"
+                alt=""
+              />
+            </div>
+            <div class="name-category">Mercedes-Benz</div>
+          </div>
+          <!-- end card -->
+          <!-- category card 1 -->
+          <div class="category-card">
+            <div class="img-cate">
+              <img
+                src="https://static.wixstatic.com/media/9d8ed5_27ef1712db9f472b843af85e4884805e~mv2.png/v1/fill/w_750,h_500,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/9d8ed5_27ef1712db9f472b843af85e4884805e~mv2.png"
+                alt=""
+              />
+            </div>
+            <div class="name-category">Honda</div>
+          </div>
+          <!-- end card -->
+          <!-- category card 1 -->
+          <div class="category-card">
+            <div class="img-cate">
+              <img
+                src="https://1000logos.net/wp-content/uploads/2023/03/Ram-Logo-768x432.png"
+                alt=""
+              />
+            </div>
+            <div class="name-category">RAM</div>
+          </div>
+          <!-- end card -->
+          <!-- category card 1 -->
+          <div class="category-card">
+            <div class="img-cate">
+              <img
+                src="https://static.wixstatic.com/media/9d8ed5_c6b5a0ddd7c54482a478871df5b4ca9a~mv2.png/v1/fill/w_750,h_500,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/9d8ed5_c6b5a0ddd7c54482a478871df5b4ca9a~mv2.png"
+                alt=""
+              />
+            </div>
+            <div class="name-category">Hyundai</div>
+          </div>
+          <!-- end card -->
+          <!-- category card 1 -->
+          <div class="category-card">
+            <div class="img-cate">
+              <img
+                src="https://static.wixstatic.com/media/9d8ed5_7fb456bd71b44985b883d6b9e5fab95a~mv2.png/v1/fill/w_750,h_500,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/9d8ed5_7fb456bd71b44985b883d6b9e5fab95a~mv2.png"
+                alt=""
+              />
+            </div>
+            <div class="name-category">KIA</div>
+          </div>
+          <!-- end card -->
+          <!-- category card 1 -->
+          <div class="category-card">
+            <div class="img-cate">
+              <img
+                src="https://static.wixstatic.com/media/9d8ed5_120ceb6a40484e11a7bc7ed6692e13d7~mv2.png/v1/fill/w_750,h_500,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/9d8ed5_120ceb6a40484e11a7bc7ed6692e13d7~mv2.png"
+                alt=""
+              />
+            </div>
+            <div class="name-category">Nissan</div>
+          </div>
+          <!-- end card -->
+          <!-- category card 1 -->
+          <div class="category-card">
+            <div class="img-cate">
+              <img
+                src="https://static.wixstatic.com/media/9d8ed5_1aa382d0f998498a80227c9f87c05183~mv2.jpg/v1/fill/w_750,h_500,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/9d8ed5_1aa382d0f998498a80227c9f87c05183~mv2.jpg"
+                alt=""
+              />
+            </div>
+            <div class="name-category">Toyota</div>
+          </div>
+          <!-- end card -->
+        </div>
+      </div>
+      <!-- End Category -->
 
-            <div class="news">
-              <div class="row">
-                <div class="col news-title blueDark-c">TIN TỨC</div>
-                <hr>
+      <!-- start list card car -->
+      <div class="listCar">
+        <div class="row">
+          <div class="col news-title blueDark-c">Top tìm kiếm</div>
+        </div>
+
+        <div class="row">
+          <div class="col-3">
+            <a href="#" class="card card_product">
+              <div class="hinhanh-card">
+                <img
+                  class="default-img"
+                  src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg"
+                  alt="no"
+                />
               </div>
-            <div class="row">
-                <div class="col-4">
-                  <div class="card">
-                    <div class="khunganh">
-                      <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="card-image">
-                    </div>
-          
-                    <div class="card-content">
-                      <h3 class="card-title">
-                        <a href="">Công bố giải tuần cuối (từ 24/4 đến 02/5) dành cho Hội nhóm dự
-                          thi Khoảnh khắc VinFast</a>
-                      </h3>
-                      <div class="card-post">
-                        <p>
-                          Trong tuần cuối của cuộc thi Khoảnh khắc đáng nhớ cùng VinFast,
-                          hội chủ xe Fadil Hải Phòng tiếp tục dẫn đầu đường đua dành cho
-                          hội nhóm tập thể. Sau khi đánh giá, tổng kết các bài dự thi, Ban
-                          tổ chức công bố Hội nhóm có nhiều bài dự thi hợp lệ nhất tuần
-                          qua là: Hội Fadil Hải Phòng Đây là lần thứ ba liên tiếp, Hội
-                          Fadil Hải Phòng đoạt giải thường tuần. Ban tổ chức xin chúc mừng
-                          Hội Fadil Hải Phòng và sẽ trực tiếp liên hệ với đại diện hội
-                          đoạt giải để hướng dẫn các bước nhận giải tiếp theo. Cuộc thi
-                          Khoảnh khắc đáng nhớ cùng VinFast sẽ công bố hội nhóm nào dành
-                          giải tập thể chung cuộc trong lễ trao giải dự kiến tổ chức vào
-                          đầu tháng 5 này tại Hà Nội. Theo thể lệ, các hội nhóm chủ xe
-                          VinFast có nhiều bài dự thi hợp lệ nhất trong mỗi tuần sẽ thắng
-                          giải tập thể tuần trị giá 10.000.000 đồng (Hội Fadil Hải Phòng
-                          đoạt giải cả 3 tuần), và chung cuộc cả tháng sẽ thắng giải tập
-                          thể trị giá 20.000.000 đồng. Cuộc thi “Khoảnh khắc
-                        </p>
-                      </div>
-                      <div class="card-footer">
-                        <div class="card-user">
-                          <a href="#">
-                            <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-                            <p>Admin</p></a>
-                          <div class="card-time">5 giờ, 15 phút trước</div>
-                          <div class="card-comment">
-                            <img src="../IMAGE/icon_comment.tintuc.svg" alt="">
-                            <span>60</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="card">
-                    <div class="khunganh">
-                      <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="card-image">
-                    </div>
-          
-                    <div class="card-content">
-                      <h3 class="card-title">
-                        <a href="">Công bố giải tuần cuối (từ 24/4 đến 02/5) dành cho Hội nhóm dự
-                          thi Khoảnh khắc VinFast</a>
-                      </h3>
-                      <div class="card-post">
-                        <p>
-                          Trong tuần cuối của cuộc thi Khoảnh khắc đáng nhớ cùng VinFast,
-                          hội chủ xe Fadil Hải Phòng tiếp tục dẫn đầu đường đua dành cho
-                          hội nhóm tập thể. Sau khi đánh giá, tổng kết các bài dự thi, Ban
-                          tổ chức công bố Hội nhóm có nhiều bài dự thi hợp lệ nhất tuần
-                          qua là: Hội Fadil Hải Phòng Đây là lần thứ ba liên tiếp, Hội
-                          Fadil Hải Phòng đoạt giải thường tuần. Ban tổ chức xin chúc mừng
-                          Hội Fadil Hải Phòng và sẽ trực tiếp liên hệ với đại diện hội
-                          đoạt giải để hướng dẫn các bước nhận giải tiếp theo. Cuộc thi
-                          Khoảnh khắc đáng nhớ cùng VinFast sẽ công bố hội nhóm nào dành
-                          giải tập thể chung cuộc trong lễ trao giải dự kiến tổ chức vào
-                          đầu tháng 5 này tại Hà Nội. Theo thể lệ, các hội nhóm chủ xe
-                          VinFast có nhiều bài dự thi hợp lệ nhất trong mỗi tuần sẽ thắng
-                          giải tập thể tuần trị giá 10.000.000 đồng (Hội Fadil Hải Phòng
-                          đoạt giải cả 3 tuần), và chung cuộc cả tháng sẽ thắng giải tập
-                          thể trị giá 20.000.000 đồng. Cuộc thi “Khoảnh khắc
-                        </p>
-                      </div>
-                      <div class="card-footer">
-                        <div class="card-user">
-                          <a href="#">
-                            <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-                            <p>Admin</p></a>
-                          <div class="card-time">5 giờ, 15 phút trước</div>
-                          <div class="card-comment">
-                            <img src="../IMAGE/icon_comment.tintuc.svg" alt="">
-                            <span>60</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="col-4">
-                  <div class="card">
-                    <div class="khunganh">
-                      <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="card-image">
-                    </div>
-          
-                    <div class="card-content">
-                      <h3 class="card-title">
-                        <a href="">Công bố giải tuần cuối (từ 24/4 đến 02/5) dành cho Hội nhóm dự
-                          thi Khoảnh khắc VinFast</a>
-                      </h3>
-                      <div class="card-post">
-                        <p>
-                          Trong tuần cuối của cuộc thi Khoảnh khắc đáng nhớ cùng VinFast,
-                          hội chủ xe Fadil Hải Phòng tiếp tục dẫn đầu đường đua dành cho
-                          hội nhóm tập thể. Sau khi đánh giá, tổng kết các bài dự thi, Ban
-                          tổ chức công bố Hội nhóm có nhiều bài dự thi hợp lệ nhất tuần
-                          qua là: Hội Fadil Hải Phòng Đây là lần thứ ba liên tiếp, Hội
-                          Fadil Hải Phòng đoạt giải thường tuần. Ban tổ chức xin chúc mừng
-                          Hội Fadil Hải Phòng và sẽ trực tiếp liên hệ với đại diện hội
-                          đoạt giải để hướng dẫn các bước nhận giải tiếp theo. Cuộc thi
-                          Khoảnh khắc đáng nhớ cùng VinFast sẽ công bố hội nhóm nào dành
-                          giải tập thể chung cuộc trong lễ trao giải dự kiến tổ chức vào
-                          đầu tháng 5 này tại Hà Nội. Theo thể lệ, các hội nhóm chủ xe
-                          VinFast có nhiều bài dự thi hợp lệ nhất trong mỗi tuần sẽ thắng
-                          giải tập thể tuần trị giá 10.000.000 đồng (Hội Fadil Hải Phòng
-                          đoạt giải cả 3 tuần), và chung cuộc cả tháng sẽ thắng giải tập
-                          thể trị giá 20.000.000 đồng. Cuộc thi “Khoảnh khắc
-                        </p>
-                      </div>
-                      <div class="card-footer">
-                        <div class="card-user">
-                          <a href="#">
-                            <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-                            <p>Admin</p></a>
-                          <div class="card-time">5 giờ, 15 phút trước</div>
-                          <div class="card-comment">
-                            <img src="../IMAGE/icon_comment.tintuc.svg" alt="">
-                            <span>60</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
+              <div class="tieude-card">
+                🚘Mercedes E200 Model 2020 siêu lướt .
+              </div>
+              <div class="thongtinxe-card">
+                <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_nam.svg" alt="" />
+                  <div id="doixe_thongtinxe-card"></div>
+                  2023
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xemoi.svg" alt="" />
+                  <div id="hinhthuc_thongtinxe-card"></div>
+                  Xe mới
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xang.svg" alt="" />
+                  <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_tudong.svg" alt="" />
+                  <div id="hopso_thongtinxe-card">Tự động</div>
+                </div>
+              </div>
+              <div class="giaxe-card">1 tỷ 289 triệu</div>
+
+              <div class="chucnang-card">
+                <div class="row">
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_themgiohang">
+                      Thêm giỏ hàng
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_muangay">
+                      Mua ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-3">
+            <a href="#" class="card card_product">
+              <div class="hinhanh-card">
+                <img
+                  class="default-img"
+                  src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg"
+                  alt="no"
+                />
+              </div>
+
+              <div class="tieude-card">
+                🚘Mercedes E200 Model 2020 siêu lướt .
+              </div>
+              <div class="thongtinxe-card">
+                <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_nam.svg" alt="" />
+                  <div id="doixe_thongtinxe-card"></div>
+                  2023
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xemoi.svg" alt="" />
+                  <div id="hinhthuc_thongtinxe-card"></div>
+                  Xe mới
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xang.svg" alt="" />
+                  <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_tudong.svg" alt="" />
+                  <div id="hopso_thongtinxe-card">Tự động</div>
+                </div>
+              </div>
+              <div class="giaxe-card">1 tỷ 289 triệu</div>
+
+              <div class="chucnang-card">
+                <div class="row">
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_themgiohang">
+                      Thêm giỏ hàng
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_muangay">
+                      Mua ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-3">
+            <a href="#" class="card card_product">
+              <div class="hinhanh-card">
+                <img
+                  class="default-img"
+                  src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg"
+                  alt="no"
+                />
+              </div>
+
+              <div class="tieude-card">
+                🚘Mercedes E200 Model 2020 siêu lướt .
+              </div>
+              <div class="thongtinxe-card">
+                <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_nam.svg" alt="" />
+                  <div id="doixe_thongtinxe-card"></div>
+                  2023
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xemoi.svg" alt="" />
+                  <div id="hinhthuc_thongtinxe-card"></div>
+                  Xe mới
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xang.svg" alt="" />
+                  <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_tudong.svg" alt="" />
+                  <div id="hopso_thongtinxe-card">Tự động</div>
+                </div>
+              </div>
+              <div class="giaxe-card">1 tỷ 289 triệu</div>
+
+              <div class="chucnang-card">
+                <div class="row">
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_themgiohang">
+                      Thêm giỏ hàng
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_muangay">
+                      Mua ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-3">
+            <a href="#" class="card card_product">
+              <div class="hinhanh-card">
+                <img
+                  class="default-img"
+                  src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg"
+                  alt="no"
+                />
+              </div>
+
+              <div class="tieude-card">
+                🚘Mercedes E200 Model 2020 siêu lướt .
+              </div>
+              <div class="thongtinxe-card">
+                <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_nam.svg" alt="" />
+                  <div id="doixe_thongtinxe-card"></div>
+                  2023
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xemoi.svg" alt="" />
+                  <div id="hinhthuc_thongtinxe-card"></div>
+                  Xe mới
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xang.svg" alt="" />
+                  <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_tudong.svg" alt="" />
+                  <div id="hopso_thongtinxe-card">Tự động</div>
+                </div>
+              </div>
+              <div class="giaxe-card">1 tỷ 289 triệu</div>
+
+              <div class="chucnang-card">
+                <div class="row">
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_themgiohang">
+                      Thêm giỏ hàng
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_muangay">
+                      Mua ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="index-abs_toptimkiem">
+          <div class="abs_toptimkiem-khung">
+            <a href="#">
+              <img src="/IMAGE/oto/1.jpg" alt="" />
+            </a>
+          </div>
+
+          <div class="abs_toptimkiem-khung">
+            <a href="#">
+              <img src="/IMAGE/oto/1.jpg" alt="" />
+            </a>
+          </div>
+
+          <div class="abs_toptimkiem-khung">
+            <a href="#">
+              <img src="/IMAGE/oto/1.jpg" alt="" />
+            </a>
+          </div>
+
+          <div class="abs_toptimkiem-khung">
+            <a href="#">
+              <img src="/IMAGE/oto/1.jpg" alt="" />
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- end list card car -->
+
+      <div class="news">
+        <div class="row">
+          <div class="col news-title blueDark-c">TIN TỨC</div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="card">
+              <div class="khunganh">
+                <img
+                  src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt=""
+                  class="card-image"
+                />
+              </div>
+
+              <div class="card-content">
+                <h3 class="card-title">
+                  <a href=""
+                    >Công bố giải tuần cuối (từ 24/4 đến 02/5) dành cho Hội nhóm
+                    dự thi Khoảnh khắc VinFast</a
+                  >
+                </h3>
+                <div class="card-post">
+                  <p>
+                    Trong tuần cuối của cuộc thi Khoảnh khắc đáng nhớ cùng
+                    VinFast, hội chủ xe Fadil Hải Phòng tiếp tục dẫn đầu đường
+                    đua dành cho hội nhóm tập thể. Sau khi đánh giá, tổng kết
+                    các bài dự thi, Ban tổ chức công bố Hội nhóm có nhiều bài dự
+                    thi hợp lệ nhất tuần qua là: Hội Fadil Hải Phòng Đây là lần
+                    thứ ba liên tiếp, Hội Fadil Hải Phòng đoạt giải thường tuần.
+                    Ban tổ chức xin chúc mừng Hội Fadil Hải Phòng và sẽ trực
+                    tiếp liên hệ với đại diện hội đoạt giải để hướng dẫn các
+                    bước nhận giải tiếp theo. Cuộc thi Khoảnh khắc đáng nhớ cùng
+                    VinFast sẽ công bố hội nhóm nào dành giải tập thể chung cuộc
+                    trong lễ trao giải dự kiến tổ chức vào đầu tháng 5 này tại
+                    Hà Nội. Theo thể lệ, các hội nhóm chủ xe VinFast có nhiều
+                    bài dự thi hợp lệ nhất trong mỗi tuần sẽ thắng giải tập thể
+                    tuần trị giá 10.000.000 đồng (Hội Fadil Hải Phòng đoạt giải
+                    cả 3 tuần), và chung cuộc cả tháng sẽ thắng giải tập thể trị
+                    giá 20.000.000 đồng. Cuộc thi “Khoảnh khắc
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <div class="card-user">
+                    <a href="#">
+                      <img
+                        src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt=""
+                      />
+                      <p>Admin</p></a
+                    >
+                    <div class="card-time">5 giờ, 15 phút trước</div>
+                    <div class="card-comment">
+                      <img src="../IMAGE/icon_comment.tintuc.svg" alt="" />
+                      <span>60</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="khunganh">
+                <img
+                  src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt=""
+                  class="card-image"
+                />
+              </div>
 
+              <div class="card-content">
+                <h3 class="card-title">
+                  <a href=""
+                    >Công bố giải tuần cuối (từ 24/4 đến 02/5) dành cho Hội nhóm
+                    dự thi Khoảnh khắc VinFast</a
+                  >
+                </h3>
+                <div class="card-post">
+                  <p>
+                    Trong tuần cuối của cuộc thi Khoảnh khắc đáng nhớ cùng
+                    VinFast, hội chủ xe Fadil Hải Phòng tiếp tục dẫn đầu đường
+                    đua dành cho hội nhóm tập thể. Sau khi đánh giá, tổng kết
+                    các bài dự thi, Ban tổ chức công bố Hội nhóm có nhiều bài dự
+                    thi hợp lệ nhất tuần qua là: Hội Fadil Hải Phòng Đây là lần
+                    thứ ba liên tiếp, Hội Fadil Hải Phòng đoạt giải thường tuần.
+                    Ban tổ chức xin chúc mừng Hội Fadil Hải Phòng và sẽ trực
+                    tiếp liên hệ với đại diện hội đoạt giải để hướng dẫn các
+                    bước nhận giải tiếp theo. Cuộc thi Khoảnh khắc đáng nhớ cùng
+                    VinFast sẽ công bố hội nhóm nào dành giải tập thể chung cuộc
+                    trong lễ trao giải dự kiến tổ chức vào đầu tháng 5 này tại
+                    Hà Nội. Theo thể lệ, các hội nhóm chủ xe VinFast có nhiều
+                    bài dự thi hợp lệ nhất trong mỗi tuần sẽ thắng giải tập thể
+                    tuần trị giá 10.000.000 đồng (Hội Fadil Hải Phòng đoạt giải
+                    cả 3 tuần), và chung cuộc cả tháng sẽ thắng giải tập thể trị
+                    giá 20.000.000 đồng. Cuộc thi “Khoảnh khắc
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <div class="card-user">
+                    <a href="#">
+                      <img
+                        src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt=""
+                      />
+                      <p>Admin</p></a
+                    >
+                    <div class="card-time">5 giờ, 15 phút trước</div>
+                    <div class="card-comment">
+                      <img src="../IMAGE/icon_comment.tintuc.svg" alt="" />
+                      <span>60</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div class="col-4">
+            <div class="card">
+              <div class="khunganh">
+                <img
+                  src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt=""
+                  class="card-image"
+                />
+              </div>
 
-    
+              <div class="card-content">
+                <h3 class="card-title">
+                  <a href=""
+                    >Công bố giải tuần cuối (từ 24/4 đến 02/5) dành cho Hội nhóm
+                    dự thi Khoảnh khắc VinFast</a
+                  >
+                </h3>
+                <div class="card-post">
+                  <p>
+                    Trong tuần cuối của cuộc thi Khoảnh khắc đáng nhớ cùng
+                    VinFast, hội chủ xe Fadil Hải Phòng tiếp tục dẫn đầu đường
+                    đua dành cho hội nhóm tập thể. Sau khi đánh giá, tổng kết
+                    các bài dự thi, Ban tổ chức công bố Hội nhóm có nhiều bài dự
+                    thi hợp lệ nhất tuần qua là: Hội Fadil Hải Phòng Đây là lần
+                    thứ ba liên tiếp, Hội Fadil Hải Phòng đoạt giải thường tuần.
+                    Ban tổ chức xin chúc mừng Hội Fadil Hải Phòng và sẽ trực
+                    tiếp liên hệ với đại diện hội đoạt giải để hướng dẫn các
+                    bước nhận giải tiếp theo. Cuộc thi Khoảnh khắc đáng nhớ cùng
+                    VinFast sẽ công bố hội nhóm nào dành giải tập thể chung cuộc
+                    trong lễ trao giải dự kiến tổ chức vào đầu tháng 5 này tại
+                    Hà Nội. Theo thể lệ, các hội nhóm chủ xe VinFast có nhiều
+                    bài dự thi hợp lệ nhất trong mỗi tuần sẽ thắng giải tập thể
+                    tuần trị giá 10.000.000 đồng (Hội Fadil Hải Phòng đoạt giải
+                    cả 3 tuần), và chung cuộc cả tháng sẽ thắng giải tập thể trị
+                    giá 20.000.000 đồng. Cuộc thi “Khoảnh khắc
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <div class="card-user">
+                    <a href="#">
+                      <img
+                        src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt=""
+                      />
+                      <p>Admin</p></a
+                    >
+                    <div class="card-time">5 giờ, 15 phút trước</div>
+                    <div class="card-comment">
+                      <img src="../IMAGE/icon_comment.tintuc.svg" alt="" />
+                      <span>60</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <!-- end list card car -->
+      <div class="listTopCar">
+        <div class="row">
+          <div class="col news-title blueDark-c">TOP XE BÁN CHẠY</div>
+        </div>
+        <div class="topCars">
+          <!-- start card car 1 -->
+          <div class="col-3 topCar">
+            <a href="#" class="card card_product">
+              <div class="hinhanh-card">
+                <img
+                  class="default-img"
+                  src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg"
+                  alt="no"
+                />
+              </div>
+
+              <div class="tieude-card">
+                🚘Mercedes E200 Model 2020 siêu lướt .
+              </div>
+              <div class="thongtinxe-card">
+                <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_nam.svg" alt="" />
+                  <div id="doixe_thongtinxe-card"></div>
+                  2023
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xemoi.svg" alt="" />
+                  <div id="hinhthuc_thongtinxe-card"></div>
+                  Xe mới
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xang.svg" alt="" />
+                  <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_tudong.svg" alt="" />
+                  <div id="hopso_thongtinxe-card">Tự động</div>
+                </div>
+              </div>
+              <div class="giaxe-card">1 tỷ 289 triệu</div>
+
+              <div class="chucnang-card">
+                <div class="row">
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_themgiohang">
+                      Thêm giỏ hàng
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_muangay">
+                      Mua ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-3 topCar">
+            <a href="#" class="card card_product">
+              <div class="hinhanh-card">
+                <img
+                  class="default-img"
+                  src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg"
+                  alt="no"
+                />
+              </div>
+
+              <div class="tieude-card">
+                🚘Mercedes E200 Model 2020 siêu lướt .
+              </div>
+              <div class="thongtinxe-card">
+                <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_nam.svg" alt="" />
+                  <div id="doixe_thongtinxe-card"></div>
+                  2023
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xemoi.svg" alt="" />
+                  <div id="hinhthuc_thongtinxe-card"></div>
+                  Xe mới
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xang.svg" alt="" />
+                  <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_tudong.svg" alt="" />
+                  <div id="hopso_thongtinxe-card">Tự động</div>
+                </div>
+              </div>
+              <div class="giaxe-card">1 tỷ 289 triệu</div>
+
+              <div class="chucnang-card">
+                <div class="row">
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_themgiohang">
+                      Thêm giỏ hàng
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_muangay">
+                      Mua ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-3 topCar">
+            <a href="#" class="card card_product">
+              <div class="hinhanh-card">
+                <img
+                  class="default-img"
+                  src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg"
+                  alt="no"
+                />
+              </div>
+
+              <div class="tieude-card">
+                🚘Mercedes E200 Model 2020 siêu lướt .
+              </div>
+              <div class="thongtinxe-card">
+                <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_nam.svg" alt="" />
+                  <div id="doixe_thongtinxe-card"></div>
+                  2023
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xemoi.svg" alt="" />
+                  <div id="hinhthuc_thongtinxe-card"></div>
+                  Xe mới
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xang.svg" alt="" />
+                  <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_tudong.svg" alt="" />
+                  <div id="hopso_thongtinxe-card">Tự động</div>
+                </div>
+              </div>
+              <div class="giaxe-card">1 tỷ 289 triệu</div>
+
+              <div class="chucnang-card">
+                <div class="row">
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_themgiohang">
+                      Thêm giỏ hàng
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_muangay">
+                      Mua ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-3 topCar">
+            <a href="#" class="card card_product">
+              <div class="hinhanh-card">
+                <img
+                  class="default-img"
+                  src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg"
+                  alt="no"
+                />
+              </div>
+
+              <div class="tieude-card">
+                🚘Mercedes E200 Model 2020 siêu lướt .
+              </div>
+              <div class="thongtinxe-card">
+                <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_nam.svg" alt="" />
+                  <div id="doixe_thongtinxe-card"></div>
+                  2023
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xemoi.svg" alt="" />
+                  <div id="hinhthuc_thongtinxe-card"></div>
+                  Xe mới
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xang.svg" alt="" />
+                  <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_tudong.svg" alt="" />
+                  <div id="hopso_thongtinxe-card">Tự động</div>
+                </div>
+              </div>
+              <div class="giaxe-card">1 tỷ 289 triệu</div>
+
+              <div class="chucnang-card">
+                <div class="row">
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_themgiohang">
+                      Thêm giỏ hàng
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_muangay">
+                      Mua ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-3 topCar">
+            <a href="#" class="card card_product">
+              <div class="hinhanh-card">
+                <img
+                  class="default-img"
+                  src="https://cmu-cdn.vinfast.vn/2023/05/6d1cf0ee-img_3894giainhatmvm-1536x1024.jpg"
+                  alt="no"
+                />
+              </div>
+
+              <div class="tieude-card">
+                🚘Mercedes E200 Model 2020 siêu lướt .
+              </div>
+              <div class="thongtinxe-card">
+                <div class="doixe_thongtinxe-card thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_nam.svg" alt="" />
+                  <div id="doixe_thongtinxe-card"></div>
+                  2023
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xemoi.svg" alt="" />
+                  <div id="hinhthuc_thongtinxe-card"></div>
+                  Xe mới
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_xang.svg" alt="" />
+                  <div id="nhienlieu_thongtinxe-card">Xăng</div>
+                </div>
+                <div class="thongtinxe-card_chung">
+                  <img src="../IMAGE/icon_card_tudong.svg" alt="" />
+                  <div id="hopso_thongtinxe-card">Tự động</div>
+                </div>
+              </div>
+              <div class="giaxe-card">1 tỷ 289 triệu</div>
+
+              <div class="chucnang-card">
+                <div class="row">
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_themgiohang">
+                      Thêm giỏ hàng
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="chucnang-card_muangay">
+                      Mua ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
     </main>
 
@@ -1111,6 +1214,28 @@
       </div>
     </footer>
     <!-- end start -->
+
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-1.11.0.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Components/CardCategory/CardCategory.js"
+    ></script>
+
+    <script type="text/javascript" src="/USER-JS/Index.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -1122,7 +1247,5 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
-
-
   </body>
 </html>

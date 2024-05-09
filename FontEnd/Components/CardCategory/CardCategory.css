@@ -1,0 +1,91 @@
+.Category {
+  /* display: flex; */
+
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 15px;
+}
+.slick-arrow {
+  width: 40px;
+  position: absolute;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  border: 0;
+  background-color: #ffffff00;
+}
+.slick-arrow img {
+  height: 50px;
+  display: none;
+}
+.slick-next:hover img {
+  display: block;
+}
+
+.slick-next:hover {
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(65, 65, 65, 0.848)
+  );
+}
+.slick-next {
+  right: 0px;
+}
+
+.slick-prev:hover {
+  background-image: linear-gradient(
+    to right,
+    rgba(65, 65, 65, 0.848),
+    rgba(255, 255, 255, 0)
+  );
+}
+.slick-prev:hover img {
+  display: block;
+}
+.slick-prev {
+  left: 0px;
+}
+
+.category-cards {
+  width: 100%;
+  transition: transform 0.5s ease-in-out 0s;
+  display: flex;
+}
+
+.category-card {
+  border: 3px solid rgb(172, 172, 172);
+  margin-right: 10px;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.category-card:hover {
+  box-shadow: 0 0 20px rgba(142, 142, 142, 0.381);
+}
+
+.img-cate {
+  width: 100%;
+  height: 110px;
+  overflow: hidden;
+}
+.img-cate img {
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.name-category {
+  padding: 5px 0;
+  background-color: rgb(164, 164, 164);
+  width: 100%;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+}
