@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="/IMAGE/logo4.png" type="image/png" />
+
+    <title>Bài viết - Vinfast</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/USER-CSS/Posts.css" />
+  </head>
+
+  <body>
+    <header>
+      <!-- place navbar here -->
+    </header>
+
+    <main>
+      <div class="posts">
+        <div class="main-left">
+          <a href="#" class="tenchude"> Tên chủ đề </a>
+
+          <h1 class="tieudebaiviet">Đây là tiêu đề bài viết</h1>
+          <div class="USER">
+            <a href="#" class="user-avt"
+              ><img src="/IMAGE/oto/3.jpg" alt="Lỗi r"
+            /></a>
+
+            <div class="chitiet-name">
+              <div class="xuongdong">
+                <a href="" class="user-name"> Người dùng đăng bài </a>
+              </div>
+              <div class="user-quyenvadiem">
+                <span
+                  title="Thành viên"
+                  class="gamipress-bbpress-rank-thumbnail gamipress-bbpress-vf-community_member-thumbnail"
+                >
+                  <img
+                    width="25"
+                    height="25"
+                    src="https://cmu-cdn.vinfast.vn/2022/08/ddae6ee5-member-50x50.png"
+                    class="gamipress-rank-thumbnail wp-post-image wp-stateless-item"
+                    alt=""
+                    decoding="async"
+                    loading="lazy"
+                    srcset="
+                      https://cmu-cdn.vinfast.vn/2022/08/ddae6ee5-member-50x50.png    50w,
+                      https://cmu-cdn.vinfast.vn/2022/08/ddae6ee5-member-150x150.png 150w,
+                      https://cmu-cdn.vinfast.vn/2022/08/ddae6ee5-member-100x100.png 100w,
+                      https://cmu-cdn.vinfast.vn/2022/08/ddae6ee5-member.png         240w
+                    "
+                    sizes="(max-width: 25px) 100vw, 25px"
+                    data-image-size="25x25"
+                    data-stateless-media-bucket="prod-vinfast-vn-cmu-data"
+                    data-stateless-media-name="2022/08/ddae6ee5-member.png"
+                  /> </span
+                >Thành viên
+              </div>
+              <div class="user-quyenvadiem">
+                <span
+                  class="gamipress-bbpress-points-thumbnail gamipress-bbpress-vf-point-thumbnail"
+                >
+                  <img
+                    width="25"
+                    height="25"
+                    src="https://storage.googleapis.com/dev-vinfast-vn-cmu-data/2022/08/3587b7ca-point1-50x50.png"
+                    class="gamipress-points-thumbnail wp-post-image wp-stateless-item"
+                    alt=""
+                    decoding="async"
+                    loading="lazy"
+                    srcset="
+                      https://storage.googleapis.com/dev-vinfast-vn-cmu-data/2022/08/3587b7ca-point1-50x50.png 50w,
+                      https://storage.googleapis.com/dev-vinfast-vn-cmu-data/2022/08/3587b7ca-point1.png       80w
+                    "
+                    sizes="(max-width: 25px) 100vw, 25px"
+                    data-image-size="25x25"
+                    data-stateless-media-bucket="dev-vinfast-vn-cmu-data"
+                    data-stateless-media-name="2022/08/3587b7ca-point1.png"
+                  /> </span
+                >25 VF Points
+              </div>
+            </div>
+            <div class="class"></div>
+            <div class="khungtimedangbai">
+              <div class="timedangbai">10/20/2024 lúc 20:30</div>
+            </div>
+          </div>
+          <div class="khung_chitietbaiviet">
+            <p class="noidungbaiviet">Đây là nội dung bài viết</p>
+          </div>
+
+          <div class="hastags">
+            <div class="iconhastag">
+              <img src="/IMAGE/Posts/icon_hastag.svg" />
+            </div>
+            <div class="hastag-cha">
+              <a href="#" class="hastag">#Luxa2.0</a>
+              <a href="#" class="hastag">#Luxa2.0</a>
+              <a href="#" class="hastag">#Luxa2.0</a>
+              <a href="#" class="hastag">#Luxa2.0</a>
+              <a href="#" class="hastag">#Luxa2.0</a>
+              <a href="#" class="hastag">#Luxa2.0</a>
+            </div>
+          </div>
+
+          <hr />
+          <h1 class="tieudebaiviet">Bình luận</h1>
+          <div class="user-binhluan">
+            <div class="form-group">
+              <textarea
+                id="edt_binhluanbaiviet"
+                class="nhapnoidungvabinhluan"
+                rows="2"
+                oninput="autoExpand(this)"
+                placeholder="Điền nội dung bình luận..."
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              ng-click="btn_binhluanbaiviet()"
+              id="btn-binhluanbaiviet"
+            >
+              Bình luận
+            </button>
+          </div>
+
+          <div class="khung_binhluan_posts">
+            <div id="user-dabinhluans">
+              <div class="user-dabinhluan">
+                <div class="khung_user_dabinhluan">
+                  <div class="user-thongtin">
+                    <a href="#" class="user-avt"
+                      ><img src="/IMAGE/oto/2.jpg" alt="Lỗi r"
+                    /></a>
+                    <a href="#" class="user-name">Khang</a>
+                    <div class="user-quyenvadiem">
+                      <span
+                        title="Thành viên"
+                        class="gamipress-bbpress-rank-thumbnail gamipress-bbpress-vf-community_member-thumbnail"
+                      >
+                        <img
+                          width="25"
+                          height="25"
+                          src="https://cmu-cdn.vinfast.vn/2022/08/ddae6ee5-member-50x50.png"
+                          class="gamipress-rank-thumbnail wp-post-image wp-stateless-item"
+                          alt=""
+                          decoding="async"
+                          loading="lazy"
+                          srcset="
+                            https://cmu-cdn.vinfast.vn/2022/08/ddae6ee5-member-50x50.png    50w,
+                            https://cmu-cdn.vinfast.vn/2022/08/ddae6ee5-member-150x150.png 150w,
+                            https://cmu-cdn.vinfast.vn/2022/08/ddae6ee5-member-100x100.png 100w,
+                            https://cmu-cdn.vinfast.vn/2022/08/ddae6ee5-member.png         240w
+                          "
+                          sizes="(max-width: 25px) 100vw, 25px"
+                          data-image-size="25x25"
+                          data-stateless-media-bucket="prod-vinfast-vn-cmu-data"
+                          data-stateless-media-name="2022/08/ddae6ee5-member.png"
+                        />
+                      </span>
+                      Thành viên
+                    </div>
+                    <div id="timedangbai">02/10/2024 lúc 18:30</div>
+                  </div>
+
+                  <div
+                    class="user-chucnang-dabinhluan"
+                    ng-if="c.iD_User == _user.iD_User"
+                  >
+                    <button
+                      ng-click="btn_chucnang_dabinhluan($index)"
+                      id="btn_chucnang_dabinhluan"
+                      type="submit"
+                    >
+                      <img
+                        width="20px"
+                        height="20px"
+                        src="/IMAGE/Posts/icon_3dots.svg"
+                        alt=""
+                      />
+                    </button>
+                    <div class="from_chucnang_dabinhluan">
+                      <button id="btn_chucnang_xoa_dabinhluan">Xoá</button>
+                    </div>
+                  </div>
+                </div>
+
+                <p id="noidungbinhluan">Hi đây là nội dung bình luận</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="main-right">
+          <div class="quangcao-hinhanh1">
+            <img
+              width="100%"
+              src="https://cmu-cdn.vinfast.vn/2023/10/d1694c46-microsoftteams-image-1-768x1024.jpg"
+              alt="#"
+            />
+          </div>
+          <div class="quangcao-trangchude"></div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

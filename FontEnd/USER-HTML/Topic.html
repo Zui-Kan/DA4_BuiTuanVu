@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="/IMAGE/logo4.png" type="image/png" />
+
+    <title>Chủ đề - Vinfast</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <header>
+      <!-- place navbar here -->
+    </header>
+    <main>
+        <main>
+    
+  <!-- START--------------------------------------------------------------------------------------Chủ đề  -->
+  <div id="chudes">
+
+    <div class="khung-chude" width="100%">
+      <img ng-src="{{listTopic_ID[0].image}}" height="30px">
+      <div class="card-noidung">
+          <div class="tieude-khung-chude">{{listTopic_ID[0].title}}</div>
+          <div class="khung-chude_tuongtac">1.8k Chủ đề | 13.3K Trả lời</div>
+      </div>
+  </div>
+  
+    
+  </div>
+
+    <!-- Chủ đề- diễn đàn -------------------------------------------------------------START -->
+    <div class="chude-diendans">
+      <div class="baiviets">
+        <div class="tieude-baiviets">
+          <div class="taobaiviet">
+            <img src="../Hình ảnh/logo.jpg" alt="">
+            <input onclick="btn_taobaiviet()" id="btn_taobaiviet" type="button" value="Tạo bài viết">
+          </div>
+
+          <div id="overlay" class="overlay">
+            <div class="popup ">      <h2>Điền thông tin</h2>
+              <div class="close">
+        
+                <img src="../Hình ảnh/icons8_Close_3.svg" alt="" ng-click="closeOverlay()">
+              </div>
+
+              <div class="dienthongtin">
+
+                <div class="tieude_input">Chủ đề:</div>
+                <select ng-model="BaiViet.iD_Topic" id="dienthongtin_chude">
+                  <option ng-repeat="x in listChuDe"  value="{{x.iD_Topic}}">{{x.title}}</option>
+              </select>
+
+              <div class="tieude_input">Tiêu đề:</div>
+
+                  <input ng-model="BaiViet.title" id="dienthongtin_tieude" type="text" placeholder="Tiêu đề bài viết"> 
+                  <div  class="tieude_input">Tóm tắt nội dung chính:</div>
+                  <textarea class="inp_chung" ng-model="BaiViet.synopsis" id="dienthongtin_tomtat" rows="3"  placeholder="Điền nội dung bình bài viết"></textarea>
+                  <div class="khung_dienchitiet">
+                    <div class="dienchitiet" ng-repeat="post in BaiViet.list_json_posts track by $index">
+                      <div class="tieude_input">Nội dung đoạn {{$index + 1}}:</div>
+  
+                    <textarea id="dienthongtin_noidung" class="inp_chung" rows="3" ng-model="post.content"  placeholder="Điền nội dung bình bài viết"></textarea>
+                    
+                     Hình ảnh:<input type="file" id="fileInput_{{$index}}" ng-model="post.image"  onchange="angular.element(this).scope().handleFileChange(this)" name="Chọn hình ảnh">
+                  </div>
+                  </div>
+                 
+                 <div class="khung_themchitiet">
+
+                   <button type="submit" id="btn_thembaiviet" ng-click="addPost()"><img src="../Hình ảnh/icon_cộng.svg" width="25px" height="25px" alt="">Thêm đoạn văn</button>
+                 </div>
+              </div>
+
+              <div class="chucnang">
+                <input ng-click="btn_dangbaiviet()" type="button" value="Đăng" id="btn_dangbaiviet">
+              </div>
+
+            </div>
+          </div>
+
+          
+          <div class="tieude-baiviets_trai chinhsualink">
+            <button type="submit" class="btn_hienthibaiviettheoaz btn_hienthitheoaz"  ng-click="search_desc_and_asc()" style="color: #464646;"> BÀI VIẾT <img style="display: block;" height="20px" width="20px" id="btn_icon_baiviet_den"  src="../Hình ảnh/icon_tubedenlon.svg" alt="">
+              <img id="btn_icon_baiviet_xanh"  src="../Hình ảnh/icon_tulondenbe.svg" alt="" height="20px" width="20px" style="display: none;">
+            </button>
+            
+          </div>
+
+          <div class="tieude-baiviets_phai ">
+            <!-- Bình luận -->
+            <button type="submit" class="btn_hienthibinhluantheoaz btn_hienthitheoaz"  ng-click="search_binhluan_desc_and_asc()" style="color: #464646;"> BÌNH LUẬN 
+              <img style="display: block;" height="20px" width="20px" id="btn_icon_binhluan_den"  src="../Hình ảnh/icon_tubedenlon.svg" alt="">
+              <img id="btn_icon_binhluan_xanh"  src="../Hình ảnh/icon_tulondenbe.svg" alt="" height="20px" width="20px" style="display: none;">
+            </button>
+            <!-- lượt thích -->
+            <button type="submit" class="btn_hienthithichtheoaz btn_hienthitheoaz"  ng-click="search_luotthich_desc_and_asc()" style="color: #464646;"> LƯỢT THÍCH 
+              <img style="display: block;" height="20px" width="20px" id="btn_icon_luotthich_den"  src="../Hình ảnh/icon_tubedenlon.svg" alt="">
+              <img id="btn_icon_luotthicht_xanh"  src="../Hình ảnh/icon_tulondenbe.svg" alt="" height="20px" width="20px" style="display: none;">
+            </button>
+          </div>
+        </div>
+        <div class="list_baiviets" ng-repeat="P in listPosts track by P.iD_Post" >
+          <hr>
+          <!-- bài viết 1 -->
+         <a href="./Bài viết.html?id={{P.iD_Post}}" class="linkbaiviet" >
+             <img class="avt-baiviet" src="../Hình ảnh/card-diendan-1.png" alt="">
+           <div class="tieudes-baiviet">
+             <div class="tieudechinh-baiviet"> {{P.title}}</div>
+             <div class="tacgia">Người dùng</div>
+             <div class="thoigiandang"> {{ P.createdDate }} </div>
+           </div>
+           <div class="list_binhluan binhluan">
+             <div class="view-binhluan">
+               30
+             </div>
+             <h3>Bình luận</h3>
+           </div>
+           <div class="list_thich binhluan">
+            <div class="view-binhluan">
+              20
+            </div>
+            <h3>Lượt thích</h3>
+          </div>
+         </a>
+
+        </div>
+       <div class="khung_chucnangxemthem">
+        <button id="btn_xemthem_baiviet" ng-click="btn_xemthem()">Xem Thêm</button>
+      </div>
+      </div>
+      <div class="quangcao-trangchude">
+        <div class="quangcao-hinhanh1">
+          <img src="https://cmu-cdn.vinfast.vn/2023/10/d1694c46-microsoftteams-image-1-768x1024.jpg" alt="#">
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Chủ đề- diễn đàn -------------------------------------------------------------END -->
+
+  </div>
+
+  <!-- END--------------------------------------------------------------------------------------Chủ đề  -->
+</main>
+    <div class="topics">
+        <main>
+    
+            <!-- START--------------------------------------------------------------------------------------Chủ đề  -->
+            <div id="chudes">
+          
+              <div class="khung-chude" width="100%">
+                <img ng-src="{{listTopic_ID[0].image}}" height="30px">
+                <div class="card-noidung">
+                    <div class="tieude-khung-chude">{{listTopic_ID[0].title}}</div>
+                    <div class="khung-chude_tuongtac">1.8k Chủ đề | 13.3K Trả lời</div>
+                </div>
+            </div>
+            
+              
+            </div>
+          
+              <!-- Chủ đề- diễn đàn -------------------------------------------------------------START -->
+              <div class="chude-diendans">
+                <div class="baiviets">
+                  <div class="tieude-baiviets">
+                    <div class="taobaiviet">
+                      <img src="/IMAGE/LOGO2.png" alt="">
+                      <input onclick="btn_taobaiviet()" id="btn_taobaiviet" type="button" value="Tạo bài viết">
+                    </div>
+          
+                    
+                    <div class="tieude-baiviets_trai chinhsualink">
+                      <button type="submit" class="btn_hienthibaiviettheoaz btn_hienthitheoaz" style="color: #464646;"> BÀI VIẾT 
+                        <img style="display: block;" height="20px" width="20px" id="btn_icon_baiviet_den"  src="/IMAGE/Topic/icon_tubedenlon.svg" alt="">
+                        <img id="btn_icon_baiviet_xanh"  src="/IMAGE/Topic/icon_tulondenbe.svg" alt="" height="20px" width="20px" style="display: none;">
+                      </button>
+                      
+                    </div>
+          
+                    <div class="tieude-baiviets_phai ">
+                      <!-- Bình luận -->
+                      <button type="submit" class="btn_hienthibinhluantheoaz btn_hienthitheoaz"  style="color: #464646;"> BÌNH LUẬN 
+                        <img style="display: block;" height="20px" width="20px" id="btn_icon_binhluan_den"  src="/IMAGE/Topic/icon_tubedenlon.svg" alt="">
+                        <img id="btn_icon_binhluan_xanh"  src="/IMAGE/Topic/icon_tulondenbe.svg" alt="" height="20px" width="20px" style="display: none;">
+                      </button>
+                     
+                    </div>
+                  </div>
+                  <div class="list_baiviets"  >
+                    <hr>
+                    <!-- bài viết 1 -->
+                   <a href="#" class="linkbaiviet" >
+                       <img class="avt-baiviet" src="/IMAGE/oto/5.jpg" alt="">
+                     <div class="tieudes-baiviet">
+                       <div class="tieudechinh-baiviet"> Tiêu đề</div>
+                       <div class="tacgia">Người dùng</div>
+                       <div class="thoigiandang"> 28/10/2004 lúc 20:04:10 </div>
+                     </div>
+                     <div class="list_binhluan binhluan">
+                       <div class="view-binhluan">
+                         30
+                       </div>
+                       <h3>Bình luận</h3>
+                     </div>
+                     <div class="list_thich binhluan">
+                      <div class="view-binhluan">
+                        20
+                      </div>
+                      <h3>Lượt thích</h3>
+                    </div>
+                   </a>
+          
+                  </div>
+                 <div class="khung_chucnangxemthem">
+                  <button id="btn_xemthem_baiviet">Xem Thêm</button>
+                </div>
+                </div>
+                <div class="quangcao-trangchude">
+                  <div class="quangcao-hinhanh1">
+                    <img src="https://cmu-cdn.vinfast.vn/2023/10/d1694c46-microsoftteams-image-1-768x1024.jpg" alt="#">
+                  </div>
+                </div>
+              </div>
+           
+              <!-- Chủ đề- diễn đàn -------------------------------------------------------------END -->
+          
+            </div>
+          
+            <!-- END--------------------------------------------------------------------------------------Chủ đề  -->
+          </main>
+              
+    </div>
+    </main>
+    <footer>
+      <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TaiKhoan;
 use App\Models\User;
+use App\Traits\TrangThaiTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,15 +13,7 @@ use Illuminate\Support\Str;
 
 class TaiKhoanController extends Controller
 {
-    public function errors($loi)
-    {
-        return response()->json([
-            'data' => null,
-            'status_code' => 404,
-            'message' => $loi ?? "lỗi rồi!"
-        ]);
-    }
-
+    use TrangThaiTrait;
     public function login(Request $request)
     {
         try {
@@ -30,11 +23,8 @@ class TaiKhoanController extends Controller
             // Kiểm tra xem tài khoản có tồn tại không
             $taiKhoan = TaiKhoan::where('TenTaiKhoan', $tenTaiKhoan)->first();
             if (!$taiKhoan || $matKhau != $taiKhoan->MatKhau) {
-                return response()->json([
-                    'data' => null,
-                    'status_code' => 404,
-                    'message' => 'Tài khoản hoặc mật khẩu không đúng!'
-                ]);
+                return $this->errors("Tài khoản hoặc mật khẩu không đúng!");
+
             } else {
                 return response()->json([
                     'data' => $taiKhoan,
@@ -67,29 +57,15 @@ class TaiKhoanController extends Controller
         }
 
         $db = $query->paginate($totalPage ?? 5);
-        if ($db) {
-            return response()->json([
-                'data' => ['ketqua' => $db, 'timkiem' => $query],
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        $kq =  ['ketqua' => $db, 'timkiem' => $query];
+
+        return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
 
     public function index($total = null)
     {
         $db = TaiKhoan::paginate($total);
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
     public function signup(Request $res)
@@ -126,15 +102,8 @@ class TaiKhoanController extends Controller
         $tk->SDT = $res->SDT;
         $tk->MatKhau = $res->MatKhau;
         $tk->Quyen = 2;
-        if ($tk->save()) {
-            return response()->json([
-                'data' => $tk,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        $db = $tk->save();
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
 
@@ -142,58 +111,36 @@ class TaiKhoanController extends Controller
     public function delete($id)
     {
         $db = TaiKhoan::where('MaTaiKhoan', $id)->first()->delete();
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
     public function deletes(Request $request)
     {
         $ids = $request->input('ids');
 
-        $deleted = TaiKhoan::whereIn('MaTaiKhoan', $ids)->delete();
+        $db = TaiKhoan::whereIn('MaTaiKhoan', $ids)->delete();
 
-        if ($deleted) {
-            return response()->json([
-                'data' => $deleted,
-                'status_code' => 200,
-                'message' => 'Đã xoá thành công'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
 
-    public function save(Request $res, $id)
+    public function save(Request $res, $id = null)
     {
-        if ($id == 0) {
-            $tk = new TaiKhoan();
-        } else {
-            $tk = TaiKhoan::where('MaTaiKhoan', $id)->first();
-        }
 
+        $file_name = $this->uploadFile($res, 'image_upload', 'uploads');
+
+        $tk = $id ? TaiKhoan::where('MaTaiKhoan', $id)->first() : new TaiKhoan();
         $tk->TenTaiKhoan = $res->TenTaiKhoan;
         $tk->Email = $res->Email;
         $tk->SDT = $res->SDT;
         $tk->MatKhau = $res->MatKhau;
         $tk->Quyen = $res->Quyen;
-        $db = $tk->save();
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
+        if ($file_name !== null) {
+            $tk->AnhDaiDien = $file_name;
         }
+
+        $db = $tk->save();
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
 
@@ -201,14 +148,6 @@ class TaiKhoanController extends Controller
     public function getTaiKhoan($id)
     {
         $db = TaiKhoan::find($id);
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 }

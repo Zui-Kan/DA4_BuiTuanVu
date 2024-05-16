@@ -19,15 +19,7 @@ class LoaiXeController extends Controller
     public function index($total = null)
     {
         $db = LoaiXe::paginate($total);
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
     public function search(Request $request)
@@ -57,44 +49,22 @@ class LoaiXeController extends Controller
     public function delete($id)
     {
         $db = LoaiXe::where('MaLoaiXe', $id)->first()->delete();
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
     public function deletes(Request $request)
     {
         $ids = $request->input('ids');
 
-        $deleted = LoaiXe::whereIn('MaLoaiXe', $ids)->delete();
+        $db = LoaiXe::whereIn('MaLoaiXe', $ids)->delete();
 
-        if ($deleted) {
-            return response()->json([
-                'data' => $deleted,
-                'status_code' => 200,
-                'message' => 'Đã xoá thành công'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
 
-    public function save(Request $res, $id)
+    public function save(Request $res, $id = null)
     {
-        $file_name = null;
-
-        if ($res->has('image_upload')) {
-            $file = $res->image_upload;
-            $file_name = $file->getClientoriginalName();
-            $file->move(public_path('uploads'), $file_name);
-        }
+        $file_name = $this->uploadFile($res, 'image_upload', 'uploads');
 
         if ($id == 0) {
             $tk = new LoaiXe();
@@ -107,15 +77,7 @@ class LoaiXeController extends Controller
             $tk->HinhAnhLoaiXe = $file_name;
         }
         $db = $tk->save();
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
 
@@ -123,14 +85,6 @@ class LoaiXeController extends Controller
     public function getLoaiXe($id)
     {
         $db = LoaiXe::find($id);
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 }

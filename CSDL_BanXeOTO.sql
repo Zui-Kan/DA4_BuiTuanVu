@@ -1,149 +1,165 @@
-﻿create database DA3_BanXeOTO
-go
+CREATE DATABASE DA3_BanXeOTO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 use DA3_BanXeOTO;
--- Bảng chứa thông tin về người dùng
+select*from users
+CREATE TABLE users (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    email_verified_at TIMESTAMP NULL,
+    password VARCHAR(255) NOT NULL,
+    role INT,
+    remember_token VARCHAR(100),
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
+);
+
 
 CREATE TABLE TaiKhoan (
-    MaTaiKhoan INT PRIMARY KEY IDENTITY,
+    MaTaiKhoan INT PRIMARY KEY auto_increment,
     TenTaiKhoan VARCHAR(100),
     Email VARCHAR(255),
     SDT varchar(20),
 	MatKhau varchar(100),
 	Quyen int,
     AnhDaiDien nvarchar(250),
-    NgayTao datetime default GETDATE()
+    NgayTao datetime default NOW()
 
 );
-
+drop table TaiKhoan
 -- Bảng chứa thông tin về loại xe
 CREATE TABLE LoaiXe (
-    MaLoaiXe INT PRIMARY KEY IDENTITY,
+    MaLoaiXe INT PRIMARY KEY auto_increment,
     HinhAnhLoaiXe text,
     TenLoaiXe NVARCHAR(100) NOT NULL,
-    NgayTao datetime default GETDATE()
+    NgayTao datetime default NOW()
 
 );
 
 -- Bảng chứa thông tin về các hãng xe
 CREATE TABLE HangXe (
-    MaHang INT PRIMARY KEY IDENTITY ,
+    MaHang INT PRIMARY KEY auto_increment ,
     HinhAnhHangXe text,
     TenHang NVARCHAR(100) NOT NULL,
-    NgayTao datetime default GETDATE()
+    NgayTao datetime default NOW()
 );
 
 
 -- Bảng chứa thông tin về các mẫu xe
 CREATE TABLE ModelXe (
-    MaModel INT PRIMARY KEY IDENTITY,
+    MaModel INT PRIMARY KEY auto_increment,
     TenModel NVARCHAR(100) NOT NULL,
     MaHang INT,
     MaLoaiXe INT,
     NamSanXuat INT,
     Gia DECIMAL(10, 2),
-	HinhAnhXe nvarchar(max),
-	DSHinhAnhXe nvarchar(max),
-	MoTa nvarchar(max),
-    NgayTao datetime default GETDATE(),
+	HinhAnhXe LONGTEXT,
+	DSHinhAnhXe LONGTEXT,
+	MoTa LONGTEXT,
+    NgayTao datetime default NOW(),
 
     FOREIGN KEY (MaHang) REFERENCES HangXe(MaHang),
     FOREIGN KEY (MaLoaiXe) REFERENCES LoaiXe(MaLoaiXe)
 );
 create table PhienBanXe(
-    MaPhienBan int primary key IDENTITY,
+    MaPhienBan int primary key auto_increment,
     MaModel int,
     TenPhienBan nvarchar(100),
-    NgayTao datetime default GETDATE(),
+    NgayTao datetime default NOW(),
 
     FOREIGN KEY (MaModel) REFERENCES ModelXe(MaModel)
-)
-
-
-
+);
 create table MauNgoaiThat(
-    MaMauNgoaiThat int primary key identity,
+    MaMauNgoaiThat int primary key auto_increment,
     MaPhienBan int,
     TenMauNgoaiThat nvarchar(100),
     HinhAnhMau text,
-    NgayTao datetime default GETDATE(),
+    NgayTao datetime default NOW(),
 
     FOREIGN KEY (MaPhienBan) REFERENCES PhienBanXe(MaPhienBan)
-)
+);
 
 create table MauNoiThat(
-    MaMauNoiThat int primary key identity,
+    MaMauNoiThat int primary key auto_increment,
     MaMauNgoaiThat int,
 	TenMauNoiThat nvarchar(100),
     HinhAnhMau text,
-    NgayTao datetime default GETDATE(),
+    NgayTao datetime default NOW(),
     FOREIGN KEY (MaMauNgoaiThat) REFERENCES MauNgoaiThat(MaMauNgoaiThat)
 
-)
+);
 
 
 -- Bảng chứa thông tin về các chi tiết kỹ thuật của xe
 CREATE TABLE ThongSoKyThuatXe (
-    MaThongSo INT PRIMARY KEY IDENTITY,
+    MaThongSo INT PRIMARY KEY auto_increment,
     MaModel INT,
 	PhienBanXe nvarchar(255),
     LoaiDongCo NVARCHAR(255),
     LoaiHieuDong NVARCHAR(255),
-	MauSac nvarchar(max),
+	MauSac LONGTEXT,
     CongSuat INT,
     MoMenXoan INT,
     LoaiNhienLieu NVARCHAR(255),
-    NgayTao datetime default GETDATE(),
+    TenPhienBan LONGTEXT,
+    NgayTao datetime default NOW(),
 
     FOREIGN KEY (MaModel) REFERENCES ModelXe(MaModel)
 );
 
 CREATE TABLE NhanVien (
-    MaNhanVien INT PRIMARY KEY IDENTITY,
-	MaTaiKhoan int unique,
+    MaNhanVien INT PRIMARY KEY auto_increment,
     TenNhanVien NVARCHAR(100) NOT NULL,
     ChucVu NVARCHAR(100),
     DiaChi NVARCHAR(255),
     SoDienThoai NVARCHAR(20),
     Luong DECIMAL(10, 2),
-    NgayTao datetime default GETDATE(),
-
-    FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan)
-
+    NgayTao datetime default NOW(),
+TaiKhoanID bigint UNSIGNED,
+FOREIGN KEY (TaiKhoanID) REFERENCES users(id)
 );
+
+  
 -- Bảng chứa thông tin về người dùng
 CREATE TABLE KhachHang (
-    MaKhachHang INT PRIMARY KEY IDENTITY,
-	MaTaiKhoan int,
+    MaKhachHang INT PRIMARY KEY auto_increment,
+	TaiKhoanID BIGINT UNSIGNED,
     HoVaTen NVARCHAR(100),
     Email VARCHAR(255),
     CMND VARCHAR(20),
     SDT varchar(20),
-    FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan),
-    NgayTao datetime default GETDATE()
+    DiaChi nvarchar(255),
+    NgayTao datetime default NOW(),
+	FOREIGN KEY (TaiKhoanID) REFERENCES users(id)
 );
 
 
 CREATE TABLE NhaCungCap (
-    MaNhaCungCap INT PRIMARY KEY IDENTITY,
+    MaNhaCungCap INT PRIMARY KEY auto_increment,
     TenNhaCungCap NVARCHAR(100) NOT NULL,
     DiaChi NVARCHAR(255),
     Email VARCHAR(255),
     SoDienThoai NVARCHAR(20),
-    NgayTao datetime default GETDATE()
+    NgayTao datetime default NOW()
 );
 
 -- Bảng chứa thông tin liên quan đến việc bán xe
 CREATE TABLE DatHang (
-    MaDatHang INT PRIMARY KEY IDENTITY,
+    MaDatHang INT PRIMARY KEY auto_increment,
 	MaKhachHang int,
-    NgayTao Datetime default GETDATE(),
-    TrangThai nvarchar(100),
+    NgayTao Datetime default NOW(),
+    TrangThai nvarchar(100),      
+HinhThucNhan nvarchar(255) not null,
+DiaChiNhanXe nvarchar(255) not null,
 	TongTien  DECIMAL(10, 2),
-    FOREIGN KEY (MaKhachHang) REFERENCES KhachHang(MaKhachHang),
+    MaNhanVien int,
+  FOREIGN KEY (MaNhanVien) REFERENCES Nhanvien(MaNhanVien),
+    FOREIGN KEY (MaKhachHang) REFERENCES KhachHang(MaKhachHang)
 );
 
+
 create table ChiTietDatHang(
-MaChiTietDatHang int primary key identity,
+MaChiTietDatHang int primary key auto_increment,
 MaDatHang int,
 MaModel INT,
 MaPhienBan int,
@@ -155,21 +171,21 @@ FOREIGN KEY (MaPhienBan) REFERENCES PhienBanXe(MaPhienBan),
 FOREIGN KEY (MaMauNgoaiThat) REFERENCES MauNgoaiThat(MaMauNgoaiThat),
 FOREIGN KEY (MaMauNoiThat) REFERENCES MauNoiThat(MaMauNoiThat),
 FOREIGN KEY (MaDatHang) REFERENCES DatHang(MaDatHang),
-FOREIGN KEY (MaModel) REFERENCES ModelXe(MaModel),
+FOREIGN KEY (MaModel) REFERENCES ModelXe(MaModel)
 );
 
 CREATE TABLE HoaDonNhapXe (
-    MaHoaDonNhap INT PRIMARY KEY IDENTITY,
+    MaHoaDonNhap INT PRIMARY KEY auto_increment,
     MaNhaCungCap INT,
     MaNhanVien INT,
-    NgayTao Datetime default GETDATE(),
+    NgayTao Datetime default NOW(),
     GiaNhap DECIMAL(10, 2),
     FOREIGN KEY (MaNhaCungCap) REFERENCES NhaCungCap(MaNhaCungCap),
     FOREIGN KEY (MaNhanVien) REFERENCES NhanVien(MaNhanVien)
 );
 
 create table ChiTietNhapXe(
-MaChiTietNhapXe int primary key identity,
+MaChiTietNhapXe int primary key auto_increment,
 MaHoaDonNhap int,
 MaModel INT,
 MaPhienBan int,
@@ -185,39 +201,71 @@ FOREIGN KEY (MaModel) REFERENCES ModelXe(MaModel)
 );
 
 create table ChuDeBaiViet(
-    MaChuDe int primary key identity,
+    MaChuDe int primary key auto_increment,
     TenChuDu nvarchar(255),
     HinhAnhChuDe text,
     GhiChu nvarchar(255),
-    NgayTao datetime default GETDATE(),
-)
+    NgayTao datetime default NOW()
+);
 
 create table BaiViet( 
-    MaBaiViet int primary key identity,
+    MaBaiViet int primary key auto_increment,
     MaTaiKhoan int,
     MaChuDe int,
     TieuDe nvarchar(255),
-    NoiDung nvarchar(max),
-    NgayTao datetime default GETDATE(),
+    NoiDung LONGTEXT,
+    NgayTao datetime default NOW(),
 FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan),
 FOREIGN KEY (MaChuDe) REFERENCES ChuDeBaiViet(MaChuDe)
-)
+);
 
 create table BinhLuan(
-    MaBinhLuan int primary key identity,
+    MaBinhLuan int primary key auto_increment,
     MaBaiViet int,
     MaModel int,
     MaTaiKhoan int,
-    NoiDung nvarchar(max),
-    NgayTao datetime default GETDATE(),
+    NoiDung LONGTEXT,
+    NgayTao datetime default NOW(),
     FOREIGN KEY (MaBaiViet) REFERENCES BaiViet(MaBaiViet),
     FOREIGN KEY (MaModel) REFERENCES ModelXe(MaModel),
-    FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan),
-)
+    FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan)
+);
 
+CREATE TABLE YeuCauHuy (
+    MaYeuCauHuy INT PRIMARY KEY AUTO_INCREMENT,
+    MaDatHang INT,
+    TrangThai NVARCHAR(100) DEFAULT 'Đang chờ xác nhận từ admin',
+    NgayYeuCau DATETIME DEFAULT NOW(),
+    FOREIGN KEY (MaDatHang) REFERENCES DatHang(MaDatHang)
+);
+CREATE TABLE QuangCao (
+    MaQuangCao INT PRIMARY KEY AUTO_INCREMENT,
+    HinhAnh text,
+	DSHinhAnh text,
+    Link text,
+    TieuDe nvarchar(255),
+    NgayTao DATETIME DEFAULT NOW()
+);
 
+CREATE TABLE `laithu` (
+  `MaLaiThu` int NOT NULL AUTO_INCREMENT,
+  `MaKhachHang` int NOT NULL,
+  `MaModelXe` int NOT NULL,
+  `MaNhanVien` int DEFAULT NULL,
+  `NgayHen` datetime DEFAULT NULL,
+  `DiaChiShowroom` text,
+  `GhiChu` text,
+  `NgayTao` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`MaLaiThu`),
+  KEY `laithu_fk1_idx` (`MaKhachHang`),
+  KEY `laithu_fk2_idx` (`MaModelXe`),
+  KEY `laithu_fk3_idx` (`MaNhanVien`),
+  CONSTRAINT `laithu_fk1` FOREIGN KEY (`MaKhachHang`) REFERENCES `khachhang` (`MaKhachHang`),
+  CONSTRAINT `laithu_fk2` FOREIGN KEY (`MaModelXe`) REFERENCES `modelxe` (`MaModel`),
+  CONSTRAINT `laithu_fk3` FOREIGN KEY (`MaNhanVien`) REFERENCES `nhanvien` (`MaNhanVien`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+-- ----------------------Thêm dữ liệu vào
 
-----------------------Thêm dữ liệu vào
 INSERT INTO TaiKhoan (TenTaiKhoan, Email, SDT, MatKhau, Quyen, AnhDaiDien)
 VALUES 
 ('admin', 'admin@example.com', '123456789', 'admin', 0, 'avatar1.jpg'),
@@ -370,19 +418,19 @@ VALUES
 
 INSERT INTO DatHang (MaKhachHang, NgayTao, TrangThai, TongTien)
 VALUES 
-(11, GETDATE(), 'Đã nhận đơn hàng nhân viên sẽ liên hệ xác nhận', 1500.00),
-(2, GETDATE(), 'Đang xử lý', 2000.00),
-(3, GETDATE(), 'Đã giao hàng', 1800.00),
-(4, GETDATE(), 'Đã thanh toán', 2200.00),
-(5, GETDATE(), 'Chờ xe về', 1900.00),
-(6, GETDATE(), 'Xe đã về showroom', 2100.00),
-(7, GETDATE(), 'Đang giao xe', 1600.00),
-(8, GETDATE(), 'Chờ khách hàng tới nhận xe', 2300.00),
-(9, GETDATE(), 'Giao hàng và thanh toán thành công', 2400.00),
-(10, GETDATE(), 'Đang xử lý', 1700.00);
+(1, NOW(), 'Đã nhận đơn hàng nhân viên sẽ liên hệ xác nhận', 1500.00),
+(2, NOW(), 'Đang xử lý', 2000.00),
+(3, NOW(), 'Đã giao hàng', 1800.00),
+(4, NOW(), 'Đã thanh toán', 2200.00),
+(5, NOW(), 'Chờ xe về', 1900.00),
+(6, NOW(), 'Xe đã về showroom', 2100.00),
+(7, NOW(), 'Đang giao xe', 1600.00),
+(8, NOW(), 'Chờ khách hàng tới nhận xe', 2300.00),
+(9, NOW(), 'Giao hàng và thanh toán thành công', 2400.00),
+(10, NOW(), 'Đang xử lý', 1700.00);
 INSERT INTO ChiTietDatHang (MaDatHang, MaModel, MaPhienBan, MaMauNgoaiThat, MaMauNoiThat, SoLuong, GiaBan)
 VALUES 
-(11, 1, 1, 1, 1, 1, 25000.00),
+(1, 1, 1, 1, 1, 1, 25000.00),
 (2, 2, 2, 2, 2, 1, 27000.00),
 (3, 3, 3, 3, 3, 1, 35000.00),
 (4, 4, 4, 4, 4, 1, 45000.00),
@@ -395,16 +443,16 @@ VALUES
 
 INSERT INTO HoaDonNhapXe (MaNhaCungCap, MaNhanVien, NgayTao, GiaNhap)
 VALUES 
-(1, 1, GETDATE(), 20000.00),
-(2, 2, GETDATE(), 18000.00),
-(3, 3, GETDATE(), 22000.00),
-(4, 4, GETDATE(), 25000.00),
-(5, 5, GETDATE(), 23000.00),
-(6, 6, GETDATE(), 19000.00),
-(7, 7, GETDATE(), 21000.00),
-(8, 8, GETDATE(), 24000.00),
-(9, 9, GETDATE(), 27000.00),
-(10, 10, GETDATE(), 26000.00);
+(1, 1, NOW(), 20000.00),
+(2, 2, NOW(), 18000.00),
+(3, 3, NOW(), 22000.00),
+(4, 4, NOW(), 25000.00),
+(5, 5, NOW(), 23000.00),
+(6, 6, NOW(), 19000.00),
+(7, 7, NOW(), 21000.00),
+(8, 8, NOW(), 24000.00),
+(9, 9, NOW(), 27000.00),
+(10, 10, NOW(), 26000.00);
 
 INSERT INTO ChiTietNhapXe (MaHoaDonNhap, MaModel, MaPhienBan, MaMauNgoaiThat, MaMauNoiThat, SoLuong, GiaNhap)
 VALUES 
@@ -421,41 +469,39 @@ VALUES
 
 INSERT INTO ChuDeBaiViet (TenChuDu, HinhAnhChuDe, GhiChu, NgayTao)
 VALUES 
-('Công nghệ', 'congnghe.jpg', 'Công nghệ mới nhất', GETDATE()),
-('Xe hơi', 'xehoi.jpg', 'Cập nhật tin tức về xe hơi', GETDATE()),
-('Ẩm thực', 'amthuc.jpg', 'Các món ăn ngon mỗi ngày', GETDATE()),
-('Du lịch', 'dulich.jpg', 'Kinh nghiệm du lịch hữu ích', GETDATE()),
-('Sức khỏe', 'suckhoe.jpg', 'Bí quyết giữ gìn sức khỏe', GETDATE()),
-('Thể thao', 'thethao.jpg', 'Thông tin về các môn thể thao', GETDATE()),
-('Gia đình', 'giadinh.jpg', 'Chia sẻ kinh nghiệm về gia đình', GETDATE()),
-('Mẹo vặt', 'meovat.jpg', 'Những mẹo vặt trong cuộc sống', GETDATE()),
-('Phong cách sống', 'phongcachsong.jpg', 'Chia sẻ phong cách sống', GETDATE()),
-('Âm nhạc', 'amnhac.jpg', 'Những bản nhạc hot nhất hiện nay', GETDATE());
+('Công nghệ', 'congnghe.jpg', 'Công nghệ mới nhất', NOW()),
+('Xe hơi', 'xehoi.jpg', 'Cập nhật tin tức về xe hơi', NOW()),
+('Ẩm thực', 'amthuc.jpg', 'Các món ăn ngon mỗi ngày', NOW()),
+('Du lịch', 'dulich.jpg', 'Kinh nghiệm du lịch hữu ích', NOW()),
+('Sức khỏe', 'suckhoe.jpg', 'Bí quyết giữ gìn sức khỏe', NOW()),
+('Thể thao', 'thethao.jpg', 'Thông tin về các môn thể thao', NOW()),
+('Gia đình', 'giadinh.jpg', 'Chia sẻ kinh nghiệm về gia đình', NOW()),
+('Mẹo vặt', 'meovat.jpg', 'Những mẹo vặt trong cuộc sống', NOW()),
+('Phong cách sống', 'phongcachsong.jpg', 'Chia sẻ phong cách sống', NOW()),
+('Âm nhạc', 'amnhac.jpg', 'Những bản nhạc hot nhất hiện nay', NOW());
 
 INSERT INTO BaiViet (MaTaiKhoan, MaChuDe, TieuDe, NoiDung, NgayTao)
 VALUES 
-(1, 1, 'Những xu hướng công nghệ nổi bật năm 2024', 'Trong năm 2024, có nhiều xu hướng công nghệ đột phá, từ trí tuệ nhân tạo đến ô tô tự lái và thực tế ảo.', GETDATE()),
-(2, 2, 'Ra mắt mẫu sedan mới của Honda', 'Honda vừa công bố mẫu sedan mới với thiết kế hiện đại và tính năng an toàn tiên tiến.', GETDATE()),
-(3, 3, 'Top 10 món ăn ngon không thể bỏ qua', 'Danh sách những món ăn ngon đặc sản từ khắp nơi trên thế giới, từ mì phở Việt Nam đến pizza Ý.', GETDATE()),
-(4, 4, 'Khám phá điểm du lịch mới ở Hawaii', 'Hawaii không chỉ có bãi biển đẹp mê hồn mà còn có nhiều điểm du lịch độc đáo như hồ núi lửa và thác nước tuyệt đẹp.', GETDATE()),
-(5, 5, 'Bí quyết giữ gìn sức khỏe mỗi ngày', 'Các chuyên gia sức khỏe chia sẻ những bí quyết đơn giản giúp duy trì sức khỏe tốt mỗi ngày.', GETDATE()),
-(6, 6, 'Cập nhật kết quả các trận đấu thể thao mới nhất', 'Thông tin mới nhất về kết quả các trận đấu từ bóng đá đến quần vợt và bóng rổ.', GETDATE()),
-(7, 7, 'Những phương pháp giải quyết xung đột trong gia đình', 'Học cách giải quyết xung đột và tạo ra môi trường hòa hợp và hạnh phúc trong gia đình.', GETDATE()),
-(8, 8, '10 mẹo vặt giúp tiết kiệm thời gian hàng ngày', 'Những mẹo vặt đơn giản nhưng hữu ích giúp bạn tiết kiệm thời gian và công sức hàng ngày.', GETDATE()),
-(9, 9, 'Phong cách sống lành mạnh và hạnh phúc', 'Tìm hiểu về phong cách sống lành mạnh và các bước đơn giản để tạo ra một cuộc sống hạnh phúc.', GETDATE()),
-(10, 10, 'Top 10 bản nhạc hot nhất tháng này', 'Danh sách những bản nhạc được yêu thích và hot nhất trong tháng này, từ pop đến hip hop.', GETDATE());
+(1, 1, 'Những xu hướng công nghệ nổi bật năm 2024', 'Trong năm 2024, có nhiều xu hướng công nghệ đột phá, từ trí tuệ nhân tạo đến ô tô tự lái và thực tế ảo.', NOW()),
+(2, 2, 'Ra mắt mẫu sedan mới của Honda', 'Honda vừa công bố mẫu sedan mới với thiết kế hiện đại và tính năng an toàn tiên tiến.', NOW()),
+(3, 3, 'Top 10 món ăn ngon không thể bỏ qua', 'Danh sách những món ăn ngon đặc sản từ khắp nơi trên thế giới, từ mì phở Việt Nam đến pizza Ý.', NOW()),
+(4, 4, 'Khám phá điểm du lịch mới ở Hawaii', 'Hawaii không chỉ có bãi biển đẹp mê hồn mà còn có nhiều điểm du lịch độc đáo như hồ núi lửa và thác nước tuyệt đẹp.', NOW()),
+(5, 5, 'Bí quyết giữ gìn sức khỏe mỗi ngày', 'Các chuyên gia sức khỏe chia sẻ những bí quyết đơn giản giúp duy trì sức khỏe tốt mỗi ngày.', NOW()),
+(6, 6, 'Cập nhật kết quả các trận đấu thể thao mới nhất', 'Thông tin mới nhất về kết quả các trận đấu từ bóng đá đến quần vợt và bóng rổ.', NOW()),
+(7, 7, 'Những phương pháp giải quyết xung đột trong gia đình', 'Học cách giải quyết xung đột và tạo ra môi trường hòa hợp và hạnh phúc trong gia đình.', NOW()),
+(8, 8, '10 mẹo vặt giúp tiết kiệm thời gian hàng ngày', 'Những mẹo vặt đơn giản nhưng hữu ích giúp bạn tiết kiệm thời gian và công sức hàng ngày.', NOW()),
+(9, 9, 'Phong cách sống lành mạnh và hạnh phúc', 'Tìm hiểu về phong cách sống lành mạnh và các bước đơn giản để tạo ra một cuộc sống hạnh phúc.', NOW()),
+(10, 10, 'Top 10 bản nhạc hot nhất tháng này', 'Danh sách những bản nhạc được yêu thích và hot nhất trong tháng này, từ pop đến hip hop.', NOW());
 
 INSERT INTO BinhLuan (MaBaiViet, MaModel, MaTaiKhoan, NoiDung, NgayTao)
 VALUES 
-(1, null, 1, N'Bài viết rất thú vị và cập nhật.', GETDATE()),
-(null, 2, 2, N'Mẫu sedan mới của Honda trông rất hấp dẫn!', GETDATE()),
-(3, null, 3, N'Món phở Việt Nam là ngon nhất!', GETDATE()),
-(4, null, 4, N'Hawaii là nơi mơ ước của tôi.', GETDATE()),
-(null, 5, 5, N'Bí quyết giữ gìn sức khỏe rất hữu ích.', GETDATE()),
-(6, null, 6, N'Cập nhật kết quả thể thao nhanh chóng và chính xác.', GETDATE()),
-(null, 7, 7, N'Học cách giải quyết xung đột là một kỹ năng quan trọng.', GETDATE()),
-(8, null, 8, N'Những mẹo vặt này thật sự giúp tiết kiệm thời gian.', GETDATE()),
-(null, 9, 9, N'Cuộc sống lành mạnh là chìa khóa cho hạnh phúc.', GETDATE()),
-(10, null, 10, N'Âm nhạc là nguồn cảm hứng cho tôi.', GETDATE());
-
-drop table 
+(1, null, 1, N'Bài viết rất thú vị và cập nhật.', NOW()),
+(null, 2, 2, 'Mẫu sedan mới của Honda trông rất hấp dẫn!', NOW()),
+(3, null, 3, 'Món phở Việt Nam là ngon nhất!', NOW()),
+(4, null, 4, 'Hawaii là nơi mơ ước của tôi.', NOW()),
+(null, 5, 5, 'Bí quyết giữ gìn sức khỏe rất hữu ích.', NOW()),
+(6, null, 6, 'Cập nhật kết quả thể thao nhanh chóng và chính xác.', NOW()),
+(null, 7, 7, 'Học cách giải quyết xung đột là một kỹ năng quan trọng.', NOW()),
+(8, null, 8, 'Những mẹo vặt này thật sự giúp tiết kiệm thời gian.', NOW()),
+(null, 9, 9, 'Cuộc sống lành mạnh là chìa khóa cho hạnh phúc.', NOW()),
+(10, null, 10, 'Âm nhạc là nguồn cảm hứng cho tôi.', NOW());

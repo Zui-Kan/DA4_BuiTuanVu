@@ -3,31 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\ModelXe;
+use App\Traits\TrangThaiTrait;
 use Illuminate\Http\Request;
 
 class ModelXeController extends Controller
 {
-    public function errors($loi)
-    {
-        return response()->json([
-            'data' => null,
-            'status_code' => 404,
-            'message' => $loi ?? "lỗi rồi!"
-        ]);
-    }
+    use TrangThaiTrait;
 
     public function index($total = null)
     {
         $db = ModelXe::paginate($total);
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
     public function search(Request $request)
@@ -46,74 +32,35 @@ class ModelXeController extends Controller
         }
 
         $db = $query->paginate($totalPage ?? 5);
-        if ($db) {
-            return response()->json([
-                'data' => ['ketqua' => $db, 'timkiem' => $query],
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        $kq =  ['ketqua' => $db, 'timkiem' => $query];
+
+        return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
     public function delete($id)
     {
         $db = ModelXe::where('MaModel', $id)->first()->delete();
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
     public function deletes(Request $request)
     {
         $ids = $request->input('ids');
 
-        $deleted = ModelXe::whereIn('MaModel', $ids)->delete();
+        $db = ModelXe::whereIn('MaModel', $ids)->delete();
 
-        if ($deleted) {
-            return response()->json([
-                'data' => $deleted,
-                'status_code' => 200,
-                'message' => 'Đã xoá thành công'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
 
-    public function save(Request $res, $id)
+    public function save(Request $res, $id=null)
     {
-        $file_name = null;
+        $file_name = $this->uploadFile($res, 'image_upload', 'uploads');
 
-        if ($res->has('image_upload')) {
-            $file = $res->image_upload;
-            $file_name = $file->getClientoriginalName();
-            $file->move(public_path('uploads'), $file_name);
-        }
 
-        $file_names = [];
-        if ($res->hasFile('image_uploads')) {
-            $files = $res->file('image_uploads');
-            
-            foreach ($files as $file) {
-                $file_name = $file->getClientOriginalName();
-                $file->move(public_path('uploads'), $file_name);
-                $file_names[] = $file_name;
-            }
-        }
+        $file_names = $this->uploadFiles($res, 'image_uploads', 'uploads');
 
-        if ($id == 0) {
-            $tk = new ModelXe();
-        } else {
-            $tk = ModelXe::where('MaModel', $id)->first();
-        }
+        $tk = $id ? ModelXe::where('MaModel', $id)->first() : new ModelXe();
+
 
         $tk->TenModel = $res->TenModel;
         $tk->MaHang = $res->MaHang;
@@ -130,15 +77,7 @@ class ModelXeController extends Controller
         }
 
         $db = $tk->save();
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
 
@@ -146,14 +85,6 @@ class ModelXeController extends Controller
     public function getModelXe($id)
     {
         $db = ModelXe::find($id);
-        if ($db) {
-            return response()->json([
-                'data' => $db,
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 }
