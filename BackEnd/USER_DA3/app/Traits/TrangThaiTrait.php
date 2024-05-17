@@ -4,10 +4,10 @@ namespace App\Traits;
 
 trait TrangThaiTrait
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth.jwt', ['except' => ['login']]);
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth.jwt', ['except' => ['login']]);
+    }
     public function errors($loi)
     {
         return response()->json(

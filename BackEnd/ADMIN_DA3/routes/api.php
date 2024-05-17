@@ -23,25 +23,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Không sử dụng được session
-|
-*/
-
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
@@ -57,7 +38,11 @@ Route::group([
 });
 
 
-Route::group(['prefix' => 'taikhoan'],  function () {
+Route::group([
+    'middleware' => 'auth.jwt',
+
+    'prefix' => 'taikhoan'
+],  function () {
     Route::get('/get/{id}', [UsersController::class, 'getTaiKhoan'])->name('taikhoan.getTaiKhoan');
     Route::get('/{total?}', [UsersController::class, 'index'])->name('taikhoan.index');
     Route::post('/signup', [UsersController::class, 'signup'])->name('taikhoan.signup');
@@ -66,11 +51,16 @@ Route::group(['prefix' => 'taikhoan'],  function () {
     Route::delete('/deletes', [UsersController::class, 'deletes'])->name('taikhoan.deletes');
     Route::post('/save/{id?}', [UsersController::class, 'save'])->name('taikhoan.save');
     Route::post('/search', [UsersController::class, 'search'])->name('taikhoan.search');
+    Route::post('/gettaikhoanct/{id}', [UsersController::class, 'getTaiKhoanCT'])->name('taikhoan.gettaikhoanct');
+    Route::post('/updatectusers/{id}', [UsersController::class, 'updateCTusers'])->name('taikhoan.updatectusers');
+    Route::post('/changepassword', [UsersController::class, 'changePassword'])->name('taikhoan.changepassword');
 });
 
 
 //Nhanvien
-Route::group(['prefix' => 'nhanvien',], function () {
+Route::group([
+    'prefix' => 'nhanvien',
+], function () {
     Route::get('/get/{id}', [NhanVienController::class, 'getnhanvien'])->name('nhanvien.getnhanvien');
     Route::get('/{total?}', [NhanVienController::class, 'index'])->name('taikhoan.index');
     Route::delete('/delete/{id}', [NhanVienController::class, 'delete'])->name('nhanvien.delete');
