@@ -11,6 +11,14 @@ class ChuDeBaiVietController extends Controller
 
     use TrangThaiTrait;
 
+
+    /**
+     * @OA\post(
+     *     path="/api/chudebaiviet/search",
+     *    tags={"chudebaiviet"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -29,7 +37,13 @@ class ChuDeBaiVietController extends Controller
 
         return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
-
+    /**
+     * @OA\Get(
+     *     path="/api/chudebaiviet/{total}",
+     *    tags={"chudebaiviet"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function index($total = null)
     {
         $db = ChuDeBaiViet::paginate($total);
@@ -38,12 +52,28 @@ class ChuDeBaiVietController extends Controller
 
 
 
+    /**
+     * @OA\delete(
+     *     path="/api/chudebaiviet/delete/{id}",
+     *    tags={"chudebaiviet"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+
     public function delete($id)
     {
         $db = ChuDeBaiViet::where('MaChuDe', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
+
+    /**
+     * @OA\delete(
+     *     path="/api/chudebaiviet/deletes",
+     *    tags={"chudebaiviet"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function deletes(Request $request)
     {
         $ids = $request->input('ids');
@@ -53,13 +83,19 @@ class ChuDeBaiVietController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-
+    /**
+     * @OA\post(
+     *     path="/api/chudebaiviet/save/{id}",
+     *    tags={"chudebaiviet"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function save(Request $res, $id = null)
     {
 
 
         $tk = $id ? ChuDeBaiViet::where('MaChuDe', $id)->first() : new ChuDeBaiViet();
- 
+
 
         $tk->TenChuDu = $res->TenChuDu;
         $tk->GhiChu = $res->GhiChu;
@@ -76,6 +112,13 @@ class ChuDeBaiVietController extends Controller
 
 
 
+    /**
+     * @OA\Get(
+     *     path="/api/get/{id}",
+     *    tags={"chudebaiviet"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function getChuDeBaiViet($id)
     {
         $db = ChuDeBaiViet::find($id);

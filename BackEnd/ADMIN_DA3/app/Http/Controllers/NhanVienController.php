@@ -9,13 +9,26 @@ use Illuminate\Http\Request;
 class NhanVienController extends Controller
 {
     use TrangThaiTrait;
+    /**
+     * @OA\Get(
+     *     path="/api/nhanvien/{total}",
+     *    tags={"nhanvien"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function index($total = null)
     {
         $db = NhanVien::paginate($total);
         return $db ? $this->ok($db) : $this->errors(null);
     }
-
+    /**
+     * @OA\post(
+     *     path="/api/nhanvien/search",
+     *    tags={"nhanvien"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -37,11 +50,27 @@ class NhanVienController extends Controller
 
         return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
+
+    /**
+     * @OA\delete(
+     *     path="/api/nhanvien/delete/{id}",
+     *    tags={"nhanvien"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+
     public function delete($id)
     {
         $db = NhanVien::where('MaNhanVien', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
+    /**
+     * @OA\delete(
+     *     path="/api/nhanvien/deletes",
+     *    tags={"nhanvien"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function deletes(Request $request)
     {
@@ -50,12 +79,17 @@ class NhanVienController extends Controller
         $db = NhanVien::whereIn('MaNhanVien', $ids)->delete();
 
         return $db ? $this->ok($db) : $this->errors(null);
-
     }
 
-
-    public function save(Request $res, $id= null)
-    {   
+    /**
+     * @OA\post(
+     *     path="/api/nhanvien/save/{id}",
+     *    tags={"nhanvien"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+    public function save(Request $res, $id = null)
+    {
         $tk = $id ? NhanVien::where('MaNhanVien', $id)->first() : new NhanVien();
 
         $tk->MaTaiKhoan = $res->MaTaiKhoan;
@@ -69,7 +103,13 @@ class NhanVienController extends Controller
     }
 
 
-
+    /**
+     * @OA\Get(
+     *     path="/api/nhanvien/get/{id}",
+     *    tags={"nhanvien"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function getNhanVien($id)
     {
         $db = NhanVien::find($id);

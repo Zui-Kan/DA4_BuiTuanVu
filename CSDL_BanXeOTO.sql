@@ -14,19 +14,6 @@ CREATE TABLE users (
     updated_at TIMESTAMP NULL
 );
 
-
-CREATE TABLE TaiKhoan (
-    MaTaiKhoan INT PRIMARY KEY auto_increment,
-    TenTaiKhoan VARCHAR(100),
-    Email VARCHAR(255),
-    SDT varchar(20),
-	MatKhau varchar(100),
-	Quyen int,
-    AnhDaiDien nvarchar(250),
-    NgayTao datetime default NOW()
-
-);
-drop table TaiKhoan
 -- Bảng chứa thông tin về loại xe
 CREATE TABLE LoaiXe (
     MaLoaiXe INT PRIMARY KEY auto_increment,
@@ -69,6 +56,8 @@ create table PhienBanXe(
 
     FOREIGN KEY (MaModel) REFERENCES ModelXe(MaModel)
 );
+
+
 create table MauNgoaiThat(
     MaMauNgoaiThat int primary key auto_increment,
     MaPhienBan int,
@@ -134,7 +123,7 @@ CREATE TABLE KhachHang (
 );
 
 
-CREATE TABLE NhaCungCap (
+CREATE TABLE	 (
     MaNhaCungCap INT PRIMARY KEY auto_increment,
     TenNhaCungCap NVARCHAR(100) NOT NULL,
     DiaChi NVARCHAR(255),
@@ -210,12 +199,12 @@ create table ChuDeBaiViet(
 
 create table BaiViet( 
     MaBaiViet int primary key auto_increment,
-    MaTaiKhoan int,
+    TaiKhoanID int,
     MaChuDe int,
     TieuDe nvarchar(255),
     NoiDung LONGTEXT,
     NgayTao datetime default NOW(),
-FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan),
+FOREIGN KEY (TaiKhoanID) REFERENCES users(id),
 FOREIGN KEY (MaChuDe) REFERENCES ChuDeBaiViet(MaChuDe)
 );
 
@@ -223,12 +212,12 @@ create table BinhLuan(
     MaBinhLuan int primary key auto_increment,
     MaBaiViet int,
     MaModel int,
-    MaTaiKhoan int,
+    TaiKhoanID int,
     NoiDung LONGTEXT,
     NgayTao datetime default NOW(),
     FOREIGN KEY (MaBaiViet) REFERENCES BaiViet(MaBaiViet),
     FOREIGN KEY (MaModel) REFERENCES ModelXe(MaModel),
-    FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan)
+FOREIGN KEY (TaiKhoanID) REFERENCES users(id),
 );
 
 CREATE TABLE YeuCauHuy (

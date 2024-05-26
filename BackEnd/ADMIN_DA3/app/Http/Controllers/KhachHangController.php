@@ -10,12 +10,15 @@ class KhachHangController extends Controller
 {
     use TrangThaiTrait;
 
-    public function index($total = null)
-    {
-        $db = KhachHang::paginate($total);
-        return $db ? $this->ok($db) : $this->errors(null);
-    }
 
+
+    /**
+     * @OA\post(
+     *     path="/api/khachhang/search",
+     *    tags={"khachhang"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -36,12 +39,39 @@ class KhachHangController extends Controller
 
         return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/khachhang/{total}",
+     *    tags={"khachhang"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+    public function index($total = null)
+    {
+        $db = KhachHang::paginate($total);
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
+
+    /**
+     * @OA\delete(
+     *     path="/api/khachhang/delete/{id}",
+     *    tags={"khachhang"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function delete($id)
     {
         $db = KhachHang::where('MaKhachHang', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
-
+    /**
+     * @OA\delete(
+     *     path="/api/khachhang/deletes",
+     *    tags={"khachhang"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function deletes(Request $request)
     {
         $ids = $request->input('ids');
@@ -51,7 +81,13 @@ class KhachHangController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-
+    /**
+     * @OA\post(
+     *     path="/api/khachhang/save/{id}",
+     *    tags={"khachhang"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function save(Request $res, $id = null)
     {
 
@@ -67,6 +103,13 @@ class KhachHangController extends Controller
 
 
 
+    /**
+     * @OA\Get(
+     *     path="/api/khachhang/get/{id}",
+     *    tags={"khachhang"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function getkhachhang($id)
     {
         $db = KhachHang::find($id);

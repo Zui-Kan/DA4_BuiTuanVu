@@ -8,9 +8,29 @@ use Illuminate\Http\Request;
 
 class BaiVietController extends Controller
 {
-
     use TrangThaiTrait;
 
+    /**
+     * @OA\Post(
+     *     path="/api/baiviet/search",
+     *     summary="Authenticate user and generate JWT token",
+     *    tags={"BaiViet"},
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         description="",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="totalPage",
+     *         in="query",
+     *         description="",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Login successful"),
+     *     @OA\Response(response="401", description="Invalid credentials")
+     * )
+     */
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -34,6 +54,22 @@ class BaiVietController extends Controller
     }
 
 
+    /**
+     * @OA\get(
+     *     path="/api/baiviet/",
+     *     summary="Authenticate user and generate JWT token",
+     *    tags={"BaiViet"},
+     *     @OA\Parameter(
+     *         name="total",
+     *         in="path",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Login successful"),
+     *     @OA\Response(response="401", description="Invalid credentials")
+     * )
+     */
     public function index($total = null)
     {
         $db = BaiViet::paginate($total);
@@ -41,11 +77,44 @@ class BaiVietController extends Controller
         return $db->total() > 0 ? $this->ok($db) : $this->errors(null);
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/api/baiviet/delete/{id}",
+     *     summary="Authenticate user and generate JWT token",
+     *    tags={"BaiViet"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Login successful"),
+     *     @OA\Response(response="401", description="Invalid credentials")
+     * )
+     */
     public function delete($id)
     {
         $db = BaiViet::where('MaBaiViet', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/baiviet/deletes",
+     *     summary="Authenticate user and generate JWT token",
+     *    tags={"BaiViet"},
+     *     @OA\Parameter(
+     *         name="ids",
+     *         in="query",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Login successful"),
+     *     @OA\Response(response="401", description="Invalid credentials")
+     * )
+     */
 
     public function deletes(Request $request)
     {
@@ -56,7 +125,43 @@ class BaiVietController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-
+    /**
+     * @OA\Post(
+     *     path="/api/baiviet/save/{id}",
+     *     summary="Authenticate user and generate JWT token",
+     *    tags={"BaiViet"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="MaTaiKhoan",
+     *         in="query",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="MaChuDe",
+     *         in="query",
+     *         description="",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="NoiDung",
+     *         in="query",
+     *         description="User's password",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Login successful"),
+     *     @OA\Response(response="401", description="Invalid credentials")
+     * )
+     */
     public function save(Request $res, $id = null)
     {
         $db = $id ? BaiViet::where('MaBaiViet', $id)->first() : new BaiViet();
@@ -65,13 +170,27 @@ class BaiVietController extends Controller
         $db->MaChuDe = $res->MaChuDe;
         $db->TieuDe = $res->TieuDe;
         $db->NoiDung = $res->NoiDung;
-
         $db = $db->save();
-
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
 
+    /**
+     * @OA\Get(
+     *     path="/api/baiviet/get/{id}",
+     *     summary="Get logged-in user details",
+     *     tags={"BaiViet"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID của bài viết",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Success"),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
 
     public function getBaiViet($id)
     {

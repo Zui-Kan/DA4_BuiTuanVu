@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\File;
+
 trait TrangThaiTrait
 {
     // public function __construct()
@@ -57,4 +59,5 @@ trait TrangThaiTrait
 
         return $file_names;
     }
+
 }

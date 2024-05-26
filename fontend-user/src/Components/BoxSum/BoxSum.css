@@ -1,0 +1,37 @@
+.box-sum {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.box-all {
+  display: flex;
+  align-items: center;
+  gap: 0 3px;
+}
+.box-all button {
+  overflow: hidden;
+  width: 50px;
+  max-width: 50px;
+  font-size: 15px;
+  font-weight: 500;
+  height: 25px;
+  border: 0.3px solid rgb(111, 111, 111);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box-all .active-page {
+  background-color: rgb(68, 128, 239);
+  color: #fff;
+  border: 0px;
+}
+
+.box-right-left img {
+  width: 17px;
+  height: 17px;
+}
+.box-right-left:hover {
+  background-color: rgb(110, 155, 238);
+  border: 0px;
+}

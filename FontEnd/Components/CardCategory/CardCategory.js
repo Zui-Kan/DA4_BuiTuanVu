@@ -10,5 +10,4 @@ $(document).ready(function () {
       '<button type="button" class="slick-next pull-right"><img src="/Components/CardCategory/icons8_forward_3.svg" alt="#" /></button>',
   });
 
-  
 });

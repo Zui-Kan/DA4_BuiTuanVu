@@ -10,6 +10,13 @@ class PhienBanXeController extends Controller
 {
 
     use TrangThaiTrait;
+    /**
+     * @OA\post(
+     *     path="/api/phienbanxe/search",
+     *    tags={"phienbanxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function search(Request $request)
     {
@@ -30,7 +37,13 @@ class PhienBanXeController extends Controller
 
         return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
-
+    /**
+     * @OA\Get(
+     *     path="/api/phienbanxe/{total}",
+     *    tags={"phienbanxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function index($total = null)
     {
         $db = PhienBanXe::paginate($total);
@@ -38,13 +51,25 @@ class PhienBanXeController extends Controller
     }
 
 
-
+    /**
+     * @OA\delete(
+     *     path="/api/phienbanxe/delete/{id}",
+     *    tags={"phienbanxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function delete($id)
     {
         $db = PhienBanXe::where('MaPhienBan', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
-
+    /**
+     * @OA\delete(
+     *     path="/api/phienbanxe/deletes",
+     *    tags={"phienbanxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function deletes(Request $request)
     {
         $ids = $request->input('ids');
@@ -53,6 +78,13 @@ class PhienBanXeController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
+    /**
+     * @OA\post(
+     *     path="/api/phienbanxe/save/{id}",
+     *    tags={"phienbanxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function save(Request $res, $id = null)
     {
@@ -67,6 +99,13 @@ class PhienBanXeController extends Controller
 
 
 
+    /**
+     * @OA\Get(
+     *     path="/api/phienbanxe/get/{id}",
+     *    tags={"phienbanxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function getPhienBanXe($id)
     {
         $db = PhienBanXe::find($id);

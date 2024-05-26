@@ -12,7 +12,13 @@ class ThongSoKyThuatXeController extends Controller
 {
 
     use TrangThaiTrait;
-
+    /**
+     * @OA\post(
+     *     path="/api/thongsokythuatxe/search",
+     *    tags={"thongsokythuatxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -32,6 +38,13 @@ class ThongSoKyThuatXeController extends Controller
 
         return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
+    /**
+     * @OA\Get(
+     *     path="/api/thongsokythuatxe/{total}",
+     *    tags={"thongsokythuatxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function index($total = null)
     {
@@ -39,14 +52,26 @@ class ThongSoKyThuatXeController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-
+    /**
+     * @OA\delete(
+     *     path="/api/thongsokythuatxe/delete/{id}",
+     *    tags={"thongsokythuatxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function delete($id)
     {
         $db = ThongSoKyThuatXe::where('MaThongSo', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
-
+    /**
+     * @OA\delete(
+     *     path="/api/thongsokythuatxe/deletes",
+     *    tags={"thongsokythuatxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function deletes(Request $request)
     {
         $ids = $request->input('ids');
@@ -56,7 +81,13 @@ class ThongSoKyThuatXeController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-
+    /**
+     * @OA\post(
+     *     path="/api/thongsokythuatxe/save/{id}",
+     *    tags={"thongsokythuatxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function save(Request $res, $id = null)
     {
 
@@ -76,7 +107,13 @@ class ThongSoKyThuatXeController extends Controller
     }
 
 
-
+    /**
+     * @OA\Get(
+     *     path="/api/thongsokythuatxe/get/{id}",
+     *    tags={"thongsokythuatxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function getThongSoKyThuatXe($id)
     {
         $db = ThongSoKyThuatXe::find($id);

@@ -137,7 +137,7 @@ return [
     */
 
     'providers' => [
-
+        L5Swagger\L5SwaggerServiceProvider::class,
         /*
          * Laravel Framework Service Providers...
          */
@@ -180,6 +180,8 @@ return [
 
 
     ],
+
+
 
     /*
     |--------------------------------------------------------------------------

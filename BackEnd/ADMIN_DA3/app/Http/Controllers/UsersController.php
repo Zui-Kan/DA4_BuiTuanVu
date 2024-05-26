@@ -17,6 +17,14 @@ class UsersController extends Controller
     use TrangThaiTrait;
 
 
+    /**
+     * @OA\post(
+     *     path="/api/taikhoan/search",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -36,6 +44,13 @@ class UsersController extends Controller
 
         return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
+    /**
+     * @OA\Get(
+     *     path="/api/taikhoan/{total}",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function index($total = null)
     {
@@ -43,6 +58,14 @@ class UsersController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
+
+    /**
+     * @OA\post(
+     *     path="/api/taikhoan/signup",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function signup(Request $res)
     {
 
@@ -73,7 +96,13 @@ class UsersController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-
+    /**
+     * @OA\delete(
+     *     path="/api/taikhoan/delete/{id}",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function delete($id)
     {
         $kt = Users::find($id);
@@ -84,7 +113,13 @@ class UsersController extends Controller
             return $this->errors('Tài khoản này không thể xoá!');
         }
     }
-
+    /**
+     * @OA\delete(
+     *     path="/api/taikhoan/deletes",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function deletes(Request $request)
     {
         $ids = $request->input('ids');
@@ -107,7 +142,13 @@ class UsersController extends Controller
     }
 
 
-
+    /**
+     * @OA\post(
+     *     path="/api/taikhoan/save/{id}",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function save(Request $res, $id = null)
     {
         // Kiểm tra xem tên tài khoản đã tồn tại chưa
@@ -143,7 +184,13 @@ class UsersController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-    
+    /**
+     * @OA\post(
+     *     path="/api/taikhoan/changepassword",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function changePassword(Request $res)
     {
         $db = Users::where('id', $res->id)->first();
@@ -156,6 +203,14 @@ class UsersController extends Controller
 
         return $db->save() ? $this->ok($db) : $this->errors(null);
     }
+
+    /**
+     * @OA\post(
+     *     path="/api/taikhoan/updatectusers/{id}",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function updateCTusers(Request $request, $id)
     {
 
@@ -171,7 +226,13 @@ class UsersController extends Controller
         $db = $ct->save();
         return $db->save() ? $this->ok($db) : $this->errors(null);
     }
-
+    /**
+     * @OA\Get(
+     *     path="/api/taikhoan/gettaikhoanct/{id}",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function getTaiKhoanCT($id)
     {
         $db = DB::table('users')
@@ -183,6 +244,13 @@ class UsersController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/taikhoan/get/{id}",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function getTaiKhoan($id)
     {
         $db = Users::find($id);

@@ -1,0 +1,73 @@
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.fillter-price {
+  overflow: hidden;
+  width: 100%;
+}
+
+.price-inps {
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 5px 10px;
+  background-color: #e5e4e4;
+  gap: 10px;
+  display: flex;
+}
+.price-inps input {
+  width: 48%;
+  font-size: 13px;
+  height: 28px;
+}
+
+.price-suggest {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 15px;
+}
+.price-suggest button {
+  font-size: 13px;
+  border: 0;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.price-suggest button:hover {
+  background-color: #b8b8b8;
+}
+.btn-price_filter {
+  font-size: 18px;
+  padding: 8px;
+  border: 0;
+  border-radius: 7px;
+  width: 100%;
+  color: #fff;
+  font-weight: 600;
+  background-color: #f2863b;
+  margin-bottom: 10px;
+}
+.btn-price_filter:hover {
+  background-color: #f59856;
+}
+
+.title-listCar {
+  font-size: 25px;
+  color: rgb(235, 72, 2);
+  font-weight: 600;
+  margin: 10px;
+}
+
+.filter-row:hover {
+  background-color: #e4e4e4;
+  border-radius: 8px;
+}
+
+

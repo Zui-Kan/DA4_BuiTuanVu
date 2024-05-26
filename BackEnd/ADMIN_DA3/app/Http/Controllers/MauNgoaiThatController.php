@@ -15,7 +15,13 @@ class MauNgoaiThatController extends Controller
             'message' => $loi ?? "lỗi rồi!"
         ]);
     }
-
+    /**
+     * @OA\post(
+     *     path="/api/maungoaithat/search",
+     *    tags={"maungoaithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -41,7 +47,13 @@ class MauNgoaiThatController extends Controller
             return $this->errors(null);
         }
     }
-
+    /**
+     * @OA\Get(
+     *     path="/api/maungoaithat/{total}",
+     *    tags={"maungoaithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function index($total = null)
     {
         $db = MauNgoaiThat::paginate($total);
@@ -57,7 +69,13 @@ class MauNgoaiThatController extends Controller
     }
 
 
-
+    /**
+     * @OA\delete(
+     *     path="/api/maungoaithat/delete/{id}",
+     *    tags={"maungoaithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function delete($id)
     {
         $db = MauNgoaiThat::where('MaMauNgoaiThat', $id)->first()->delete();
@@ -71,6 +89,13 @@ class MauNgoaiThatController extends Controller
             return $this->errors(null);
         }
     }
+    /**
+     * @OA\delete(
+     *     path="/api/maungoaithat/deletes",
+     *    tags={"maungoaithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function deletes(Request $request)
     {
@@ -89,7 +114,13 @@ class MauNgoaiThatController extends Controller
         }
     }
 
-
+    /**
+     * @OA\post(
+     *     path="/api/maungoaithat/save/{id}",
+     *    tags={"maungoaithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function save(Request $res, $id = null)
     {
 
@@ -104,7 +135,7 @@ class MauNgoaiThatController extends Controller
         }
 
         $db = $tk->save();
-        
+
         if ($db) {
             return response()->json([
                 'data' => $db,
@@ -117,7 +148,13 @@ class MauNgoaiThatController extends Controller
     }
 
 
-
+    /**
+     * @OA\Get(
+     *     path="/api/maungoaithat/get/{id}",
+     *    tags={"maungoaithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function getMauNgoaiThat($id)
     {
         $db = MauNgoaiThat::find($id);

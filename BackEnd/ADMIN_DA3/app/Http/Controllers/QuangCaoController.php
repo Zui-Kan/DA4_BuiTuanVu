@@ -9,13 +9,25 @@ use Illuminate\Http\Request;
 class QuangCaoController extends Controller
 {
     use TrangThaiTrait;
-
+    /**
+     * @OA\Get(
+     *     path="/api/quangcao/{total}",
+     *    tags={"quangcao"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function index($total = null)
     {
         $db = QuangCao::paginate($total);
         return $db ? $this->ok($db) : $this->errors(null);
     }
-
+    /**
+     * @OA\post(
+     *     path="/api/quangcao/search",
+     *    tags={"quangcao"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -34,12 +46,25 @@ class QuangCaoController extends Controller
 
         return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
-
+    /**
+     * @OA\delete(
+     *     path="/api/quangcao/delete/{id}",
+     *    tags={"quangcao"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function delete($id)
     {
         $db = QuangCao::where('MaQuangCao', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
+    /**
+     * @OA\delete(
+     *     path="/api/quangcao/deletes",
+     *    tags={"quangcao"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function deletes(Request $request)
     {
@@ -49,7 +74,13 @@ class QuangCaoController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-
+    /**
+     * @OA\post(
+     *     path="/api/quangcao/save/{id}",
+     *    tags={"quangcao"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function save(Request $res, $id = null)
     {
         $tk = $id ? QuangCao::where('MaQuangCao', $id)->first() : new QuangCao();
@@ -63,7 +94,13 @@ class QuangCaoController extends Controller
     }
 
 
-
+    /**
+     * @OA\Get(
+     *     path="/api/quangcao/get/{id}",
+     *    tags={"quangcao"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function getQuangCao($id)
     {
         $db = QuangCao::find($id);

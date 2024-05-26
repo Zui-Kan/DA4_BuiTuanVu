@@ -9,13 +9,25 @@ use Illuminate\Http\Request;
 class ModelXeController extends Controller
 {
     use TrangThaiTrait;
-
+    /**
+     * @OA\Get(
+     *     path="/api/modelxe/{total}",
+     *    tags={"modelxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function index($total = null)
     {
         $db = ModelXe::paginate($total);
         return $db ? $this->ok($db) : $this->errors(null);
     }
-
+    /**
+     * @OA\post(
+     *     path="/api/modelxe/search",
+     *    tags={"modelxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -36,12 +48,25 @@ class ModelXeController extends Controller
 
         return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
+    /**
+     * @OA\delete(
+     *     path="/api/modelxe/delete/{id}",
+     *    tags={"modelxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function delete($id)
     {
         $db = ModelXe::where('MaModel', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
-
+    /**
+     * @OA\delete(
+     *     path="/api/modelxe/deletes",
+     *    tags={"modelxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function deletes(Request $request)
     {
         $ids = $request->input('ids');
@@ -51,7 +76,13 @@ class ModelXeController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-
+    /**
+     * @OA\post(
+     *     path="/api/modelxe/save/{id}",
+     *    tags={"modelxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function save(Request $res, $id = null)
     {
         $file_name = $this->uploadFile($res, 'image_upload', 'uploads');
@@ -81,7 +112,13 @@ class ModelXeController extends Controller
     }
 
 
-
+    /**
+     * @OA\post(
+     *     path="/api/modelxe/filtermodels",
+     *    tags={"modelxe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function filterModels(Request $request)
     {
         $minPrice = $request->input('min_price');
@@ -114,8 +151,6 @@ class ModelXeController extends Controller
 
         $result = $query->get();
 
-        return $result ? $this->ok($result) : $this->errors(null);       
+        return $result ? $this->ok($result) : $this->errors(null);
     }
-
-    
 }

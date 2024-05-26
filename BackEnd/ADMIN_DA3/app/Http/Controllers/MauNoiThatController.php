@@ -8,15 +8,26 @@ use Illuminate\Http\Request;
 
 class MauNoiThatController extends Controller
 {
-use TrangThaiTrait;
-
+    use TrangThaiTrait;
+    /**
+     * @OA\Get(
+     *     path="/api/maunoithat/{total}",
+     *    tags={"maunoithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function index($total = null)
     {
         $db = MauNoiThat::paginate($total);
-               return $db? $this->ok($db) : $this->errors(null);
-
+        return $db ? $this->ok($db) : $this->errors(null);
     }
-
+    /**
+     * @OA\post(
+     *     path="/api/maunoithat/search",
+     *    tags={"maunoithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -35,12 +46,25 @@ use TrangThaiTrait;
 
         return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
     }
+    /**
+     * @OA\delete(
+     *     path="/api/maunoithat/delete/{id}",
+     *    tags={"maunoithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function delete($id)
     {
         $db = MauNoiThat::where('MaMauNoiThat', $id)->first()->delete();
-               return $db? $this->ok($db) : $this->errors(null);
-
+        return $db ? $this->ok($db) : $this->errors(null);
     }
+    /**
+     * @OA\delete(
+     *     path="/api/maunoithat/deletes",
+     *    tags={"maunoithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function deletes(Request $request)
     {
@@ -49,9 +73,15 @@ use TrangThaiTrait;
         $db = MauNoiThat::whereIn('MaMauNoiThat', $ids)->delete();
 
         return $db ? $this->ok($db) : $this->errors(null);
-
     }
 
+    /**
+     * @OA\post(
+     *     path="/api/maunoithat/save/{id}",
+     *    tags={"maunoithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function save(Request $res, $id = null)
     {
@@ -68,16 +98,20 @@ use TrangThaiTrait;
         }
 
         $db = $tk->save();
-               return $db? $this->ok($db) : $this->errors(null);
-
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 
 
-
+    /**
+     * @OA\Get(
+     *     path="/api/maunoithat/get/{id}",
+     *    tags={"maunoithat"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function getMauNoiThat($id)
     {
         $db = MauNoiThat::find($id);
-               return $db? $this->ok($db) : $this->errors(null);
-
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 }

@@ -1,0 +1,1665 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "APIs For Thrift Store",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "8dcb70df1020986038d098cc08d05dae",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "operationId": "a8dd056be3e98a38c657f73ed6cdef2d",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/auth/refresh": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "operationId": "b655e0f8fa74e3a128cf4548d7fe3a55",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/auth/profile": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get logged-in user details",
+                "operationId": "6d010834430854e4df1a215e5771aa96",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/baiviet/search": {
+            "post": {
+                "tags": [
+                    "BaiViet"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "f4b6a4fc9e7ea6c2f475c2a8d625d87e",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "totalPage",
+                        "in": "query",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/baiviet/": {
+            "get": {
+                "tags": [
+                    "BaiViet"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "ce5cdfcd6ad4dcb55b7bab5dd8501301",
+                "parameters": [
+                    {
+                        "name": "total",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/baiviet/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "BaiViet"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "c5c57deebda54e4fb5257a10c54e03f1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/baiviet/deletes": {
+            "delete": {
+                "tags": [
+                    "BaiViet"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "0a54c0803e4d5faa0a11361da7393667",
+                "parameters": [
+                    {
+                        "name": "ids",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/baiviet/save/{id}": {
+            "post": {
+                "tags": [
+                    "BaiViet"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "03acb0071a0efd8531e2806245c20418",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "MaTaiKhoan",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "MaChuDe",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "NoiDung",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/baiviet/get/{id}": {
+            "get": {
+                "tags": [
+                    "BaiViet"
+                ],
+                "summary": "Get logged-in user details",
+                "operationId": "ffbe4e3a71236593db3eb3600f138acb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID của bài viết",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/binhluan/search": {
+            "post": {
+                "tags": [
+                    "BinhLuan"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "db54a3afb8ea91cd8071903bbfd2c298",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "totalPage",
+                        "in": "query",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/binhluan/": {
+            "get": {
+                "tags": [
+                    "BinhLuan"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "bcce5281a6c2e152fc5c77ac941ea34b",
+                "parameters": [
+                    {
+                        "name": "total",
+                        "in": "path",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/binhluan/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "BinhLuan"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "9863149372066bceec1519c4f7fe3457",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/binhluan/deletes": {
+            "delete": {
+                "tags": [
+                    "BinhLuan"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "f6f0abe874fa8190255205072f6e4a3f",
+                "parameters": [
+                    {
+                        "name": "ids",
+                        "in": "query",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/binhluan/save/{id}": {
+            "get": {
+                "tags": [
+                    "BinhLuan"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "97e7bada5483f94d3d8f9a75c44f3849",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "MaBaiViet",
+                        "in": "query",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "MaModel",
+                        "in": "query",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "MaTaiKhoan",
+                        "in": "query",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "NoiDung",
+                        "in": "query",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/binhluan/get/{id}": {
+            "get": {
+                "tags": [
+                    "BinhLuan"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "8ba322fa6e413f1d00e6d1ad9b65bea9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/chudebaiviet/search": {
+            "post": {
+                "tags": [
+                    "chudebaiviet"
+                ],
+                "operationId": "8ad0254227d2479517e6410dfb2d1675",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/chudebaiviet/{total}": {
+            "get": {
+                "tags": [
+                    "chudebaiviet"
+                ],
+                "operationId": "8cccbb7d6853a722fde2ebb6b88939e0",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/chudebaiviet/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "chudebaiviet"
+                ],
+                "operationId": "1752371b837be16aebb28baa59675d15",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/chudebaiviet/deletes": {
+            "delete": {
+                "tags": [
+                    "chudebaiviet"
+                ],
+                "operationId": "2179fff0a04959874a28ac8d82a90787",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/chudebaiviet/save/{id}": {
+            "post": {
+                "tags": [
+                    "chudebaiviet"
+                ],
+                "operationId": "0da26f827b2f23459ea1cae198242635",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/get/{id}": {
+            "get": {
+                "tags": [
+                    "chudebaiviet"
+                ],
+                "operationId": "95ef9e7c569bd94e02edb9a6436548d2",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/datxe/search": {
+            "post": {
+                "tags": [
+                    "datxe"
+                ],
+                "operationId": "4249becd40a02a01dfffe3d5fffe8c79",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/datxe/dat": {
+            "post": {
+                "tags": [
+                    "datxe"
+                ],
+                "operationId": "de76440911d61a55282704e82259f5e0",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/datxe/nhanvienxacnhan": {
+            "post": {
+                "tags": [
+                    "datxe"
+                ],
+                "operationId": "4215f8c9588efc80b25d12b3362e83f1",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/datxe/giaoxe": {
+            "post": {
+                "tags": [
+                    "datxe"
+                ],
+                "operationId": "861ab4b4f58caf17ec4dbfddf40173c5",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/datxe/hoantat": {
+            "post": {
+                "tags": [
+                    "datxe"
+                ],
+                "operationId": "df37c2eea114e513616603e7f1cb8028",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/datxe/huydonhang/{id}": {
+            "post": {
+                "tags": [
+                    "datxe"
+                ],
+                "operationId": "7314105e7148ce7cd63efb7404e8c8d9",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/datxe/search_yeucauhuy": {
+            "post": {
+                "tags": [
+                    "datxe"
+                ],
+                "operationId": "36a36b3cae74ddb8df335293c9f7f44b",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/datxe/xacnhanyeucauhuy/{id}": {
+            "delete": {
+                "tags": [
+                    "datxe"
+                ],
+                "operationId": "347a72248701ef6ffb229a2bc866ec90",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/hangxe/search": {
+            "post": {
+                "tags": [
+                    "hangxe"
+                ],
+                "operationId": "1671f0afe362e663dafffb4396fdb601",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/hangxe/{total}": {
+            "get": {
+                "tags": [
+                    "hangxe"
+                ],
+                "operationId": "eec2f0130dc9f50f1e9321f82bea8ab0",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/hangxe/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "hangxe"
+                ],
+                "operationId": "2ceaecf60e6cf52ac7487da58001ea6d",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/hangxe/deletes": {
+            "delete": {
+                "tags": [
+                    "hangxe"
+                ],
+                "operationId": "1ac23455dc6d88853a99ebb0c81b658c",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/hangxe/save/{id}": {
+            "post": {
+                "tags": [
+                    "hangxe"
+                ],
+                "operationId": "88af78cf938711e6e13c8a44ec64ee5a",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/hangxe/get/{id}": {
+            "get": {
+                "tags": [
+                    "hangxe"
+                ],
+                "operationId": "d666c158f0068ce301aa719146e60ddd",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/khachhang/search": {
+            "post": {
+                "tags": [
+                    "khachhang"
+                ],
+                "operationId": "b4970452bc771df1f91bb23b2d27fc38",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/khachhang/{total}": {
+            "get": {
+                "tags": [
+                    "khachhang"
+                ],
+                "operationId": "486bbf336ff2b09879514621c8760125",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/khachhang/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "khachhang"
+                ],
+                "operationId": "f39374caf6615cc7e57219ff6d3386e2",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/khachhang/deletes": {
+            "delete": {
+                "tags": [
+                    "khachhang"
+                ],
+                "operationId": "da8ad513634e91197fc001cd9fd4a135",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/khachhang/save/{id}": {
+            "post": {
+                "tags": [
+                    "khachhang"
+                ],
+                "operationId": "8c5ea098b5021e5e1fb528163b334ca2",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/khachhang/get/{id}": {
+            "get": {
+                "tags": [
+                    "khachhang"
+                ],
+                "operationId": "59a040298e329abae7bd0dfb2a157a7f",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/loaixe/search": {
+            "post": {
+                "tags": [
+                    "loaixe"
+                ],
+                "operationId": "85322f1fe3c60e9822c9d1227003423a",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/loaixe/{total}": {
+            "get": {
+                "tags": [
+                    "loaixe"
+                ],
+                "operationId": "dc1f2bcf1c7b19f1239e7c598b834a28",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/loaixe/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "loaixe"
+                ],
+                "operationId": "f28ae89c28c9b5c8d37b70f24ea6444a",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/loaixe/deletes": {
+            "delete": {
+                "tags": [
+                    "loaixe"
+                ],
+                "operationId": "c19cfca1937664e4faa06448a47cbc1b",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/loaixe/save/{id}": {
+            "post": {
+                "tags": [
+                    "loaixe"
+                ],
+                "operationId": "11866f791ad0ee107f1ddbdc58f85507",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maungoaithat/search": {
+            "post": {
+                "tags": [
+                    "maungoaithat"
+                ],
+                "operationId": "e9b2ff01c5a5fa67464ab9041da81cb2",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maungoaithat/{total}": {
+            "get": {
+                "tags": [
+                    "maungoaithat"
+                ],
+                "operationId": "c151870f335b5ee9a1ffb7edaef9cf18",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maungoaithat/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "maungoaithat"
+                ],
+                "operationId": "92bcbce609bac72737c0c3c1efd8f6f3",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maungoaithat/deletes": {
+            "delete": {
+                "tags": [
+                    "maungoaithat"
+                ],
+                "operationId": "b8f0a2e1dac672e2910dd6f8e29b6778",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maungoaithat/save/{id}": {
+            "post": {
+                "tags": [
+                    "maungoaithat"
+                ],
+                "operationId": "b6a06af972f43946171ddd8a28039083",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maungoaithat/get/{id}": {
+            "get": {
+                "tags": [
+                    "maungoaithat"
+                ],
+                "operationId": "c65ad976f3c49e80c8b36c36d9b40bb1",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maunoithat/{total}": {
+            "get": {
+                "tags": [
+                    "maunoithat"
+                ],
+                "operationId": "bbf37d2bc81d6e9e10714895677adbb2",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maunoithat/search": {
+            "post": {
+                "tags": [
+                    "maunoithat"
+                ],
+                "operationId": "a3c41c0a4325ba043868f355519562a0",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maunoithat/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "maunoithat"
+                ],
+                "operationId": "57cd08ba14a767e55357250067771b2f",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maunoithat/deletes": {
+            "delete": {
+                "tags": [
+                    "maunoithat"
+                ],
+                "operationId": "80a1c168da4757a9ea05c7cb6eb4a468",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maunoithat/save/{id}": {
+            "post": {
+                "tags": [
+                    "maunoithat"
+                ],
+                "operationId": "9e2401d36e173790c7009d734715db22",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/maunoithat/get/{id}": {
+            "get": {
+                "tags": [
+                    "maunoithat"
+                ],
+                "operationId": "29420d4065722d1ac73cebbfd19dc315",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/modelxe/{total}": {
+            "get": {
+                "tags": [
+                    "modelxe"
+                ],
+                "operationId": "58874d9fedf2fc0f2886bba55a3bf31e",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/modelxe/search": {
+            "post": {
+                "tags": [
+                    "modelxe"
+                ],
+                "operationId": "1baf0d9683ad35ee3fb87e3892ed3d1b",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/modelxe/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "modelxe"
+                ],
+                "operationId": "c89642f3a9a08fe76a6d6b90a1cb76c0",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/modelxe/deletes": {
+            "delete": {
+                "tags": [
+                    "modelxe"
+                ],
+                "operationId": "6e2f1fa37b495b1325f350489bb4af35",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/modelxe/save/{id}": {
+            "post": {
+                "tags": [
+                    "modelxe"
+                ],
+                "operationId": "476711c5dffe1c70bf6a1af97bbe246a",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/modelxe/filtermodels": {
+            "post": {
+                "tags": [
+                    "modelxe"
+                ],
+                "operationId": "6a0c7ced5ddab683b289e7f3fd82a531",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhacungcap/{total}": {
+            "get": {
+                "tags": [
+                    "nhacungcap"
+                ],
+                "operationId": "f74c4692921b7354ac7d6ba9ccd797fb",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhacungcap/search": {
+            "post": {
+                "tags": [
+                    "nhacungcap"
+                ],
+                "operationId": "01b568e98e46c424d46c586867459a2d",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhacungcap/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "nhacungcap"
+                ],
+                "operationId": "fb2b9614c1faf9186272dc7fcb5734d4",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhacungcap/deletes": {
+            "delete": {
+                "tags": [
+                    "nhacungcap"
+                ],
+                "operationId": "7af1ee682b41f5013e1dc4b4559052ba",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhacungcap/save/{id}": {
+            "post": {
+                "tags": [
+                    "nhacungcap"
+                ],
+                "operationId": "0b83143cf54f9a14f2570f9b2132c1f9",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhacungcap/get/{id}": {
+            "get": {
+                "tags": [
+                    "nhacungcap"
+                ],
+                "operationId": "f358222b6e9a74ba25d533316eead4f2",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhanvien/{total}": {
+            "get": {
+                "tags": [
+                    "nhanvien"
+                ],
+                "operationId": "4548d2f9f4f24056e2388d12dcaa0392",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhanvien/search": {
+            "post": {
+                "tags": [
+                    "nhanvien"
+                ],
+                "operationId": "6ab764a3e08e8ef689c72ca97e2185cb",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhanvien/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "nhanvien"
+                ],
+                "operationId": "24f6f7fc909aae81b76ff587001ac8b3",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhanvien/deletes": {
+            "delete": {
+                "tags": [
+                    "nhanvien"
+                ],
+                "operationId": "7b4548f47726a6e80b848430a050528a",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhanvien/save/{id}": {
+            "post": {
+                "tags": [
+                    "nhanvien"
+                ],
+                "operationId": "aae860ad896d45eb94562835b6b0102d",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/nhanvien/get/{id}": {
+            "get": {
+                "tags": [
+                    "nhanvien"
+                ],
+                "operationId": "3d81bc9f4a7cb4a6649a6c18c384cfdb",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/phienbanxe/search": {
+            "post": {
+                "tags": [
+                    "phienbanxe"
+                ],
+                "operationId": "4ef57a793f8bb8a01db400d5221e2bd3",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/phienbanxe/{total}": {
+            "get": {
+                "tags": [
+                    "phienbanxe"
+                ],
+                "operationId": "e287c7c26855fcb24a7ee69b08e7303c",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/phienbanxe/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "phienbanxe"
+                ],
+                "operationId": "703ffb3db37d40c6f6ca30c663d63e01",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/phienbanxe/deletes": {
+            "delete": {
+                "tags": [
+                    "phienbanxe"
+                ],
+                "operationId": "3f888c97f0eeca4528f7ea922a462a1d",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/phienbanxe/save/{id}": {
+            "post": {
+                "tags": [
+                    "phienbanxe"
+                ],
+                "operationId": "c82852497dd2c48ac4dbd2596546aaa2",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/phienbanxe/get/{id}": {
+            "get": {
+                "tags": [
+                    "phienbanxe"
+                ],
+                "operationId": "57f372cc69e811d66168f46551b69e95",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/quangcao/{total}": {
+            "get": {
+                "tags": [
+                    "quangcao"
+                ],
+                "operationId": "af5bd18fac0113f573df2c002062ddbb",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/quangcao/search": {
+            "post": {
+                "tags": [
+                    "quangcao"
+                ],
+                "operationId": "42f37ef659434fa8e08d61e1eb3571f4",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/quangcao/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "quangcao"
+                ],
+                "operationId": "2b1bddb2a27e93f3ae9ec765c499b0fd",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/quangcao/deletes": {
+            "delete": {
+                "tags": [
+                    "quangcao"
+                ],
+                "operationId": "fcfa47a813951babdfd0df82c88afd08",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/quangcao/save/{id}": {
+            "post": {
+                "tags": [
+                    "quangcao"
+                ],
+                "operationId": "189ac2bff3d721e22f1324143f0ea94c",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/quangcao/get/{id}": {
+            "get": {
+                "tags": [
+                    "quangcao"
+                ],
+                "operationId": "bc5aa6e9b74b693a2d7fb4f7cc38e8f2",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/thongsokythuatxe/search": {
+            "post": {
+                "tags": [
+                    "thongsokythuatxe"
+                ],
+                "operationId": "f5f6cf696f69024dfd94dd4db60851ad",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/thongsokythuatxe/{total}": {
+            "get": {
+                "tags": [
+                    "thongsokythuatxe"
+                ],
+                "operationId": "0d10da4444929c4e5d31682d6a72cc88",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/thongsokythuatxe/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "thongsokythuatxe"
+                ],
+                "operationId": "f05b5f44b5c4346017d2112a68a37fee",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/thongsokythuatxe/deletes": {
+            "delete": {
+                "tags": [
+                    "thongsokythuatxe"
+                ],
+                "operationId": "b4da67bc97e4abf29d68c4e977dbb923",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/thongsokythuatxe/save/{id}": {
+            "post": {
+                "tags": [
+                    "thongsokythuatxe"
+                ],
+                "operationId": "e194693328460ced93b48a3eb3fba5d7",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/thongsokythuatxe/get/{id}": {
+            "get": {
+                "tags": [
+                    "thongsokythuatxe"
+                ],
+                "operationId": "025f4772fc25c1e77cc05a63a00ab9db",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/taikhoan/search": {
+            "post": {
+                "tags": [
+                    "taikhoan"
+                ],
+                "operationId": "65e81175f84996ca609f2c5556b0b8b5",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/taikhoan/{total}": {
+            "get": {
+                "tags": [
+                    "taikhoan"
+                ],
+                "operationId": "790749e5d9c4b643b09762e7392208ac",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/taikhoan/signup": {
+            "post": {
+                "tags": [
+                    "taikhoan"
+                ],
+                "operationId": "8fe33a543e3ffa3e2ec6b243f14d6015",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/taikhoan/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "taikhoan"
+                ],
+                "operationId": "9477b3777c74baeff0eca0e728763fd0",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/taikhoan/deletes": {
+            "delete": {
+                "tags": [
+                    "taikhoan"
+                ],
+                "operationId": "a1815f21399a11ae08afc88e48af4c9a",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/taikhoan/save/{id}": {
+            "post": {
+                "tags": [
+                    "taikhoan"
+                ],
+                "operationId": "4f3e813ca5942ac840e5c16bd1e969b9",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/taikhoan/changepassword": {
+            "post": {
+                "tags": [
+                    "taikhoan"
+                ],
+                "operationId": "ae4e4780b73912b77c976b721d41d1ef",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/taikhoan/updatectusers/{id}": {
+            "post": {
+                "tags": [
+                    "taikhoan"
+                ],
+                "operationId": "bf4b496239513ccab0315952d3fe6a30",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/taikhoan/gettaikhoanct/{id}": {
+            "get": {
+                "tags": [
+                    "taikhoan"
+                ],
+                "operationId": "51cb366bd7c54a8e4eb8c9de91e7da5e",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/taikhoan/get/{id}": {
+            "get": {
+                "tags": [
+                    "taikhoan"
+                ],
+                "operationId": "79118e51e6aed1c84e64acd18764f7f3",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

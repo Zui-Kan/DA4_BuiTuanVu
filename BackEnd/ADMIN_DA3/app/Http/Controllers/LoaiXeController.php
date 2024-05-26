@@ -16,12 +16,13 @@ class LoaiXeController extends Controller
         ]);
     }
 
-    public function index($total = null)
-    {
-        $db = LoaiXe::paginate($total);
-        return $db ? $this->ok($db) : $this->errors(null);
-    }
-
+    /**
+     * @OA\post(
+     *     path="/api/loaixe/search",
+     *    tags={"loaixe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -46,11 +47,39 @@ class LoaiXeController extends Controller
             return $this->errors(null);
         }
     }
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/loaixe/{total}",
+     *    tags={"loaixe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+    public function index($total = null)
+    {
+        $db = LoaiXe::paginate($total);
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
+    /**
+     * @OA\delete(
+     *     path="/api/loaixe/delete/{id}",
+     *    tags={"loaixe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
     public function delete($id)
     {
         $db = LoaiXe::where('MaLoaiXe', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
+    /**
+     * @OA\delete(
+     *     path="/api/loaixe/deletes",
+     *    tags={"loaixe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function deletes(Request $request)
     {
@@ -61,6 +90,13 @@ class LoaiXeController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
+    /**
+     * @OA\post(
+     *     path="/api/loaixe/save/{id}",
+     *    tags={"loaixe"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
 
     public function save(Request $res, $id = null)
     {
@@ -79,9 +115,4 @@ class LoaiXeController extends Controller
         $db = $tk->save();
         return $db ? $this->ok($db) : $this->errors(null);
     }
-
-
-
-   
-
 }
