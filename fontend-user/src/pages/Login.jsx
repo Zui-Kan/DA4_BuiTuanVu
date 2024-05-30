@@ -4,7 +4,8 @@ import "../style/login.css";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { tokenState } from "../constant/recoil";
-import { apiLogin } from "../services/auth.service";
+import { apiLogin, getProfile } from "../services/auth.service";
+
 const Login = function () {
   const [isLoading, setIsLoading] = useState(false);
   const [errorLogin, setErrorLogin] = useState(null);
@@ -19,9 +20,11 @@ const Login = function () {
     setIsLoading(true);
     try {
       const response = await apiLogin(userName, password);
-      console.log(response);
       if (response && response.access_token) {
         setToken(response.access_token);
+
+        const profile = await getProfile(response.access_token);
+        localStorage.setItem("profile", JSON.stringify(profile));
         localStorage.setItem("tn", JSON.stringify(response));
         navigate("/");
       } else {
@@ -45,11 +48,10 @@ const Login = function () {
     <>
       <Header></Header>
       <div className="container_login_signup">
-        {/* <!-- form đăng nhập--> */}
         <div className="form-container" ng-show="showLoginForm">
           <p className="title">ĐĂNG NHẬP</p>
           <form className="form" onSubmit={handleLogin}>
-            {errorLogin && <p className="error-message">{errorLogin}</p>}{" "}
+            {errorLogin && <p className="error-message">{errorLogin}</p>}
             <input
               type="text"
               className="input"

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\BinhLuan;
 use App\Models\HangXe;
+use App\Models\MauNgoaiThat;
+use App\Models\MauNoiThat;
 use App\Models\ModelXe;
 use App\Models\PhienBanXe;
 use App\Models\ThongSoKyThuatXe;
@@ -31,14 +33,16 @@ class DetailController extends Controller
 
     public function getDetail($id = null)
     {
-        $md = ModelXe::select('ModelXe.*', 'HangXe.*')
-            ->join('HangXe', 'ModelXe.MaHang', '=', 'HangXe.MaHang')
+
+        $md = ModelXe::select('ModelXe.*', 'HangXe.TenHang')
+            ->join('HangXe', 'HangXe.MaHang', '=', 'ModelXe.MaHang')
             ->where('ModelXe.MaModel', $id)
             ->first();
-        $phienban = PhienBanXe::where("MaModel", $id)->get();
-        $tskt = ThongSoKyThuatXe::find($id);
 
-        $loaixe = ModelXe::where('MaLoaiXe', $md->MaLoaiXe)->get();
+        $phienban = PhienBanXe::where("MaModel", $id)->get();
+        $tskt = ThongSoKyThuatXe::where("MaModel", $id)->first();
+
+        $loaixe = ModelXe::where('ModelXe.MaLoaiXe', $md->MaLoaiXe)->get();
 
         $binhluan = BinhLuan::select('binhluan.*', 'ctusers.HoVaTen', 'ctusers.AnhDaiDien')
             ->join('users', 'binhluan.TaiKhoanID', '=', 'users.id')
@@ -57,7 +61,30 @@ class DetailController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
+    public function hienthingoaithat($id = null)
+    {
+        if ($id) {
+            $db = MauNgoaiThat::where('MaPhienBan', $id)->get();
+            return $db ? $this->ok($db) : $this->errors(null);
+        }
+    }
 
+    public function hienthinoithat($id = null)
+    {
+        if ($id) {
+            $db = MauNoiThat::where('MaMauNgoaiThat', $id)->get();
+            return $db ? $this->ok($db) : $this->errors(null);
+        }
+    }
+
+    public function save_binhluan(Request $request)
+    {
+        $db = new BinhLuan();
+        $db->MaModel = $request->MaModel;
+        $db->TaiKhoanID = $request->TaiKhoanID;
+        $db->NoiDung = $request->NoiDung;
+        return $db->save() ? $this->ok($db) : $this->errors(null);
+    }
 
     /**
      * @OA\delete(
@@ -66,9 +93,9 @@ class DetailController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
-    public function delete($id)
+    public function delete_binhluan($id)
     {
-        $db = HangXe::where('MaHangXe', $id)->first()->delete();
+        $db = BinhLuan::where('MaBinhLuan', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
     /**

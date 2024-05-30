@@ -21,6 +21,13 @@ export const formatPrice = (price) => {
       currency: "VND",
     });
   }
-
   return formattedPrice;
+};
+export const formatPriceVND = (price) => {
+  if (price == null) return "0"; // Kiểm tra nếu giá trị không hợp lệ thì trả về '0'
+  return price.toLocaleString("vi-VN");
+};
+
+export const formatPriceStringVND = (price) => {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };

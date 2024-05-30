@@ -1,368 +1,288 @@
 import "../style/Cart.css";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
+import { useEffect, useState, useCallback } from "react";
+import {
+  getCartDetails,
+  getTotalQuantity,
+  removeFromCart,
+  updateQuantityInCart,
+} from "../services/cart.service";
+import { formatPrice } from "../shares/formatPrice";
+import { uploads } from "../constant/api";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import { Button, Popconfirm, message } from "antd";
+import { Loading } from "../Components/Loading/Loading";
+import { useRecoilState } from "recoil";
+import { cartCheckout, cartState } from "../constant/recoil";
+import { useNavigate } from "react-router-dom";
+import debounce from "lodash.debounce"; // Thêm lodash.debounce để sử dụng debounce
 
 const Cart = function () {
+  const [data, setData] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [checkout, setcheckout] = useRecoilState(cartCheckout);
+  const [card, setCart] = useRecoilState(cartState);
+  const navigate = useNavigate();
+
+  const loadData = async () => {
+    const details = await getCartDetails();
+    setData(details);
+    setSelectedItems(new Array(details.listCart.length).fill(false));
+    setIsDataLoaded(true);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const handleCheckboxChange = (index) => {
+    const newSelectedItems = [...selectedItems];
+    newSelectedItems[index] = !newSelectedItems[index];
+    setSelectedItems(newSelectedItems);
+  };
+
+  const handleSelectAllChange = (event) => {
+    const isChecked = event.target.checked;
+    setSelectAll(isChecked);
+    const newSelectedItems = selectedItems.map(() => isChecked);
+    setSelectedItems(newSelectedItems);
+  };
+
+  const handleDeleteChange = async (maMauNoiThat) => {
+    await removeFromCart(maMauNoiThat);
+    loadData();
+  };
+
+  const handleDeleteAllChange = async () => {
+    const itemsToDelete = [];
+    selectedItems.forEach((isSelected, index) => {
+      if (isSelected) {
+        itemsToDelete.push(data.listCart[index].MaMauNoiThat);
+      }
+    });
+
+    for (const maMauNoiThat of itemsToDelete) {
+      await removeFromCart(maMauNoiThat);
+    }
+
+    loadData();
+  };
+
+  const handleCheckoputChange = async () => {
+    const itemsCheckout = data.listCart.filter(
+      (item, index) => selectedItems[index]
+    );
+    setcheckout(itemsCheckout);
+    navigate("/checkout");
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const updateQuantity = useCallback(
+    debounce((index, newQuantity) => {
+      const selectedNoiThat = data.listCart[index].MaMauNoiThat;
+      updateQuantityInCart(selectedNoiThat, newQuantity);
+      setData((prevData) => {
+        const newData = { ...prevData };
+        newData.listCart[index].soLuong = newQuantity;
+        return newData;
+      });
+    }),
+    [data]
+  );
+
+  const handleQuantityChange = async (index, newQuantity) => {
+    await updateQuantity(index, newQuantity);
+    setCart(getTotalQuantity() || 0);
+  };
+
+  const calculateTotal = () => {
+    let totalQuantity = 0;
+    let totalPrice = 0;
+
+    data?.listCart.forEach((item, index) => {
+      if (selectedItems[index]) {
+        totalQuantity += item.soLuong;
+        totalPrice += item.soLuong * item.Gia;
+      }
+    });
+    return { totalQuantity, totalPrice };
+  };
+
+  const { totalQuantity, totalPrice } = calculateTotal();
+
+  if (!isDataLoaded) {
+    return <Loading />;
+  }
+
   return (
     <>
-      <Header></Header>
       <main>
         <div className="shopping-cart">
           <table className="table">
             <thead>
               <tr>
-                <th scope="col">
+                <th scope="col" style={{ width: "4%" }}>
                   <label className="custom-checkbox">
-                    <input name="dummy" type="checkbox" />
+                    <input
+                      name="checkbox_all"
+                      type="checkbox"
+                      checked={selectAll}
+                      onChange={handleSelectAllChange}
+                    />
                     <span className="checkmark"></span>
                   </label>
                 </th>
-                <th scope="col">Ảnh</th>
-                <th scope="col">Thông tin</th>
-                <th scope="col">Đơn giá</th>
-                <th scope="col">Số lượng</th>
-                <th scope="col">Số tiền</th>
-                <th scope="col">
-                  <button type="button" className="btn-xoatat">
-                    Xoá tất
-                  </button>
+                <th scope="col" style={{ width: "9%" }}>
+                  Ảnh
+                </th>
+                <th scope="col" style={{ width: "40%" }}>
+                  Thông tin
+                </th>
+                <th scope="col" style={{ width: "15%" }}>
+                  Đơn giá
+                </th>
+                <th scope="col" style={{ width: "10%" }}>
+                  Số lượng
+                </th>
+                <th scope="col" style={{ width: "15%" }}>
+                  Số tiền
+                </th>
+                <th scope="col" style={{ width: "76%" }}>
+                  <Popconfirm
+                    title="Delete"
+                    description="Bạn có chắc muốn xoá các sản phẩm đã chọn?"
+                    onConfirm={() => handleDeleteAllChange()}
+                    icon={
+                      <QuestionCircleOutlined
+                        style={{
+                          color: "red",
+                        }}
+                      />
+                    }
+                  >
+                    <button type="button" className="btn-xoatat">
+                      Xoá tất
+                    </button>
+                  </Popconfirm>
                 </th>
               </tr>
             </thead>
             <tbody>
-              {/* Card 1 */}
-              <tr>
-                <td>
-                  <label className="custom-checkbox">
-                    <input name="dummy" type="checkbox" />
-                    <span className="checkmark"></span>
-                  </label>
-                </td>
-                <td>
-                  <div className="khung-img-cart">
-                    <img className="img-cart" src="/IMAGE/oto/2.jpg" alt="" />
-                  </div>
-                </td>
+              {data?.listCart.map((item, index) => (
+                <tr key={item.MaMauNoiThat}>
+                  <td className="inp-soluong_cart">
+                    <label className="custom-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={selectedItems[index]}
+                        onChange={() => handleCheckboxChange(index)}
+                      />
+                      <span className="checkmark"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <div className="khung-img-cart inp-soluong_cart">
+                      <img
+                        className="img-cart"
+                        src={`${uploads()}${item.HinhAnhXe}`}
+                        alt=""
+                      />
+                    </div>
+                  </td>
 
-                <td>
-                  <div className="cart-thongtin">
-                    <a className="thongtin-title">
-                      Sản phẩm 1 Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản
-                      phẩm 1
-                    </a>
-                    <div>Màu sắc: Đỏ</div>
-                    <div>Phiên bản: Đặc biệt</div>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
+                  <td>
+                    <div className="cart-thongtin">
+                      <a className="thongtin-title">{item.TenModel}</a>
+                      <div>Phiên bản: {item.TenPhienBan}</div>
+                      <div>
+                        Màu ngoại thất: {item.TenMauNgoaiThat} - Nội thất:{" "}
+                        {item.TenMauNoiThat}{" "}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="inp-soluong_cart">{formatPrice(item.Gia)}</td>
 
-                <td>
-                  <div className="inp-soluong">
-                    <button className="btn-secondary decrease-btn">-</button>
-                    <input
-                      type="number"
-                      className="quantity-input"
-                      value="1"
-                      min="1"
-                    />
-                    <button className="btn-secondary increase-btn">+</button>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-                <td>
-                  <button type="button" className="btn-xoa">
-                    Xoá
-                  </button>
-                </td>
-              </tr>
-              {/* Card 1 */}
-              <tr>
-                <td>
-                  <label className="custom-checkbox">
-                    <input name="dummy" type="checkbox" />
-                    <span className="checkmark"></span>
-                  </label>
-                </td>
-                <td>
-                  <div className="khung-img-cart">
-                    <img className="img-cart" src="/IMAGE/oto/2.jpg" alt="" />
-                  </div>
-                </td>
-
-                <td>
-                  <div className="cart-thongtin">
-                    <a className="thongtin-title">
-                      Sản phẩm 1 Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản
-                      phẩm 1
-                    </a>
-                    <div>Màu sắc: Đỏ</div>
-                    <div>Phiên bản: Đặc biệt</div>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-
-                <td>
-                  <div className="inp-soluong">
-                    <button className="btn-secondary decrease-btn">-</button>
-                    <input
-                      type="number"
-                      className="quantity-input"
-                      value="1"
-                      min="1"
-                    />
-                    <button className="btn-secondary increase-btn">+</button>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-                <td>
-                  <button type="button" className="btn-xoa">
-                    Xoá
-                  </button>
-                </td>
-              </tr>
-              {/* Card 1 */}
-              <tr>
-                <td>
-                  <label className="custom-checkbox">
-                    <input name="dummy" type="checkbox" />
-                    <span className="checkmark"></span>
-                  </label>
-                </td>
-                <td>
-                  <div className="khung-img-cart">
-                    <img className="img-cart" src="/IMAGE/oto/2.jpg" alt="" />
-                  </div>
-                </td>
-
-                <td>
-                  <div className="cart-thongtin">
-                    <a className="thongtin-title">
-                      Sản phẩm 1 Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản
-                      phẩm 1
-                    </a>
-                    <div>Màu sắc: Đỏ</div>
-                    <div>Phiên bản: Đặc biệt</div>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-
-                <td>
-                  <div className="inp-soluong">
-                    <button className="btn-secondary decrease-btn">-</button>
-                    <input
-                      type="number"
-                      className="quantity-input"
-                      value="1"
-                      min="1"
-                    />
-                    <button className="btn-secondary increase-btn">+</button>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-                <td>
-                  <button type="button" className="btn-xoa">
-                    Xoá
-                  </button>
-                </td>
-              </tr>
-              {/* Card 1 */}
-              <tr>
-                <td>
-                  <label className="custom-checkbox">
-                    <input name="dummy" type="checkbox" />
-                    <span className="checkmark"></span>
-                  </label>
-                </td>
-                <td>
-                  <div className="khung-img-cart">
-                    <img className="img-cart" src="/IMAGE/oto/2.jpg" alt="" />
-                  </div>
-                </td>
-
-                <td>
-                  <div className="cart-thongtin">
-                    <a className="thongtin-title">
-                      Sản phẩm 1 Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản
-                      phẩm 1
-                    </a>
-                    <div>Màu sắc: Đỏ</div>
-                    <div>Phiên bản: Đặc biệt</div>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-
-                <td>
-                  <div className="inp-soluong">
-                    <button className="btn-secondary decrease-btn">-</button>
-                    <input
-                      type="number"
-                      className="quantity-input"
-                      value="1"
-                      min="1"
-                    />
-                    <button className="btn-secondary increase-btn">+</button>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-                <td>
-                  <button type="button" className="btn-xoa">
-                    Xoá
-                  </button>
-                </td>
-              </tr>
-              {/* Card 1 */}
-              <tr>
-                <td>
-                  <label className="custom-checkbox">
-                    <input name="dummy" type="checkbox" />
-                    <span className="checkmark"></span>
-                  </label>
-                </td>
-                <td>
-                  <div className="khung-img-cart">
-                    <img className="img-cart" src="/IMAGE/oto/2.jpg" alt="" />
-                  </div>
-                </td>
-
-                <td>
-                  <div className="cart-thongtin">
-                    <a className="thongtin-title">
-                      Sản phẩm 1 Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản
-                      phẩm 1
-                    </a>
-                    <div>Màu sắc: Đỏ</div>
-                    <div>Phiên bản: Đặc biệt</div>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-
-                <td>
-                  <div className="inp-soluong">
-                    <button className="btn-secondary decrease-btn">-</button>
-                    <input
-                      type="number"
-                      className="quantity-input"
-                      value="1"
-                      min="1"
-                    />
-                    <button className="btn-secondary increase-btn">+</button>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-                <td>
-                  <button type="button" className="btn-xoa">
-                    Xoá
-                  </button>
-                </td>
-              </tr>
-              {/* Card 1 */}
-              <tr>
-                <td>
-                  <label className="custom-checkbox">
-                    <input name="dummy" type="checkbox" />
-                    <span className="checkmark"></span>
-                  </label>
-                </td>
-                <td>
-                  <div className="khung-img-cart">
-                    <img className="img-cart" src="/IMAGE/oto/2.jpg" alt="" />
-                  </div>
-                </td>
-
-                <td>
-                  <div className="cart-thongtin">
-                    <a className="thongtin-title">
-                      Sản phẩm 1 Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản
-                      phẩm 1
-                    </a>
-                    <div>Màu sắc: Đỏ</div>
-                    <div>Phiên bản: Đặc biệt</div>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-
-                <td>
-                  <div className="inp-soluong">
-                    <button className="btn-secondary decrease-btn">-</button>
-                    <input
-                      type="number"
-                      className="quantity-input"
-                      value="1"
-                      min="1"
-                    />
-                    <button className="btn-secondary increase-btn">+</button>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-                <td>
-                  <button type="button" className="btn-xoa">
-                    Xoá
-                  </button>
-                </td>
-              </tr>
-              {/* Card 1 */}
-              <tr>
-                <td>
-                  <label className="custom-checkbox">
-                    <input name="dummy" type="checkbox" />
-                    <span className="checkmark"></span>
-                  </label>
-                </td>
-                <td>
-                  <div className="khung-img-cart">
-                    <img className="img-cart" src="/IMAGE/oto/2.jpg" alt="" />
-                  </div>
-                </td>
-
-                <td>
-                  <div className="cart-thongtin">
-                    <a className="thongtin-title">
-                      Sản phẩm 1 Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản phẩm 1Sản
-                      phẩm 1
-                    </a>
-                    <div>Màu sắc: Đỏ</div>
-                    <div>Phiên bản: Đặc biệt</div>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-
-                <td>
-                  <div className="inp-soluong">
-                    <button className="btn-secondary decrease-btn">-</button>
-                    <input
-                      type="number"
-                      className="quantity-input"
-                      value="1"
-                      min="1"
-                    />
-                    <button className="btn-secondary increase-btn">+</button>
-                  </div>
-                </td>
-                <td>100.000.000 VNĐ</td>
-                <td>
-                  <button type="button" className="btn-xoa">
-                    Xoá
-                  </button>
-                </td>
-              </tr>
+                  <td>
+                    <div className="inp-soluong inp-soluong_cart">
+                      <button
+                        className="btn-secondary decrease-btn"
+                        onClick={() =>
+                          handleQuantityChange(
+                            index,
+                            item.soLuong > 1 ? item.soLuong - 1 : 1
+                          )
+                        }
+                      >
+                        -
+                      </button>
+                      <input
+                        type="number"
+                        className="quantity-input"
+                        value={item.soLuong}
+                        min="1"
+                        onChange={(e) =>
+                          handleQuantityChange(index, parseInt(e.target.value))
+                        }
+                      />
+                      <button
+                        className="btn-secondary increase-btn"
+                        onClick={() =>
+                          handleQuantityChange(index, item.soLuong + 1)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+                  </td>
+                  <td className="inp-soluong_cart">
+                    {formatPrice(item.soLuong * item.Gia)}
+                  </td>
+                  <td className="inp-soluong_cart">
+                    <Popconfirm
+                      title="Delete"
+                      description="Bạn có chắc muốn xoá sản phẩm này?"
+                      onConfirm={() => {
+                        handleDeleteChange(item.MaMauNoiThat);
+                      }}
+                      icon={
+                        <QuestionCircleOutlined
+                          style={{
+                            color: "red",
+                          }}
+                        />
+                      }
+                    >
+                      <button type="button" className="btn-xoa">
+                        Xoá
+                      </button>
+                    </Popconfirm>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
 
           <div className="total-amount">
             <div className="total-thongtin">
               <div className="giatien">
-                <div>Tổng thanh toán (2 sản phẩm):</div>
-                <div className="total-giatien">200.000 VNĐ</div>
+                <div>Tổng thanh toán ({totalQuantity} sản phẩm):</div>
+                <div className="total-giatien">{formatPrice(totalPrice)}</div>
               </div>
               <div className="vat">Đã bao gồm VAT [nếu có]</div>
             </div>
 
-            <button className="btn-thanhtoan">Thanh toán</button>
+            <button
+              className="btn-thanhtoan"
+              onClick={() => handleCheckoputChange()}
+            >
+              Thanh toán
+            </button>
           </div>
         </div>
       </main>
-
-      <Footer></Footer>
     </>
   );
 };

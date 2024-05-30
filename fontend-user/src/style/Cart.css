@@ -35,9 +35,12 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-
+.inp-soluong_cart {
+  margin: 0 auto;
+  text-align: center;
+}
 .inp-soluong {
-  width: 100px;
+  width: 110px;
   display: flex;
   border: 0.5px solid rgb(119, 119, 119);
 }

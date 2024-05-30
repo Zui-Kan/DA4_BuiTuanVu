@@ -16,6 +16,7 @@ const Signup = function () {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({

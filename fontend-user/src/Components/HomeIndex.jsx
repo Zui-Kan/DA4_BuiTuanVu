@@ -47,7 +47,6 @@ const HomeIndex = function ({ data }) {
         <div className="category-cards">
           <Slider {...category}>
             {/* <!-- category card 1 --> */}
-
             {data?.hangXe?.map((item) => (
               <Link
                 key={item.MaHang}
@@ -84,8 +83,8 @@ const HomeIndex = function ({ data }) {
                 hinhAnhXe={item.HinhAnhXe}
                 tenModel={item.TenModel}
                 namSanXuat={item.NamSanXuat}
-                nhienLieuTieuThu100KM={item.NhienLieuTieuThu100KM}
-                loaiNhienLieu={item.LoaiNhienLieu}
+                nhienLieuTieuThu100KM={item["L/100"]}
+                loaiNhienLieu={item.NhienLieu}
                 hopSo={item.HopSo}
                 gia={formatPrice(item.Gia)}
               />
@@ -126,6 +125,7 @@ const HomeIndex = function ({ data }) {
           </Slider>
         </div>
       </div>
+
       {/* <!-- end list card car --> */}
       <div className="news">
         <div className="row">
@@ -200,8 +200,8 @@ const HomeIndex = function ({ data }) {
                     hinhAnhXe={item.HinhAnhXe}
                     tenModel={item.TenModel}
                     namSanXuat={item.NamSanXuat}
-                    nhienLieuTieuThu100KM={item.NhienLieuTieuThu100KM}
-                    loaiNhienLieu={item.LoaiNhienLieu}
+                    nhienLieuTieuThu100KM={item["L/100"]}
+                    loaiNhienLieu={item.NhienLieu}
                     hopSo={item.HopSo}
                     gia={formatPrice(item.Gia)}
                   />

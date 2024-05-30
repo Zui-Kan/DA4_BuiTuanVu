@@ -28,13 +28,14 @@ class CategoryController extends Controller
         $minPrice = $request->input('min_price');
         $maxPrice = $request->input('max_price');
         $namSanXuat = $request->input('namsanxuat');
+        $nhienlieu = $request->input('nhienlieu');
         $search = $request->input('timkiem');
         $maLoaiXe = $request->input('maloaixe');
 
-        $query = DB::table('ModelXe')
-            ->join('ThongSoKyThuatXe', 'ModelXe.MaModel', '=', 'ThongSoKyThuatXe.MaModel')
-            ->where('ModelXe.MaHang', $id)
-            ->select('ModelXe.*', 'ThongSoKyThuatXe.*');
+        $query = ModelXe::query();
+        if ($id !== null) {
+            $query->where('ModelXe.MaHang', $id);
+        }
 
         if ($search) {
             $query->where(function ($query) use ($search) {
@@ -58,6 +59,13 @@ class CategoryController extends Controller
             $query->whereIn('ModelXe.NamSanXuat', $namSanXuat);
         }
 
+        if ($nhienlieu !== null) {
+            if (!is_array($namSanXuat)) {
+                $namSanXuat = explode(',', $nhienlieu);
+            }
+            $query->whereIn('ModelXe.NhienLieu', $namSanXuat);
+        }
+
         if ($maLoaiXe !== null) {
             if (!is_array($maLoaiXe)) {
                 $maLoaiXe = explode(',', $maLoaiXe);
@@ -66,6 +74,7 @@ class CategoryController extends Controller
         }
 
         $tenhang = HangXe::where('MaHang', $id)->first();
+
         $result = $query->paginate(10);
 
         if ($result->isEmpty()) {
@@ -114,6 +123,12 @@ class CategoryController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
+    public function getNhienLieu()
+    {
+        $db = ModelXe::distinct('NhienLieu')->orderBy('NhienLieu', 'desc')->pluck('NhienLieu');
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
+
     /**
      * @OA\post(
      *     path="/api/index/modelmoi",
@@ -124,16 +139,12 @@ class CategoryController extends Controller
 
     public function ModelMoi()
     {
-        $topCars = ModelXe::select('ModelXe.*', 'ThongSoKyThuatXe.*')
-            ->leftJoin('ThongSoKyThuatXe', 'ModelXe.MaModel', '=', 'ThongSoKyThuatXe.MaModel')
+        $topCars = ModelXe::select('ModelXe.*')
             ->orderBy('ModelXe.NgayTao', 'DESC')
             ->limit(8)
             ->get();
-
         return $topCars ? $this->ok($topCars) : $this->errors(null);
     }
-
-
 
     /**
      * @OA\post(
@@ -179,10 +190,9 @@ class CategoryController extends Controller
      */
     public function TopXeBanChay()
     {
-        $topCars = ModelXe::select('ModelXe.*', 'ThongSoKyThuatXe.*', DB::raw('SUM(ChiTietDatHang.SoLuong) AS SoLuongXeDaBan'))
+        $topCars = ModelXe::select('ModelXe.*', DB::raw('SUM(ChiTietDatHang.SoLuong) AS SoLuongXeDaBan'))
             ->leftJoin('ChiTietDatHang', 'ModelXe.MaModel', '=', 'ChiTietDatHang.MaModel')
-            ->leftJoin('ThongSoKyThuatXe', 'ModelXe.MaModel', '=', 'ThongSoKyThuatXe.MaModel')
-            ->groupBy('ModelXe.MaModel', 'ThongSoKyThuatXe.MaThongSo')
+            ->groupBy('ModelXe.MaModel')
             ->orderBy('SoLuongXeDaBan', 'DESC')
             ->limit(10)
             ->get();

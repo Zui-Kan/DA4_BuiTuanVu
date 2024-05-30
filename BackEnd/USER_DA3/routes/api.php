@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\BinhLuanController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChuDeBaiVietController;
 use App\Http\Controllers\DatHangController;
@@ -39,6 +40,25 @@ Route::group([
 });
 
 
+Route::group([
+    'middleware' => 'auth.jwt',
+], function () {
+
+    Route::group([
+        'prefix' => 'detail',
+    ], function () {
+        Route::post('/save_binhluan', [DetailController::class, 'save_binhluan'])->name('detail.save_binhluan');
+        Route::delete('/delete_binhluan/{id}', [DetailController::class, 'delete_binhluan'])->name('detail.delete_binhluan');
+    });
+    Route::group([
+        'prefix' => 'taikhoan'
+    ],  function () {
+        Route::get('/gettaikhoanct/{id}', [UsersController::class, 'getTaiKhoanCT'])->name('taikhoan.gettaikhoanct');
+        Route::post('/updatectusers/{id}', [UsersController::class, 'updateCTusers'])->name('taikhoan.updatectusers');
+        Route::post('/changepassword', [UsersController::class, 'changePassword'])->name('taikhoan.changepassword');
+    });
+});
+
 
 Route::group([
     // 'middleware' => 'auth.jwt',
@@ -48,9 +68,6 @@ Route::group([
         'prefix' => 'taikhoan'
     ],  function () {
         Route::post('/signup', [UsersController::class, 'signup'])->name('taikhoan.signup');
-        Route::get('/gettaikhoanct/{id}', [UsersController::class, 'getTaiKhoanCT'])->name('taikhoan.gettaikhoanct');
-        Route::post('/updatectusers/{id}', [UsersController::class, 'updateCTusers'])->name('taikhoan.updatectusers');
-        Route::post('/changepassword', [UsersController::class, 'changePassword'])->name('taikhoan.changepassword');
     });
 
 
@@ -70,14 +87,22 @@ Route::group([
         Route::post('/boloccategory/{id}', [CategoryController::class, 'BoLocCategory'])->name('category.boloccategory');
         Route::get('/getloaixe', [CategoryController::class, 'getloaixe'])->name('category.getloaixe');
         Route::get('/getnamsanxuat', [CategoryController::class, 'getnamsanxuat'])->name('category.getnamsanxuat');
+        Route::get('/getnhienlieu', [CategoryController::class, 'getnhienlieu'])->name('category.getnhienlieu');
     });
-
 
 
     Route::group([
         'prefix' => 'detail',
     ], function () {
         Route::get('/getdetail/{id?}', [DetailController::class, 'getdetail'])->name('detail.getdetail');
+        Route::get('/hienthingoaithat/{id?}', [DetailController::class, 'hienthingoaithat'])->name('detail.hienthingoaithat');
+        Route::get('/hienthinoithat/{id?}', [DetailController::class, 'hienthinoithat'])->name('detail.hienthinoithat');
+    });
+
+    Route::group([
+        'prefix' => 'cart',
+    ], function () {
+        Route::get('/getDetailCart/{id?}', [CartController::class, 'getDetailCart'])->name('detail.getDetailCart');
     });
 
     //Đặt xe

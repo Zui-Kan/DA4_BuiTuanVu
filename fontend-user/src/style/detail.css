@@ -90,8 +90,9 @@
 }
 
 .mota-tieude-noidung {
-  margin-top: 10px;
+  margin-top: 30px;
   display: flex;
+  margin-bottom: 10px;
 }
 .mota-tieude-noidung hr {
   /* height: 10px; */
@@ -143,7 +144,6 @@
 }
 
 .card-control .delete-comment {
-  display: none;
   font-size: 15px;
   position: absolute;
   padding: 5px 20px;
@@ -151,6 +151,7 @@
   text-align: center;
   box-shadow: 0 0 10px rgb(151, 151, 151);
   right: 0;
+  bottom: 0;
   background-color: #fff;
 }
 .card-control .delete-comment:hover {
@@ -218,7 +219,7 @@
   border-radius: 10px;
   width: 50px;
   height: 50px;
-  margin-left: 15px;
+  margin-right: 15px;
   overflow: hidden;
   padding: 4px;
   background-color: #fff;
@@ -239,7 +240,7 @@
   border-radius: 10px;
   width: auto;
   padding: 10px;
-  margin-left: 15px;
+  margin-right: 15px;
   overflow: hidden;
   padding: 8px;
   background-color: #fff;
@@ -248,4 +249,32 @@
 .pro-versions input:checked + .pro-version {
   padding: 4px;
   border: 4px solid #1464f4;
+}
+
+.slider-anhnho {
+  height: 150px;
+}
+.slider-anhnho img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slider-anhto {
+  height: 450px;
+}
+.slider-anhto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.column-pro_mauvaphienban {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.justify-t {
+  margin-bottom: 30px !important;
 }

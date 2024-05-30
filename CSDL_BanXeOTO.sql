@@ -73,6 +73,7 @@ create table MauNoiThat(
     MaMauNgoaiThat int,
 	TenMauNoiThat nvarchar(100),
     HinhAnhMau text,
+    SoLuong int,
     NgayTao datetime default NOW(),
     FOREIGN KEY (MaMauNgoaiThat) REFERENCES MauNgoaiThat(MaMauNgoaiThat)
 

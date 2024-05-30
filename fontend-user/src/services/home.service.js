@@ -18,8 +18,6 @@ export const getModelMoi = async () => {
   }
 };
 
-
-
 export const getTopXeBanChay = async () => {
   try {
     const res = await apiClient?.get(`/index/topxebanchay`);

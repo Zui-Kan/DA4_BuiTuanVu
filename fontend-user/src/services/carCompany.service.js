@@ -1,6 +1,8 @@
 import { apiClient } from "../constant/api";
 
 export const getBoLocCategory = async (id, page, filters) => {
+  debugger;
+
   const params = new URLSearchParams({
     page,
     ...filters,
@@ -26,5 +28,14 @@ export const getNamSanXuat = async () => {
     return res?.data;
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu năm sản xuất:", error);
+  }
+};
+
+export const getNhienLieu = async () => {
+  try {
+    const res = await apiClient.get(`/category/getnhienlieu`);
+    return res?.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy dữ liệu loại xe:", error);
   }
 };

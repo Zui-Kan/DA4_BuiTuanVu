@@ -8,6 +8,7 @@ import {
   getBoLocCategory,
   getLoaiXe,
   getNamSanXuat,
+  getNhienLieu,
 } from "../services/carCompany.service";
 import { formatPrice } from "../shares/formatPrice";
 import { Loading } from "../Components/Loading/Loading";
@@ -20,21 +21,29 @@ function CarCompany(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [showBrands, setShowBrands] = useState(false);
   const [showYears, setShowYears] = useState(false);
+  const [showFuels, setShowFuels] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [selectedLoaiXe, setSelectedLoaiXe] = useState([]);
   const [selectedNamSanXuat, setSelectedNamSanXuat] = useState([]);
+  const [selectedNhienLieu, setSelectedNhienLieu] = useState([]);
   const [search, setSearch] = useState("");
 
   async function loadData(id, currentPage, filters = {}) {
-    const [boLoc, loaiXe, namSanXuat] = await Promise.all([
+    setIsLoading(true);
+
+    const [boLoc, loaiXe, namSanXuat, nhienLieu] = await Promise.all([
       getBoLocCategory(id, currentPage, filters),
       getLoaiXe(),
       getNamSanXuat(),
+      getNhienLieu(),
     ]);
-    setData({ boLoc, loaiXe, namSanXuat });
+
+    setData({ boLoc, loaiXe, namSanXuat, nhienLieu });
     setIsDataLoaded(true);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -51,6 +60,7 @@ function CarCompany(props) {
       max_price: maxPrice,
       maloaixe: selectedLoaiXe.join(","),
       namsanxuat: selectedNamSanXuat.join(","),
+      nhienlieu: selectedNhienLieu.join(","),
       timkiem: search,
     };
     loadData(id, 1, filters);
@@ -65,6 +75,15 @@ function CarCompany(props) {
     );
   };
 
+  const handleNhienLieuChange = (event) => {
+    const value = event.target.value;
+    setSelectedNhienLieu((prev) =>
+      event.target.checked
+        ? [...prev, value]
+        : prev.filter((item) => item !== value)
+    );
+  };
+
   const handleNamSanXuatChange = (event) => {
     const value = event.target.value;
     setSelectedNamSanXuat((prev) =>
@@ -73,6 +92,7 @@ function CarCompany(props) {
         : prev.filter((item) => item !== value)
     );
   };
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleFilterChange();
@@ -84,8 +104,6 @@ function CarCompany(props) {
 
   return (
     <>
-      {props.children}
-      <Header></Header>
       <main>
         <div className="listCar">
           <div className="title-listCar">HÃNG XE → {data.boLoc.tenhang}</div>
@@ -116,7 +134,7 @@ function CarCompany(props) {
                     <div>-</div>
                     <input
                       type="number"
-                      placeholder="Tối đa (triệu)"
+                      placeholder="Tối đa"
                       value={maxPrice}
                       onChange={(e) => setMaxPrice(e.target.value)}
                     />
@@ -234,11 +252,47 @@ function CarCompany(props) {
                   </div>
                 )}
 
+                <div
+                  className="row filter-row setShowyear"
+                  onClick={() => setShowFuels(!showFuels)}
+                >
+                  <div className="col-1">
+                    <img src="../IMAGE/icon_card_xang.svg" alt=""></img>
+                  </div>
+                  <div className="col-9 blueDark-c">NHIÊN LIỆU</div>
+                  <div className="col-1">
+                    {showFuels ? (
+                      <img src="../IMAGE/icons8_chevron_up.svg" alt="" />
+                    ) : (
+                      <img src="../IMAGE/icons8_chevron_down.svg" alt="" />
+                    )}
+                  </div>
+                </div>
+                {showFuels && (
+                  <div className="filter-years">
+                    {data?.nhienLieu?.data.map((nhienlieu) => (
+                      <div className="row filter-sub" key={nhienlieu}>
+                        <div className="col-1">
+                          <label className="custom-checkbox">
+                            <input
+                              name="nam"
+                              type="checkbox"
+                              value={nhienlieu}
+                              onChange={handleNhienLieuChange}
+                            />
+                            <span className="checkmark"></span>
+                          </label>
+                        </div>
+                        <div className="col blueDark-c">{nhienlieu}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <button
                   className="btn-price_filter"
                   onClick={handleFilterChange}
                 >
-                  Lọc
+                  {isLoading ? "Đang lọc..." : "Lọc"}
                 </button>
               </div>
 
@@ -278,8 +332,8 @@ function CarCompany(props) {
                       hinhAnhXe={item.HinhAnhXe}
                       tenModel={item.TenModel}
                       namSanXuat={item.NamSanXuat}
-                      nhienLieuTieuThu100KM={item.NhienLieuTieuThu100KM}
-                      loaiNhienLieu={item.LoaiNhienLieu}
+                      nhienLieuTieuThu100KM={item["L/100"]}
+                      loaiNhienLieu={item.NhienLieu}
                       hopSo={item.HopSo}
                       gia={formatPrice(item.Gia)}
                     />
@@ -297,7 +351,6 @@ function CarCompany(props) {
           </div>
         </div>
       </main>
-      <Footer></Footer>
     </>
   );
 }

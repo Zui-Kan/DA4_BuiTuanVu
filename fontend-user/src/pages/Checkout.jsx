@@ -1,10 +1,35 @@
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import "../style/Checkout.css";
+import { useRecoilValue } from "recoil";
+import { cartCheckout } from "../constant/recoil";
+import { formatPriceVND } from "../shares/formatPrice"; // Assuming formatPriceVND is a function that formats prices to VND
+
 function CheckOut() {
+  const itemsCheckout = useRecoilValue(cartCheckout);
+  const validItemsCheckout = Array.isArray(itemsCheckout) ? itemsCheckout : [];
+
+  // Calculate total price and quantity dynamically
+  const calculateTotal = () => {
+    let totalQuantity = 0;
+    let totalPrice = 0;
+    validItemsCheckout.forEach((item) => {
+      totalQuantity += item.soLuong;
+      totalPrice += item.soLuong * item.Gia;
+    });
+    return { totalQuantity, totalPrice };
+  };
+
+  const { totalQuantity, totalPrice } = calculateTotal();
+
+  const handleOrderSubmit = () => {
+    // Handle the order submission here
+    // You can add form validation and API call to process the order
+    console.log("Order submitted");
+  };
+
   return (
     <>
-      <Header></Header>
       <main>
         <div className="checkout">
           <div className="checkout-header">
@@ -22,7 +47,6 @@ function CheckOut() {
               <div className="checkout-control_left col-8">
                 <div className="control-title">Thông tin khách hàng</div>
                 <div className="left-inps">
-                  {/* <!-- input họ và tên  --> */}
                   <div className="left-inp row">
                     <div className="inps-item col-12">
                       <div className="inps_title">Họ và tên</div>
@@ -37,13 +61,14 @@ function CheckOut() {
                       </div>
                     </div>
                   </div>
-                  {/* <!-- input giới tính và số điện thoại --> */}
                   <div className="left-inp row">
                     <div className="inps-item col-6">
                       <div className="inps_title">Giới tính</div>
                       <div className="inps_inp">
                         <select className="inp" name="inp_sex" id="inp_sex">
-                          <option selected>Vùi lòng chọn giới tính...</option>
+                          <option defaultValue>
+                            Vùi lòng chọn giới tính...
+                          </option>
                           <option value="Nam">Nam</option>
                           <option value="Nữ">Nữ</option>
                           <option value="Khác">Khác</option>
@@ -63,7 +88,6 @@ function CheckOut() {
                       </div>
                     </div>
                   </div>
-                  {/* <!-- input email --> */}
                   <div className="left-inp row">
                     <div className="inps-item col-12">
                       <div className="inps_title">Địa chỉ Email</div>
@@ -78,7 +102,6 @@ function CheckOut() {
                       </div>
                     </div>
                   </div>
-                  {/* <!-- input địa chỉ --> */}
                   <div className="left-inp row">
                     <div className="inps-item col-12">
                       <div className="inps_title">Địa chỉ</div>
@@ -93,7 +116,6 @@ function CheckOut() {
                       </div>
                     </div>
                   </div>
-                  {/* <!-- input địa chỉ --> */}
                   <div className="left-inp row">
                     <div className="inps-item col-6">
                       <div className="inps_title">Ngày sinh</div>
@@ -143,7 +165,6 @@ function CheckOut() {
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault2"
-                    checked
                   />
                   <label
                     className="form-check-label"
@@ -152,7 +173,7 @@ function CheckOut() {
                     Nhận tại địa chỉ khách hàng
                   </label>
                 </div>
-                {/* <!-- input email --> */}
+
                 <div className="left-inp row">
                   <div className="inps-item col-12">
                     <div className="inps_title">Chọn địa chỉ cửa hàng</div>
@@ -162,9 +183,7 @@ function CheckOut() {
                         name="inp_storeAddress"
                         id="inp_storeAddress"
                       >
-                        <option selected>
-                          Vùi lòng chọn địa chỉ cửa hàng...
-                        </option>
+                        <option value>Vùi lòng chọn địa chỉ cửa hàng...</option>
                         <option value="Vinfast - Tầng L1, TTTM Vincom Center Phạm Ngọc Thạch, Số 2 Phạm Ngọc Thạch, Phường Trung Tự, Quận Đống Đa, Hà Nội">
                           Vinfast - Tầng L1, TTTM Vincom Center Phạm Ngọc Thạch,
                           Số 2 Phạm Ngọc Thạch, Phường Trung Tự, Quận Đống Đa,
@@ -183,31 +202,45 @@ function CheckOut() {
                 </div>
 
                 <hr />
-                <button type="button" className="btn-order blue-bc">
+                <button
+                  type="button"
+                  className="btn-order blue-bc"
+                  onClick={handleOrderSubmit}
+                >
                   Đặt hàng
                 </button>
               </div>
               <div className="checkout-control_right col-4">
                 <div className="control-right_title">
                   <div className="control-title">Giỏ hàng</div>
-                  <div className="totle-cart">4</div>
+                  <div className="totle-cart">{totalQuantity}</div>
                 </div>
 
                 <div className="right-carts">
-                  <div className="right-cart">
-                    <div className="cart-information">
-                      <div className="cart-title">Vinfast VF8 - Plus</div>
-                      <div className="cart-detail">
-                        <p>Ngoại thất: Crimson Red</p>
-                        <p>Nội thất: Granite Black</p>
+                  {validItemsCheckout.map((item, index) => (
+                    <div className="right-cart" key={index}>
+                      <div className="cart-information">
+                        <div className="cart-title">
+                          {item.TenModel} - {item.TenPhienBan}
+                        </div>
+                        <div className="cart-detail">
+                          <p>Ngoại thất: {item.TenMauNgoaiThat}</p>
+                          <p>Nội thất: {item.TenMauNoiThat}</p>
+                        </div>
+                        <div className="cart-priceTotal">
+                          {formatPriceVND(item.Gia)} x {item.soLuong}
+                        </div>
                       </div>
-                      <div className="cart-priceTotal">500 triệu x 3</div>
+                      <div className="cart-amountMoney">
+                        {formatPriceVND(item.Gia * item.soLuong)}
+                      </div>
                     </div>
-                    <div className="cart-amountMoney">1 tỷ 500 triệu</div>
-                  </div>
+                  ))}
                   <div className="cart-totalPayment">
                     <div className="totalPayment-title">Tổng thành tiền</div>
-                    <div className="totalPayment-total">2 tỷ 500 triệu</div>
+                    <div className="totalPayment-total">
+                      {formatPriceVND(totalPrice)}
+                    </div>
                   </div>
 
                   <div className="cart-btn_discountCode">
@@ -215,7 +248,7 @@ function CheckOut() {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Mã khuyến mã"
+                        placeholder="Mã khuyến mãi"
                         aria-describedby="button-addon2"
                       />
                       <button
@@ -233,7 +266,6 @@ function CheckOut() {
           </div>
         </div>
       </main>
-      <Footer></Footer>
     </>
   );
 }

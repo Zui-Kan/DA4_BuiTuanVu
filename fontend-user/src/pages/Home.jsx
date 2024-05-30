@@ -9,6 +9,7 @@ import {
   getModelMoi,
   getTopXeBanChay,
 } from "../services/home.service";
+import { Error } from "../Components/Error/Error";
 
 const Home = function () {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -33,10 +34,8 @@ const Home = function () {
   }
   return (
     <>
-      <Header />
       <Slider />
       <HomeIndex data={data} />
-      <Footer />
     </>
   );
 };

@@ -9,13 +9,71 @@ import Header from "../Components/Header";
 import { Loading } from "../Components/Loading/Loading";
 import { Comment } from "../Components/Comment/Comment";
 import { useParams } from "react-router-dom";
-import { getDetail } from "../services/detail.service";
+import {
+  getDetail,
+  getMauNgoaiThat,
+  getMauNoiThat,
+  saveBinhLuan,
+} from "../services/detail.service";
 import { formatPrice } from "../shares/formatPrice";
 import { uploads } from "../constant/api";
+import { Input, message } from "antd";
 
-function Detail(props) {
+import {
+  addToCart,
+  getCartDetails,
+  getTotalQuantity,
+} from "../services/cart.service";
+import { cartState } from "../constant/recoil";
+import { useRecoilState } from "recoil";
+const { TextArea } = Input;
+
+function Detail() {
   const { id } = useParams();
   const [data, setData] = useState(null);
+  const [messageApi, contextHolder] = message.useMessage();
+  const [quantity, setQuantity] = useState(1);
+  const [cart, setCart] = useRecoilState(cartState);
+
+  const [formDataGioHang, setFormDataGioHang] = useState({
+    maNoiThat: null,
+    soLuong: 1,
+  });
+
+  const handleIncrease = () => {
+    setQuantity((prevQuantity) => {
+      const newQuantity = prevQuantity + 1;
+      setFormDataGioHang((prevState) => ({
+        ...prevState,
+        soLuong: newQuantity,
+      }));
+      return newQuantity;
+    });
+  };
+
+  const handleDecrease = () => {
+    setQuantity((prevQuantity) => {
+      const newQuantity = prevQuantity > 1 ? prevQuantity - 1 : 1;
+      setFormDataGioHang((prevState) => ({
+        ...prevState,
+        soLuong: newQuantity,
+      }));
+      return newQuantity;
+    });
+  };
+
+  const handleInputChange = (event) => {
+    const value = parseInt(event.target.value);
+    const newQuantity = value >= 1 ? value : 1;
+    setQuantity(newQuantity);
+    setFormDataGioHang((prevState) => ({
+      ...prevState,
+      soLuong: newQuantity,
+    }));
+  };
+
+  const token = JSON.parse(localStorage.getItem("tn") || "{}");
+  const profile = JSON.parse(localStorage.getItem("profile") || "{}");
 
   const quangcao = {
     infinite: true,
@@ -24,30 +82,132 @@ function Detail(props) {
     autoplay: true,
     autoplaySpeed: 6000,
   };
+  const tuongtu = {
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 6000,
+  };
 
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [mauNgoaiThat, setMauNgoaiThat] = useState([]);
+  const [mauNoiThat, setMauNoiThat] = useState([]);
+  const [selectedVersion, setSelectedVersion] = useState(null);
+  const [selectedNgoaiThat, setSelectedNgoaiThat] = useState(null);
+
+  const [selectedNoiThat, setSelectedNoiThat] = useState(null);
+  const [formDataBinhLuan, setFormDataBinhLuan] = useState({
+    MaModel: "",
+    TaiKhoanID: profile.id,
+    NoiDung: "",
+  });
+
+  const [activeCommentId, setActiveCommentId] = useState(null);
 
   async function loadData(id) {
-    const detail = await getDetail(id);
+    const [detail] = await Promise.all([getDetail(id)]);
     setData(detail);
     setIsDataLoaded(true);
   }
 
   let sliderRef1 = useRef(null);
   let sliderRef2 = useRef(null);
+
   useEffect(() => {
     setNav1(sliderRef1.current);
     setNav2(sliderRef2.current);
   }, [sliderRef1, sliderRef2]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (id) {
       loadData(id);
     }
   }, [id]);
-  console.log(data);
+
+  useEffect(() => {
+    if (data && data.modelXe && data.modelXe.MaModel) {
+      setFormDataBinhLuan((prevState) => ({
+        ...prevState,
+        MaModel: data.modelXe.MaModel,
+      }));
+    }
+  }, [data]);
+
+  const handleSubmit = async () => {
+    if (!formDataBinhLuan.NoiDung) {
+      messageApi.open({
+        type: "error",
+        content: "Nội dung bình luận không được để trống.",
+      });
+      return;
+    }
+    try {
+      const response = await saveBinhLuan(formDataBinhLuan, token.access_token);
+      if (response && response.status_code === 200) {
+        // Update the comments list with the new comment
+        setData((prevData) => ({
+          ...prevData,
+          binhLuan: [...prevData.binhLuan, response.newComment],
+        }));
+        setFormDataBinhLuan((prevState) => ({
+          ...prevState,
+          NoiDung: "",
+        }));
+        messageApi.open({
+          type: "success",
+          content: "Bình luận đã được gửi.",
+        });
+        loadData(id);
+      } else {
+        messageApi.open({
+          type: "error",
+          content: "Có lỗi xảy ra. Vui lòng thử lại.",
+        });
+      }
+    } catch (error) {
+      messageApi.open({
+        type: "error",
+        content: "Có lỗi xảy ra. Vui lòng thử lại: ".error,
+      });
+    }
+  };
+
+  const handleVersionChange = async (versionId) => {
+    setSelectedVersion(versionId);
+    const mauNgoaiThatData = await getMauNgoaiThat(versionId);
+    setMauNgoaiThat(mauNgoaiThatData);
+    setMauNoiThat([]);
+  };
+
+  const handleNgoaiThatChange = async (ngoaiThatId) => {
+    setSelectedNgoaiThat(ngoaiThatId);
+    const mauNoiThatData = await getMauNoiThat(ngoaiThatId);
+    setMauNoiThat(mauNoiThatData);
+  };
+
+  const handleNoiThatChange = (noiThatId) => {
+    setSelectedNoiThat(noiThatId);
+    setFormDataGioHang((prevState) => ({
+      ...prevState,
+      maNoiThat: noiThatId,
+    }));
+  };
+
+  const handleAddToCart = async () => {
+    if (!selectedNoiThat) {
+      messageApi.error(
+        "Vui lòng chọn phiên bản, màu ngoại thất và màu nội thất."
+      );
+      return;
+    }
+    
+    await addToCart(selectedNoiThat, quantity);
+    setCart(getTotalQuantity() || 0);
+  };
 
   if (!isDataLoaded) {
     return (
@@ -56,14 +216,11 @@ function Detail(props) {
       </div>
     );
   }
-  const DSHinhAnhXe = data.modelXe.DSHinhAnhXe;
-  const hinhAnhArray = JSON.parse(DSHinhAnhXe);
 
   return (
     <>
-      {props.children}
+      {contextHolder}
 
-      <Header></Header>
       <div className="product-details_khung">
         <section className="product-details spad">
           <div className="row">
@@ -77,14 +234,16 @@ function Detail(props) {
 
                       ref={(slider) => (sliderRef1 = slider)}
                     >
-                      {hinhAnhArray.map((hinhAnh, index) => (
-                        <div className="slider-anhto" key={index}>
-                          <img
-                            src={`${uploads()}${hinhAnh}`}
-                            style={{ width: "100%" }}
-                          />
-                        </div>
-                      ))}
+                      {JSON.parse(data.modelXe.DSHinhAnhXe).map(
+                        (hinhAnh, index) => (
+                          <div className="slider-anhto" key={index}>
+                            <img
+                              src={`${uploads()}${hinhAnh}`}
+                              style={{ width: "100%" }}
+                            />
+                          </div>
+                        )
+                      )}
                     </Slider>
                   </div>
 
@@ -97,14 +256,16 @@ function Detail(props) {
                       swipeToSlide={true}
                       focusOnSelect={true}
                     >
-                      {hinhAnhArray.map((hinhAnh, index) => (
-                        <div className="slider-anhnho" key={index}>
-                          <img
-                            src={`${uploads()}${hinhAnh}`}
-                            style={{ width: "100%" }}
-                          />
-                        </div>
-                      ))}
+                      {JSON.parse(data.modelXe.DSHinhAnhXe).map(
+                        (hinhAnh, index) => (
+                          <div className="slider-anhnho" key={index}>
+                            <img
+                              src={`${uploads()}${hinhAnh}`}
+                              style={{ width: "100%" }}
+                            />
+                          </div>
+                        )
+                      )}
                     </Slider>
                   </div>
                 </div>
@@ -115,35 +276,120 @@ function Detail(props) {
                       <thead>
                         <tr>
                           <th scope="col">Thông số kỹ thuật</th>
-                          <th scope="col">Cơ bản</th>
-                          <th scope="col">Cao Cấp</th>
-                          <th scope="col">Cao cấp</th>
+                          {JSON.parse(data?.thongSoKyThuat.PhienBanXe).map(
+                            (item, index) => (
+                              <th scope="col" key={index}>
+                                {item}
+                              </th>
+                            )
+                          )}
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>Động Cơ</td>
-                          <td>Bi-Turbo Diesel 2.0L i4 TDCi</td>
-                          <td>Single Turbo Diesel 2.0L i4 TDCi</td>
-                          <td>Single Turbo Diesel 2.0L i4 TDCi</td>
+                          <th scope="row">Động cơ</th>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Dung Tích Xi Lanh (cc)</td>
-                          <td>1996</td>
-                          <td>1996</td>
-                          <td>1996</td>
+                          <td>Loại động cơ</td>
+                          {JSON.parse(data?.thongSoKyThuat.LoaiDongCo).map(
+                            (item, index) => (
+                              <td key={index}>{item}</td>
+                            )
+                          )}
+                        </tr>
+                        <tr>
+                          <td>Hiệu động</td>
+                          {JSON.parse(data?.thongSoKyThuat.LoaiHieuDong).map(
+                            (item, index) => (
+                              <td key={index}>{item}</td>
+                            )
+                          )}
+                        </tr>
+                        <tr>
+                          <td>Công Suất (HP)</td>
+                          {JSON.parse(data?.thongSoKyThuat.CongSuat).map(
+                            (item, index) => (
+                              <td key={index}>{item}</td>
+                            )
+                          )}
                         </tr>
 
+                        <tr>
+                          <td>Công Suất (HP)</td>
+                          {JSON.parse(data?.thongSoKyThuat.MoMenXoan).map(
+                            (item, index) => (
+                              <td key={index}>{item}</td>
+                            )
+                          )}
+                        </tr>
+                        <tr>
+                          <th scope="row">Thông tin</th>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td>Màu sắc</td>
+                          {JSON.parse(data?.thongSoKyThuat.MauSac).map(
+                            (item, index) => (
+                              <td key={index}>{item}</td>
+                            )
+                          )}
+                        </tr>
+                        <tr>
+                          <td>Nhiên liệu</td>
+                          {JSON.parse(data?.thongSoKyThuat.LoaiNhienLieu).map(
+                            (item, index) => (
+                              <td key={index}>{item}</td>
+                            )
+                          )}
+                        </tr>
+
+                        <tr>
+                          <td>Nhiên liệu tiêu thụ (L/100km)</td>
+                          {JSON.parse(
+                            data?.thongSoKyThuat.NhienLieuTieuThu100KM
+                          ).map((item, index) => (
+                            <td key={index}>{item}</td>
+                          ))}
+                        </tr>
+                        <tr>
+                          <td>Hộp số</td>
+                          {JSON.parse(data?.thongSoKyThuat.HopSo).map(
+                            (item, index) => (
+                              <td key={index}>{item}</td>
+                            )
+                          )}
+                        </tr>
+                        <tr>
+                          <td>Túi khí</td>
+                          {JSON.parse(data?.thongSoKyThuat.TuiKhi).map(
+                            (item, index) => (
+                              <td key={index}>{item}</td>
+                            )
+                          )}
+                        </tr>
                         <tr>
                           <th scope="row">Kích Thước Và Trọng Lượng</th>
                           <td></td>
                           <td></td>
                         </tr>
                         <tr>
-                          <td>Dài x Rộng x Cao (mm)</td>
-                          <td>4914 x 1923 x 1842</td>
-                          <td>4914 x 1923 x 1842</td>
-                          <td>4914 x 1923 x 1842</td>
+                          <td>Nhiên liệu</td>
+                          {JSON.parse(data?.thongSoKyThuat.KichThuoc).map(
+                            (item, index) => (
+                              <td key={index}>{item}</td>
+                            )
+                          )}
+                        </tr>
+                        <tr>
+                          <td>Trọng lượng</td>
+                          {JSON.parse(data?.thongSoKyThuat.TrongLuong).map(
+                            (item, index) => (
+                              <td key={index}>{item}</td>
+                            )
+                          )}
                         </tr>
                       </tbody>
                     </table>
@@ -162,7 +408,9 @@ function Detail(props) {
                     src="https://www.carmudi.vn./images/xe-oto/svg/year.svg"
                     alt=""
                   />
-                  Năm sản xuất: {data.modelXe.NamSanXuat}
+                  {" Năm sản xuất: "}
+
+                  {data.modelXe.NamSanXuat}
                 </div>
                 <div className="pro-brand blueDark-c">
                   <img
@@ -174,20 +422,24 @@ function Detail(props) {
 
                 <div className="pro-versions">
                   <div className="version-title blueDark-c">Phiên bản</div>
-                  <div className="row">
+                  <div className="column-pro_mauvaphienban">
                     {data?.phienBan.map((item) => (
-                      <div key={item.MaModel}>
+                      <div
+                        className="item-control_phienbgan"
+                        key={item.MaPhienBan}
+                      >
                         <input
                           type="radio"
                           className="btn-check"
                           name="phienban"
-                          id={`phienban${item.MaModel}`}
+                          id={`phienban${item.MaPhienBan}`}
                           value={item.TenPhienBan}
                           autoComplete="off"
+                          onChange={() => handleVersionChange(item.MaPhienBan)}
                         />
                         <label
                           className="pro-version"
-                          htmlFor={`phienban${item.MaModel}`}
+                          htmlFor={`phienban${item.MaPhienBan}`}
                         >
                           {item.TenPhienBan}
                         </label>
@@ -199,30 +451,31 @@ function Detail(props) {
                   <div className="color-title blueDark-c">
                     Ngoại thất <span id="selected_ngoai_color" />
                   </div>
-                  <div className="row">
-                    <input
-                      type="radio"
-                      className="btn-check"
-                      name="ngoai_color"
-                      id="ngoai_option7"
-                      value="Màu vàng"
-                      autoComplete="off"
-                    />
-                    <label className="pro-color" htmlFor="ngoai_option7">
-                      <img src="../IMAGE/color/NgoaiThat/CE11.jpg" alt="#" />
-                    </label>
-
-                    <input
-                      type="radio"
-                      className="btn-check"
-                      name="ngoai_color"
-                      id="ngoai_option8"
-                      value="Màu cam"
-                      autoComplete="off"
-                    />
-                    <label className="pro-color" htmlFor="ngoai_option8">
-                      <img src="../IMAGE/color/NgoaiThat/CE14.jpg" alt="#" />
-                    </label>
+                  <div className="column-pro_mauvaphienban">
+                    {mauNgoaiThat.map((mau) => (
+                      <div
+                        className="item-control_mau"
+                        key={mau.MaMauNgoaiThat}
+                      >
+                        <input
+                          type="radio"
+                          className="btn-check"
+                          name="ngoai_color"
+                          id={`ngoai_color${mau.MaMauNgoaiThat}`}
+                          value={mau.TenMauNgoaiThat}
+                          autoComplete="off"
+                          onChange={() =>
+                            handleNgoaiThatChange(mau.MaMauNgoaiThat)
+                          }
+                        />
+                        <label
+                          className="pro-color"
+                          htmlFor={`ngoai_color${mau.MaMauNgoaiThat}`}
+                        >
+                          <img src={mau.HinhAnh} alt={mau.TenMauNgoaiThat} />
+                        </label>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -230,33 +483,55 @@ function Detail(props) {
                   <div className="color-title blueDark-c">
                     Nội thất <span id="selected_noi_color"></span>
                   </div>
-                  <div className="row">
-                    <input
-                      type="radio"
-                      className="btn-check"
-                      name="noi_color"
-                      id="noithat1"
-                      value="Màu vàng"
-                      autoComplete="off"
-                    />
-                    <label className="pro-color" htmlFor="noithat1">
-                      <img src="../IMAGE/color/NoiThat/CI12.jpg" alt="#" />
-                    </label>
-
-                    <input
-                      type="radio"
-                      className="btn-check"
-                      name="noi_color"
-                      id="noithat2"
-                      value="Màu vàng"
-                      autoComplete="off"
-                    />
-                    <label className="pro-color" htmlFor="noithat2">
-                      <img src="../IMAGE/color/NoiThat/CI12.jpg" alt="#" />
-                    </label>
+                  <div className="column-pro_mauvaphienban">
+                    {mauNoiThat.map((mau) => (
+                      <div className="item-control_mau" key={mau.MaMauNoiThat}>
+                        <input
+                          type="radio"
+                          className="btn-check"
+                          name="noi_color"
+                          id={`noi_color${mau.MaMauNoiThat}`}
+                          value={mau.TenMauNoiThat}
+                          onChange={() => handleNoiThatChange(mau.MaMauNoiThat)}
+                          autoComplete="off"
+                        />
+                        <label
+                          className="pro-color"
+                          htmlFor={`noi_color${mau.MaMauNoiThat}`}
+                        >
+                          <img src={mau.HinhAnh} alt={mau.TenMauNoiThat} />
+                        </label>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
+                <div className="pro-colors noithat">
+                  <div className="color-title blueDark-c">
+                    Số lượng <span id="selected_noi_color"></span>
+                  </div>
+                  <div className="inp-soluong">
+                    <button
+                      className="btn-secondary decrease-btn"
+                      onClick={handleDecrease}
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      className="quantity-input"
+                      value={quantity}
+                      min="1"
+                      onChange={handleInputChange}
+                    />
+                    <button
+                      className="btn-secondary increase-btn"
+                      onClick={handleIncrease}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
                 <hr />
                 <div className="pro-control">
                   <div className="row">
@@ -267,7 +542,10 @@ function Detail(props) {
                       </button>
                     </div>
                     <div className="col-7 pro-btn pro-btn_right">
-                      <button className="pro-btn_cart blueDark-c">
+                      <button
+                        className="pro-btn_cart blueDark-c"
+                        onClick={handleAddToCart}
+                      >
                         <img
                           src="../IMAGE/icons8_add_shopping_cart_1.svg"
                           alt=""
@@ -344,30 +622,55 @@ function Detail(props) {
                 <hr />
                 <div className="col news-title blueDark-c">Bình luận</div>
               </div>
-              <div className="user-binhluan">
-                <div className="form-group">
-                  <textarea
-                    id="edt_binhluanbaiviet"
-                    className="nhapnoidungvabinhluan"
-                    onInput="autoExpand(this)"
-                    placeholder="Điền nội dung bình luận..."
-                    style={{ height: "50px" }}
-                  ></textarea>
+
+              {token.access_token && (
+                <div className="user-binhluan">
+                  <div className="form-group">
+                    <TextArea
+                      rows={3}
+                      className="nhapnoidungvabinhluan"
+                      placeholder="Điền nội dung bình luận..."
+                      value={formDataBinhLuan.NoiDung}
+                      onChange={(e) =>
+                        setFormDataBinhLuan({
+                          ...formDataBinhLuan,
+                          NoiDung: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    id="btn-binhluanbaiviet"
+                    onClick={handleSubmit}
+                  >
+                    Bình luận
+                  </button>
                 </div>
-                <button type="submit" id="btn-binhluanbaiviet">
-                  Bình luận
-                </button>
-              </div>
+              )}
 
               <div className="binhluan-cards">
-                {data.binhLuan.map((item) => (
+                {data?.binhLuan?.map((item) => (
                   <Comment
-                    key={item.MaBinhLuan}
-                    anhDaiDien={item.AnhDaiDien}
-                    hoTen={item.HoVaTen}
-                    thoiGian={item.NgayTao}
-                    noiDung={item.NoiDung}
-                  ></Comment>
+                    key={item?.MaBinhLuan}
+                    token={token}
+                    profile={profile}
+                    taiKhoanID={item?.TaiKhoanID}
+                    maBinhLuan={item?.MaBinhLuan}
+                    anhDaiDien={item?.AnhDaiDien || "TaiKhoan/img_1.jpg"}
+                    hoTen={item?.HoVaTen || "Anonymous"}
+                    thoiGian={item?.NgayTao || "Unknown time"}
+                    noiDung={item?.NoiDung || ""}
+                    deleteBinhLuan={activeCommentId === item.MaBinhLuan}
+                    handleDeleteBinhLuan={() =>
+                      setActiveCommentId(
+                        activeCommentId === item.MaBinhLuan
+                          ? null
+                          : item.MaBinhLuan
+                      )
+                    }
+                    loadData={() => loadData(id)}
+                  />
                 ))}
               </div>
             </div>
@@ -382,21 +685,24 @@ function Detail(props) {
               </div>
               <div className="row">
                 {/* <!-- start card car 1 --> */}
-                <CardCar className={"col-3"}> </CardCar>
-                {data.tuongTu.map((item) => (
-                  <CardCar
-                    key={item.MaModel}
-                    className={"col-3"}
-                    maModel={item.MaModel}
-                    hinhAnhXe={item.HinhAnhXe}
-                    tenModel={item.TenModel}
-                    namSanXuat={item.NamSanXuat}
-                    nhienLieuTieuThu100KM={item.NhienLieuTieuThu100KM}
-                    loaiNhienLieu={item.LoaiNhienLieu}
-                    hopSo={item.HopSo}
-                    gia={formatPrice(item.Gia)}
-                  />
-                ))}
+                <div className="tuongtus">
+                  <Slider {...tuongtu}>
+                    {data.tuongTu.map((item) => (
+                      <div className="topCar_khung" key={item.MaModel}>
+                        <CardCar
+                          maModel={item.MaModel}
+                          hinhAnhXe={item.HinhAnhXe}
+                          tenModel={item.TenModel}
+                          namSanXuat={item.NamSanXuat}
+                          nhienLieuTieuThu100KM={item["L/100"]}
+                          loaiNhienLieu={item.NhienLieu}
+                          hopSo={item.HopSo}
+                          gia={formatPrice(item.Gia)}
+                        />
+                      </div>
+                    ))}
+                  </Slider>
+                </div>
               </div>
             </div>
             {/* <!-- END Các sản phẩm tương tự --> */}

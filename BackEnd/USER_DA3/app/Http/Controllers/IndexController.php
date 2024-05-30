@@ -38,8 +38,7 @@ class IndexController extends Controller
 
     public function ModelMoi()
     {
-        $topCars = ModelXe::select('ModelXe.*', 'ThongSoKyThuatXe.*')
-            ->leftJoin('ThongSoKyThuatXe', 'ModelXe.MaModel', '=', 'ThongSoKyThuatXe.MaModel')
+        $topCars = ModelXe::select('ModelXe.*')
             ->orderBy('ModelXe.NgayTao', 'DESC')
             ->limit(8)
             ->get();
@@ -93,10 +92,9 @@ class IndexController extends Controller
      */
     public function TopXeBanChay()
     {
-        $topCars = ModelXe::select('ModelXe.*', 'ThongSoKyThuatXe.*', DB::raw('SUM(ChiTietDatHang.SoLuong) AS SoLuongXeDaBan'))
+        $topCars = ModelXe::select('ModelXe.*', DB::raw('SUM(ChiTietDatHang.SoLuong) AS SoLuongXeDaBan'))
             ->leftJoin('ChiTietDatHang', 'ModelXe.MaModel', '=', 'ChiTietDatHang.MaModel')
-            ->leftJoin('ThongSoKyThuatXe', 'ModelXe.MaModel', '=', 'ThongSoKyThuatXe.MaModel')
-            ->groupBy('ModelXe.MaModel', 'ThongSoKyThuatXe.MaThongSo')
+            ->groupBy('ModelXe.MaModel')
             ->orderBy('SoLuongXeDaBan', 'DESC')
             ->limit(10)
             ->get();
