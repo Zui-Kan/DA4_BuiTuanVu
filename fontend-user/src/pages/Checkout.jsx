@@ -37,6 +37,8 @@ function CheckOut() {
   const navigate = useNavigate();
   // Calculate total price and quantity dynamicallyd
   const calculateTotal = () => {
+    document.title = "Đặt hàng";
+
     let totalQuantity = 0;
     let totalPrice = 0;
     validItemsCheckout.forEach((item) => {
@@ -155,7 +157,6 @@ function CheckOut() {
         });
         setCart(getTotalQuantity() || 0);
         setIsLoading(false);
-        debugger;
         navigate(`/ordersuccess/${response.MaDatHang}`);
       } else {
         setIsLoading(false);

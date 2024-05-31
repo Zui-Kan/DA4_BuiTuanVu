@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { apiSignup } from "../services/auth.service";
 const Signup = function () {
   const navigate = useNavigate();
+  document.title = "Đăng ký";
 
   const [formData, setFormData] = useState({
     email: "",

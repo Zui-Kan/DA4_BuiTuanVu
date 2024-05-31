@@ -26,6 +26,8 @@ const Home = function () {
   }
 
   useEffect(() => {
+  document.title = "Trang Chủ";
+
     loadData();
   }, []);
 

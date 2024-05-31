@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function OrderSuccess() {
+  document.title = "Đặt xe thành công";
+
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 

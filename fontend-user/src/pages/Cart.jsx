@@ -15,10 +15,12 @@ import { Button, Popconfirm, message } from "antd";
 import { Loading } from "../Components/Loading/Loading";
 import { useRecoilState } from "recoil";
 import { cartCheckout, cartState } from "../constant/recoil";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import debounce from "lodash.debounce"; // Thêm lodash.debounce để sử dụng debounce
 
 const Cart = function () {
+  document.title = "Giỏ hàng";
+
   const [data, setData] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -192,24 +194,28 @@ const Cart = function () {
                     </label>
                   </td>
                   <td>
-                    <div className="khung-img-cart inp-soluong_cart">
-                      <img
-                        className="img-cart"
-                        src={`${uploads()}${item.HinhAnhXe}`}
-                        alt=""
-                      />
-                    </div>
+                    <Link to={`/detail/${item.MaModel}`}>
+                      <div className="khung-img-cart inp-soluong_cart">
+                        <img
+                          className="img-cart"
+                          src={`${uploads()}${item.HinhAnhXe}`}
+                          alt=""
+                        />
+                      </div>
+                    </Link>
                   </td>
 
                   <td>
-                    <div className="cart-thongtin">
-                      <a className="thongtin-title">{item.TenModel}</a>
-                      <div>Phiên bản: {item.TenPhienBan}</div>
-                      <div>
-                        Màu ngoại thất: {item.TenMauNgoaiThat} - Nội thất:{" "}
-                        {item.TenMauNoiThat}{" "}
+                    <Link to={`/detail/${item.MaModel}`}>
+                      <div className="cart-thongtin">
+                        <a className="thongtin-title">{item.TenModel}</a>
+                        <div>Phiên bản: {item.TenPhienBan}</div>
+                        <div>
+                          Màu ngoại thất: {item.TenMauNgoaiThat} - Nội thất:{" "}
+                          {item.TenMauNoiThat}{" "}
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   </td>
                   <td className="inp-soluong_cart">{formatPrice(item.Gia)}</td>
 

@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getCTUser, apiLogout } from "../services/auth.service";
 import { uploads } from "../constant/api";
 import { message } from "antd";
@@ -14,7 +14,7 @@ const Header = function () {
   const [totalCart, setTotalCart] = useState(0);
   const [messageApi, contextHolder] = message.useMessage();
   const [cart, setCart] = useRecoilState(cartState);
-
+  const navigate = useNavigate();
   const profile = useMemo(
     () => JSON.parse(localStorage.getItem("profile") || "{}"),
     []
@@ -175,6 +175,12 @@ const Header = function () {
                 alt=""
               />
               <div className="taskuser-detail">
+                <button
+                  className="taskuser-detail_out"
+                  onClick={() => navigate("/purchase")}
+                >
+                  Đơn hàng
+                </button>
                 <button className="taskuser-detail_out" onClick={handleLogout}>
                   Đăng xuất
                 </button>

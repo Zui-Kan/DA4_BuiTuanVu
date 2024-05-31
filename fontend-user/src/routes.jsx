@@ -10,6 +10,8 @@ import CarCompany from "./pages/CarCompany";
 import AppLayout from "./shares/AppLayout";
 import ErrorBoundary from "./Components/Error/Error";
 import OrderSuccess from "./pages/OrderSuccess";
+import Purchase from "./pages/Purchase";
+import PurchaseDetail from "./pages/PurchaseDetail";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ export const router = createBrowserRouter([
       {
         path: "/ordersuccess/:id",
         element: <OrderSuccess />,
+      },
+      {
+        path: "/purchase",
+        element: <Purchase />,
+      },
+      {
+        path: "/purchasedetail/:id",
+        element: <PurchaseDetail />,
       },
     ],
   },

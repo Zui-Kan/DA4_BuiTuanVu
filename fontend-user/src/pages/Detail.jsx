@@ -31,6 +31,8 @@ import { lc_profile, lc_tn } from "../services/auth.service";
 const { TextArea } = Input;
 
 function Detail() {
+  document.title = "Chi tiết";
+
   const { id } = useParams();
   const [data, setData] = useState(null);
   const navigate = useNavigate();
@@ -88,7 +90,6 @@ function Detail() {
       return newQuantity;
     });
   };
-
   const handleDecrease = () => {
     setQuantity((prevQuantity) => {
       const newQuantity = Math.max(prevQuantity - 1, 1);

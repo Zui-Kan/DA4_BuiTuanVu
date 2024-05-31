@@ -7,6 +7,8 @@ import { tokenState } from "../constant/recoil";
 import { apiLogin, getProfile } from "../services/auth.service";
 
 const Login = function () {
+  document.title = "Đăng nhập";
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorLogin, setErrorLogin] = useState(null);
   const [userName, setUserName] = useState("");

@@ -1,0 +1,136 @@
+.purchaseDetail-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 5px;
+  padding: 20px;
+  border-radius: 10px;
+}
+.purchasedetails {
+  width: 90%;
+  margin: 20px auto;
+}
+
+.purchasedetail-infor,
+.purchase-Orderdetails {
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 5px;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.purchasedetail-infor_title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 0.3px rgb(181, 181, 181);
+  padding-bottom: 3px;
+  margin-bottom: 10px;
+}
+.purchasedetail-infor_clients {
+  width: 50%;
+}
+.infor-client_title,
+.infor-order_title {
+  font-size: 18px;
+  font-weight: 700;
+  color: rgb(75, 75, 75);
+  margin-bottom: 5px;
+}
+.client-detail_emailSDT,
+.client-detail_cmndSex {
+  display: flex;
+  gap: 0 5px;
+}
+.purchasedetail-infor_order div {
+  margin-bottom: 2px;
+}
+.emailSDT-email,
+.emailSDT-sdt {
+  padding-right: 5px;
+  border-right: solid 0.3px rgb(181, 181, 181);
+}
+.infor-client_detail div {
+  margin-top: 2px;
+  font-size: 14px;
+  color: rgb(75, 75, 75);
+}
+.client-detail_name {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: rgb(53, 53, 53);
+}
+.purchasedetail-infor_order {
+  padding-left: 10px;
+  margin-top: 2px;
+  font-size: 15px;
+  color: rgb(75, 75, 75);
+  width: 50%;
+}
+.carts-purchasedetail {
+  width: 65%;
+  padding-right: 10px;
+  border-right: solid 3px rgb(181, 181, 181);
+}
+.orderdetail-status {
+  width: 35%;
+  padding-left: 10px;
+}
+.orderdetail-status_title,
+.carts-purchasedetail_title {
+  font-size: 18px;
+  font-weight: 700;
+  color: rgb(75, 75, 75);
+  margin-bottom: 5px;
+}
+.frame-timline {
+  margin-top: 20px;
+}
+.purchasedetail-bill {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.purchasedetail-bill-left {
+  width: 70%;
+  border: 1px solid #f6f6f6;
+  padding: 13px;
+  text-align: end;
+  font-size: 14px;
+  color: #5a5a5a;
+}
+.purchasedetail-bill-right {
+  width: 30%;
+  border: 1px solid #f6f6f6;
+  padding: 13px;
+  padding-right: 25px;
+  text-align: end;
+}
+.purchasedetail-bill-right span {
+  color: red;
+  font-size: 20px;
+  font-weight: 700;
+}
+.purchasedetail-control {
+  width: 100%;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: solid 0.3px rgb(181, 181, 181);
+  display: flex;
+  justify-content: end;
+  gap: 0 10px;
+}
+
+.purchasedetails-header_title {
+  color: #5a5a5a;
+  font-size: 23px;
+  font-weight: 500;
+}

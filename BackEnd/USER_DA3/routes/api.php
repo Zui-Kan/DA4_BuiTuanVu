@@ -1,28 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BaiVietController;
-use App\Http\Controllers\BinhLuanController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\ChuDeBaiVietController;
-use App\Http\Controllers\DatHangController;
 use App\Http\Controllers\DetailController;
-use App\Http\Controllers\HangXeController;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\KhachHangController;
-use App\Http\Controllers\LoaiXeController;
-use App\Http\Controllers\MauNgoaiThatController;
-use App\Http\Controllers\MauNoiThatController;
-use App\Http\Controllers\ModelXeController;
-use App\Http\Controllers\NhaCungCapController;
-use App\Http\Controllers\NhanVienController;
-use App\Http\Controllers\PhienBanXeController;
-use App\Http\Controllers\QuangCaoController;
-use App\Http\Controllers\QuangCaopController;
-use App\Http\Controllers\TaiKhoanController;
-use App\Http\Controllers\ThongSoKyThuatXeController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SwaggerController;
 use Illuminate\Http\Request;
@@ -75,6 +59,13 @@ Route::group([
         Route::delete('/huydonhang/{id}', [CheckoutController::class, 'huydonhang'])->name('checkout.huydonhang');
         Route::delete('/xacnhanyeucauhuy/{id}', [CheckoutController::class, 'XacNhanYeuCauHuy'])->name('checkout.xacnhanyeucauhuy');
         Route::post('/search_yeucauhuy/{id}', [CheckoutController::class, 'search_yeucauhuy'])->name('checkout.search_yeucauhuy');
+    });
+
+    Route::group([
+        'prefix' => 'purchase'
+    ],  function () {
+        Route::get('/getallpurchase/{id?}', [PurchaseController::class, 'getallpurchase'])->name('purchase.getallpurchase');
+        Route::get('/getpurchase/{id?}', [PurchaseController::class, 'getpurchase'])->name('purchase.getpurchase');
     });
 });
 

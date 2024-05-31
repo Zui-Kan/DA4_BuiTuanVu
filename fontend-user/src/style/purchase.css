@@ -1,0 +1,93 @@
+.list-purchases {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.list-purchases-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #454444;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.carts-purchase {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.carts-purchase_trangthai_thoigian {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid rgb(192, 192, 192) 0.3px;
+  padding-bottom: 10px;
+}
+.carts-purchase_trangthai {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgb(20, 100, 244);
+}
+  
+.cart-purchase {
+  overflow: hidden;
+  display: flex;
+  padding: 10px 0;
+  gap: 0 10px;
+  border-bottom: solid rgb(192, 192, 192) 0.3px;
+}
+.purchase-product-infors {
+  display: flex;
+  gap: 0 10px;
+  width: 100%;
+  color: #3e3e3e;
+
+  justify-content: space-between;
+}
+.purchase-product-infor {
+  width: 80%;
+}
+.purchase-product-infor > div {
+  margin-bottom: 3px;
+}
+.purchase-product_img {
+  border-radius: 4px;
+  overflow: hidden;
+  width: 90px;
+  height: 90px;
+}
+.purchase-product_img img {
+  height: 100%;
+  width: 100%;
+}
+
+.product-infor_title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.purchase-product_price {
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.carts-purchase-tongtien {
+  width: 100%;
+  text-align: end;
+  padding: 10px 20px;
+  font-size: 20px;
+}
+
+.carts-purchase-control {
+  padding: 0 20px;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+.carts-purchase-control button {
+  font-size: 15px;
+  font-weight: 600;
+}

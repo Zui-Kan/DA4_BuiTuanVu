@@ -15,6 +15,8 @@ import { Loading } from "../Components/Loading/Loading";
 import CardCar from "../Components/CardCar";
 
 function CarCompany(props) {
+  document.title = "Danh mục hàng xe";
+
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
