@@ -10,7 +10,6 @@ const TokenRefresher = () => {
           const { access_token } = tokenData;
           const expiration = JSON.parse(atob(access_token.split(".")[1])).exp;
           const now = Math.floor(Date.now() / 1000);
-          debugger;
 
           // Kiểm tra xem token đã hết hạn chưa
           if (expiration < now) {

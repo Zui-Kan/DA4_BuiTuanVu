@@ -8,7 +8,7 @@ import CardCar from "../Components/CardCar";
 import Header from "../Components/Header";
 import { Loading } from "../Components/Loading/Loading";
 import { Comment } from "../Components/Comment/Comment";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import {
   getDetail,
   getMauNgoaiThat,
@@ -22,58 +22,43 @@ import { Input, message } from "antd";
 import {
   addToCart,
   getCartDetails,
+  getDetailCart,
   getTotalQuantity,
 } from "../services/cart.service";
-import { cartState } from "../constant/recoil";
+import { cartCheckout, cartState } from "../constant/recoil";
 import { useRecoilState } from "recoil";
+import { lc_profile, lc_tn } from "../services/auth.service";
 const { TextArea } = Input;
 
 function Detail() {
   const { id } = useParams();
   const [data, setData] = useState(null);
+  const navigate = useNavigate();
+
   const [messageApi, contextHolder] = message.useMessage();
   const [quantity, setQuantity] = useState(1);
-  const [cart, setCart] = useRecoilState(cartState);
 
+  const token = lc_tn();
+  const profile = lc_profile();
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [mauNgoaiThat, setMauNgoaiThat] = useState([]);
+  const [mauNoiThat, setMauNoiThat] = useState([]);
+  const [selectedVersion, setSelectedVersion] = useState(null);
+  const [selectedNgoaiThat, setSelectedNgoaiThat] = useState(null);
+  const [selectedNoiThat, setSelectedNoiThat] = useState(null);
+  const [soLuongTon, setSoLuongTon] = useState(1);
   const [formDataGioHang, setFormDataGioHang] = useState({
     maNoiThat: null,
     soLuong: 1,
   });
-
-  const handleIncrease = () => {
-    setQuantity((prevQuantity) => {
-      const newQuantity = prevQuantity + 1;
-      setFormDataGioHang((prevState) => ({
-        ...prevState,
-        soLuong: newQuantity,
-      }));
-      return newQuantity;
-    });
-  };
-
-  const handleDecrease = () => {
-    setQuantity((prevQuantity) => {
-      const newQuantity = prevQuantity > 1 ? prevQuantity - 1 : 1;
-      setFormDataGioHang((prevState) => ({
-        ...prevState,
-        soLuong: newQuantity,
-      }));
-      return newQuantity;
-    });
-  };
-
-  const handleInputChange = (event) => {
-    const value = parseInt(event.target.value);
-    const newQuantity = value >= 1 ? value : 1;
-    setQuantity(newQuantity);
-    setFormDataGioHang((prevState) => ({
-      ...prevState,
-      soLuong: newQuantity,
-    }));
-  };
-
-  const token = JSON.parse(localStorage.getItem("tn") || "{}");
-  const profile = JSON.parse(localStorage.getItem("profile") || "{}");
+  const [formDataBinhLuan, setFormDataBinhLuan] = useState({
+    MaModel: "",
+    TaiKhoanID: profile.id,
+    NoiDung: "",
+  });
+  const [activeCommentId, setActiveCommentId] = useState(null);
+  const [cart, setCart] = useRecoilState(cartState);
+  const [checkout, setcheckout] = useRecoilState(cartCheckout);
 
   const quangcao = {
     infinite: true,
@@ -92,21 +77,38 @@ function Detail() {
 
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [mauNgoaiThat, setMauNgoaiThat] = useState([]);
-  const [mauNoiThat, setMauNoiThat] = useState([]);
-  const [selectedVersion, setSelectedVersion] = useState(null);
-  const [selectedNgoaiThat, setSelectedNgoaiThat] = useState(null);
 
-  const [selectedNoiThat, setSelectedNoiThat] = useState(null);
-  const [formDataBinhLuan, setFormDataBinhLuan] = useState({
-    MaModel: "",
-    TaiKhoanID: profile.id,
-    NoiDung: "",
-  });
+  const handleIncrease = () => {
+    setQuantity((prevQuantity) => {
+      const newQuantity = Math.min(prevQuantity + 1, soLuongTon);
+      setFormDataGioHang((prevState) => ({
+        ...prevState,
+        soLuong: newQuantity,
+      }));
+      return newQuantity;
+    });
+  };
 
-  const [activeCommentId, setActiveCommentId] = useState(null);
+  const handleDecrease = () => {
+    setQuantity((prevQuantity) => {
+      const newQuantity = Math.max(prevQuantity - 1, 1);
+      setFormDataGioHang((prevState) => ({
+        ...prevState,
+        soLuong: newQuantity,
+      }));
+      return newQuantity;
+    });
+  };
 
+  const handleInputChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    const newQuantity = Math.max(1, Math.min(value, soLuongTon));
+    setQuantity(newQuantity);
+    setFormDataGioHang((prevState) => ({
+      ...prevState,
+      soLuong: newQuantity,
+    }));
+  };
   async function loadData(id) {
     const [detail] = await Promise.all([getDetail(id)]);
     setData(detail);
@@ -136,7 +138,6 @@ function Detail() {
       }));
     }
   }, [data]);
-
   const handleSubmit = async () => {
     if (!formDataBinhLuan.NoiDung) {
       messageApi.open({
@@ -147,21 +148,26 @@ function Detail() {
     }
     try {
       const response = await saveBinhLuan(formDataBinhLuan, token.access_token);
+
       if (response && response.status_code === 200) {
-        // Update the comments list with the new comment
-        setData((prevData) => ({
-          ...prevData,
-          binhLuan: [...prevData.binhLuan, response.newComment],
-        }));
-        setFormDataBinhLuan((prevState) => ({
-          ...prevState,
-          NoiDung: "",
-        }));
-        messageApi.open({
-          type: "success",
-          content: "Bình luận đã được gửi.",
-        });
-        loadData(id);
+        // Kiểm tra phản hồi từ API để đảm bảo data không bị undefined
+        if (response.data) {
+          setData((prevData) => ({
+            ...prevData,
+            binhLuan: [...prevData.binhLuan, response.data],
+          }));
+          setFormDataBinhLuan((prevState) => ({
+            ...prevState,
+            NoiDung: "",
+          }));
+          messageApi.open({
+            type: "success",
+            content: "Bình luận đã được gửi.",
+          });
+          loadData(id); // Tải lại dữ liệu để cập nhật danh sách bình luận
+        } else {
+          throw new Error("Dữ liệu bình luận mới không hợp lệ.");
+        }
       } else {
         messageApi.open({
           type: "error",
@@ -171,7 +177,7 @@ function Detail() {
     } catch (error) {
       messageApi.open({
         type: "error",
-        content: "Có lỗi xảy ra. Vui lòng thử lại: ".error,
+        content: `Có lỗi xảy ra. Vui lòng thử lại: ${error.message}`,
       });
     }
   };
@@ -181,20 +187,34 @@ function Detail() {
     const mauNgoaiThatData = await getMauNgoaiThat(versionId);
     setMauNgoaiThat(mauNgoaiThatData);
     setMauNoiThat([]);
+    setSoLuongTon(1);
+    setQuantity(1);
   };
 
   const handleNgoaiThatChange = async (ngoaiThatId) => {
     setSelectedNgoaiThat(ngoaiThatId);
     const mauNoiThatData = await getMauNoiThat(ngoaiThatId);
     setMauNoiThat(mauNoiThatData);
+    setSoLuongTon(1);
+    setQuantity(1);
   };
 
-  const handleNoiThatChange = (noiThatId) => {
+  const getSoLuongTon = (noiThatId) => {
+    const noiThatItem = mauNoiThat.find(
+      (item) => item.MaMauNoiThat === noiThatId
+    );
+    return noiThatItem ? noiThatItem.SoLuong : null;
+  };
+
+  const handleNoiThatChange = async (noiThatId) => {
     setSelectedNoiThat(noiThatId);
     setFormDataGioHang((prevState) => ({
       ...prevState,
       maNoiThat: noiThatId,
     }));
+
+    const soLuongTon = await getSoLuongTon(noiThatId);
+    setSoLuongTon(soLuongTon);
   };
 
   const handleAddToCart = async () => {
@@ -204,11 +224,30 @@ function Detail() {
       );
       return;
     }
-    
+
     await addToCart(selectedNoiThat, quantity);
     setCart(getTotalQuantity() || 0);
   };
 
+  const handleBuyNowChange = async () => {
+    if (!selectedNoiThat) {
+      messageApi.error(
+        "Vui lòng chọn phiên bản, màu ngoại thất và màu nội thất."
+      );
+      return;
+    }
+
+    const response = await getDetailCart(selectedNoiThat);
+
+    const buyNow = await [
+      {
+        ...response.data.data,
+        SoLuong: quantity,
+      },
+    ];
+    setcheckout(buyNow);
+    navigate("/checkout");
+  };
   if (!isDataLoaded) {
     return (
       <div>
@@ -522,6 +561,7 @@ function Detail() {
                       className="quantity-input"
                       value={quantity}
                       min="1"
+                      max={soLuongTon}
                       onChange={handleInputChange}
                     />
                     <button
@@ -553,7 +593,12 @@ function Detail() {
                         Thêm Vào Giỏ Hàng
                       </button>
 
-                      <button className="pro-btn_buy">Mua Ngay</button>
+                      <button
+                        className="pro-btn_buy"
+                        onClick={handleBuyNowChange}
+                      >
+                        Mua Ngay
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -623,7 +668,7 @@ function Detail() {
                 <div className="col news-title blueDark-c">Bình luận</div>
               </div>
 
-              {token.access_token && (
+              {token?.access_token && (
                 <div className="user-binhluan">
                   <div className="form-group">
                     <TextArea
@@ -650,28 +695,33 @@ function Detail() {
               )}
 
               <div className="binhluan-cards">
-                {data?.binhLuan?.map((item) => (
-                  <Comment
-                    key={item?.MaBinhLuan}
-                    token={token}
-                    profile={profile}
-                    taiKhoanID={item?.TaiKhoanID}
-                    maBinhLuan={item?.MaBinhLuan}
-                    anhDaiDien={item?.AnhDaiDien || "TaiKhoan/img_1.jpg"}
-                    hoTen={item?.HoVaTen || "Anonymous"}
-                    thoiGian={item?.NgayTao || "Unknown time"}
-                    noiDung={item?.NoiDung || ""}
-                    deleteBinhLuan={activeCommentId === item.MaBinhLuan}
-                    handleDeleteBinhLuan={() =>
-                      setActiveCommentId(
-                        activeCommentId === item.MaBinhLuan
-                          ? null
-                          : item.MaBinhLuan
-                      )
-                    }
-                    loadData={() => loadData(id)}
-                  />
-                ))}
+                {console.log(data.binhLuan)}
+                {data?.binhLuan && data.binhLuan.length > 0 ? (
+                  data?.binhLuan?.map((item) => (
+                    <Comment
+                      key={item?.MaBinhLuan}
+                      token={token}
+                      profile={profile}
+                      taiKhoanID={item?.TaiKhoanID}
+                      maBinhLuan={item?.MaBinhLuan}
+                      anhDaiDien={item?.AnhDaiDien || "TaiKhoan/img_1.jpg"}
+                      hoTen={item?.HoVaTen || "Anonymous"}
+                      thoiGian={item?.NgayTao || "Unknown time"}
+                      noiDung={item?.NoiDung || ""}
+                      deleteBinhLuan={activeCommentId === item.MaBinhLuan}
+                      handleDeleteBinhLuan={() =>
+                        setActiveCommentId(
+                          activeCommentId === item.MaBinhLuan
+                            ? null
+                            : item.MaBinhLuan
+                        )
+                      }
+                      loadData={() => loadData(id)}
+                    />
+                  ))
+                ) : (
+                  <p>Chưa có bình luận nào.</p>
+                )}
               </div>
             </div>
 

@@ -22,7 +22,6 @@ const Login = function () {
       const response = await apiLogin(userName, password);
       if (response && response.access_token) {
         setToken(response.access_token);
-
         const profile = await getProfile(response.access_token);
         localStorage.setItem("profile", JSON.stringify(profile));
         localStorage.setItem("tn", JSON.stringify(response));

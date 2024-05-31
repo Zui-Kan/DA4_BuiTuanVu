@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\ChiTietDatHang;
 use App\Models\DatHang;
 use App\Models\KhachHang;
+use App\Models\MauNoiThat;
+use App\Models\TrangThaiDatHang;
 use App\Models\YeuCauHuy;
 use App\Traits\TrangThaiTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DatHangController extends Controller
+class CheckoutController extends Controller
 {
     use TrangThaiTrait;
 
@@ -64,14 +66,13 @@ class DatHangController extends Controller
             $kh->CMND = $request->CMND;
             $kh->SDT = $request->SDT;
             $kh->DiaChi = $request->DiaChi;
-            $kh->AnhDaiDien = $request->AnhDaiDien;
+            $kh->GioiTinh = $request->GioiTinh;
             $kh->save();
             $dh->MaKhachHang = $kh->MaKhachHang;
         } else {
             $dh->MaKhachHang = $request->MaKhachHang;
         }
 
-        $dh->TrangThai = "Chờ liên hệ xác nhận";
         $dh->TongTien = $request->TongTien;
         $dh->MaNhanVien = null;
         $dh->HinhThucNhan = $request->HinhThucNhan;
@@ -80,6 +81,10 @@ class DatHangController extends Controller
         $dh->save();
         $maDH = $dh->MaDatHang;
 
+        $tt = new TrangThaiDatHang();
+        $tt->MaDatHang = $maDH;
+        $tt->TrangThai = "Chờ liên hệ xác nhận";
+        $tt->save();
         // Lưu các chi tiết đơn hàng
         foreach ($request->ChiTietDatHang as $ctdhRequest) {
             $ctdh = new ChiTietDatHang();
@@ -92,8 +97,14 @@ class DatHangController extends Controller
             $ctdh->GiaBan = $ctdhRequest['GiaBan'];
             $ctdh->save();
         }
+
+
         return response()->json(['success' => true, 'message' => 'Đặt xe thành công', 'MaDatHang' => $maDH]);
     }
+
+
+
+
 
     /**
      * @OA\post(
@@ -102,13 +113,24 @@ class DatHangController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
+
+    public function getkhachhangbycheckout($id)
+    {
+        $db = KhachHang::where('TaiKhoanID', $id)->get();
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
+
     public function NhanVienXacNhan(Request $request)
     {
         $dh = DatHang::where('MaDatHang', $request->MaDatHang)->first();
         if ($dh) {
             $dh->MaNhanVien = $request->MaNhanvien;
-            $dh->TrangThai = "Xác nhận thành công, chờ giao xe";
-            $db = $dh->save();
+            $tt = new TrangThaiDatHang();
+            $tt->MaDatHang =  $request->MaDatHang;
+            $tt->TrangThai = "Đơn hàng thành công, cảm ơn quý khách <3";
+            $tt->save();
+            $dh->save();
+            $db = ['Đơn hàng' => $dh, 'Trang thái' => $tt];
         }
 
         return $db ? $this->ok($db) : $this->errors(null);
@@ -145,9 +167,10 @@ class DatHangController extends Controller
      */
     public function HoanTat(Request $request)
     {
-        $dh = DatHang::where('MaDatHang', $request->MaDatHang)->first();
-        $dh->TrangThai = "Đơn hàng thành công, cảm ơn quý khách <3";
-        $db = $dh->save();
+        $db = new TrangThaiDatHang();
+        $db->MaDatHang =  $request->MaDatHang;
+        $db->TrangThai = "Đơn hàng thành công, cảm ơn quý khách <3";
+        $db->save();
 
         return $db ? $this->ok($db) : $this->errors(null);
     }
@@ -161,6 +184,7 @@ class DatHangController extends Controller
     public function HuyDonHang($id)
     {
         $dl = DatHang::where('MaDatHang', $id)->first();
+
         if ($dl->TrangThai == "Chờ liên hệ xác nhận") {
             $dl->TrangThai = "Đơn hàng đã được huỷ";
             $db = $dl->save();

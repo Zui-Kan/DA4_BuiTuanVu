@@ -9,6 +9,7 @@ import CheckOut from "./pages/Checkout";
 import CarCompany from "./pages/CarCompany";
 import AppLayout from "./shares/AppLayout";
 import ErrorBoundary from "./Components/Error/Error";
+import OrderSuccess from "./pages/OrderSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "/carcompany/:id",
         element: <CarCompany />,
+      },
+      {
+        path: "/ordersuccess/:id",
+        element: <OrderSuccess />,
       },
     ],
   },

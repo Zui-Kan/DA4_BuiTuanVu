@@ -1,4 +1,10 @@
 import { apiClient } from "../constant/api";
+export const lc_tn = () => {
+  return JSON.parse(localStorage.getItem("tn") || "{}");
+};
+export const lc_profile = () => {
+  return JSON.parse(localStorage.getItem("profile") || "{}");
+};
 
 export const apiLogin = async (username, password) => {
   try {
@@ -11,15 +17,29 @@ export const apiLogin = async (username, password) => {
 };
 
 export const apiRefreshToken = async (token) => {
+  if (!token) {
+    console.error("Token không hợp lệ.");
+    return null;
+  }
+
   try {
     const res = await apiClient?.post(`/auth/refresh`, null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return res?.data;
+
+    if (res && res.data) {
+      return res.data;
+    } else {
+      console.error("Không nhận được dữ liệu từ máy chủ.");
+      return null;
+    }
   } catch (error) {
-    console.error("Lỗi khi refresh token:", error);
+    console.error(
+      "Lỗi khi refresh token:",
+      error.response?.data || error.message || error
+    );
     return null;
   }
 };
@@ -37,9 +57,7 @@ export const apiSignup = async (data) => {
 export const getProfile = async (token) => {
   try {
     const res = await apiClient?.get(`/auth/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
     return res?.data;
   } catch (error) {
@@ -67,6 +85,7 @@ export const getCTUser = async (id, token) => {
 export const apiLogout = async (token) => {
   try {
     if (token) {
+      debugger;
       const res = await apiClient?.post(`/auth/logout`, null, {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -124,7 +124,7 @@ CREATE TABLE KhachHang (
 );
 
 
-CREATE TABLE	 (
+CREATE TABLE NhaCungCap(
     MaNhaCungCap INT PRIMARY KEY auto_increment,
     TenNhaCungCap NVARCHAR(100) NOT NULL,
     DiaChi NVARCHAR(255),
@@ -138,7 +138,6 @@ CREATE TABLE DatHang (
     MaDatHang INT PRIMARY KEY auto_increment,
 	MaKhachHang int,
     NgayTao Datetime default NOW(),
-    TrangThai nvarchar(100),      
 HinhThucNhan nvarchar(255) not null,
 DiaChiNhanXe nvarchar(255) not null,
 	TongTien  DECIMAL(10, 2),
@@ -146,7 +145,13 @@ DiaChiNhanXe nvarchar(255) not null,
   FOREIGN KEY (MaNhanVien) REFERENCES Nhanvien(MaNhanVien),
     FOREIGN KEY (MaKhachHang) REFERENCES KhachHang(MaKhachHang)
 );
-
+CREATE TABLE TrangThaiDatHang (
+    MaTrangThai INT PRIMARY KEY auto_increment,
+	MaDatHang int,
+    TrangThai nvarchar(255),
+    NgayTao Datetime default NOW(),
+    FOREIGN KEY (MaDatHang) REFERENCES DatHang(MaDatHang)
+);
 
 create table ChiTietDatHang(
 MaChiTietDatHang int primary key auto_increment,
@@ -495,3 +500,33 @@ VALUES
 (8, null, 8, 'Những mẹo vặt này thật sự giúp tiết kiệm thời gian.', NOW()),
 (null, 9, 9, 'Cuộc sống lành mạnh là chìa khóa cho hạnh phúc.', NOW()),
 (10, null, 10, 'Âm nhạc là nguồn cảm hứng cho tôi.', NOW());
+
+
+
+
+  SELECT
+            DH.*,
+        
+            TT.*,
+            TT.NgayTao AS TrangThaiNgayTao,
+            CTDH.*,
+            MX.*,
+            PBX.*,
+            MNT.*,
+            MNNT.*
+        FROM
+            DatHang DH
+         JOIN
+            TrangThaiDatHang TT ON DH.MaDatHang = TT.MaDatHang
+        LEFT JOIN
+            ChiTietDatHang CTDH ON DH.MaDatHang = CTDH.MaDatHang
+        LEFT JOIN
+            ModelXe MX ON CTDH.MaModel = MX.MaModel
+        LEFT JOIN
+            PhienBanXe PBX ON CTDH.MaPhienBan = PBX.MaPhienBan
+        LEFT JOIN
+            MauNgoaiThat MNT ON CTDH.MaMauNgoaiThat = MNT.MaMauNgoaiThat
+        LEFT JOIN
+            MauNoiThat MNNT ON CTDH.MaMauNoiThat = MNNT.MaMauNoiThat
+        WHERE
+            DH.MaDatHang = 12

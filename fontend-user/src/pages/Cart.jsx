@@ -26,7 +26,7 @@ const Cart = function () {
   const [checkout, setcheckout] = useRecoilState(cartCheckout);
   const [card, setCart] = useRecoilState(cartState);
   const navigate = useNavigate();
-
+  const messageAPI = message;
   const loadData = async () => {
     const details = await getCartDetails();
     setData(details);
@@ -53,6 +53,8 @@ const Cart = function () {
 
   const handleDeleteChange = async (maMauNoiThat) => {
     await removeFromCart(maMauNoiThat);
+    messageAPI.success("Sản phẩm đã được xóa khỏi giỏ hàng.");
+
     loadData();
   };
 
@@ -67,6 +69,7 @@ const Cart = function () {
     for (const maMauNoiThat of itemsToDelete) {
       await removeFromCart(maMauNoiThat);
     }
+    messageAPI.success("Sản phẩm đã được xóa khỏi giỏ hàng.");
 
     loadData();
   };
@@ -76,7 +79,12 @@ const Cart = function () {
       (item, index) => selectedItems[index]
     );
     setcheckout(itemsCheckout);
-    navigate("/checkout");
+
+    if (itemsCheckout.length < 1) {
+      messageAPI.error("Vui lòng chọn xe cần thanh toán!!!");
+    } else {
+      navigate("/checkout");
+    }
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,7 +94,7 @@ const Cart = function () {
       updateQuantityInCart(selectedNoiThat, newQuantity);
       setData((prevData) => {
         const newData = { ...prevData };
-        newData.listCart[index].soLuong = newQuantity;
+        newData.listCart[index].SoLuong = newQuantity;
         return newData;
       });
     }),
@@ -104,8 +112,8 @@ const Cart = function () {
 
     data?.listCart.forEach((item, index) => {
       if (selectedItems[index]) {
-        totalQuantity += item.soLuong;
-        totalPrice += item.soLuong * item.Gia;
+        totalQuantity += item.SoLuong;
+        totalPrice += item.SoLuong * item.Gia;
       }
     });
     return { totalQuantity, totalPrice };
@@ -212,7 +220,7 @@ const Cart = function () {
                         onClick={() =>
                           handleQuantityChange(
                             index,
-                            item.soLuong > 1 ? item.soLuong - 1 : 1
+                            item.SoLuong > 1 ? item.SoLuong - 1 : 1
                           )
                         }
                       >
@@ -221,7 +229,7 @@ const Cart = function () {
                       <input
                         type="number"
                         className="quantity-input"
-                        value={item.soLuong}
+                        value={item.SoLuong}
                         min="1"
                         onChange={(e) =>
                           handleQuantityChange(index, parseInt(e.target.value))
@@ -230,7 +238,7 @@ const Cart = function () {
                       <button
                         className="btn-secondary increase-btn"
                         onClick={() =>
-                          handleQuantityChange(index, item.soLuong + 1)
+                          handleQuantityChange(index, item.SoLuong + 1)
                         }
                       >
                         +
@@ -238,7 +246,7 @@ const Cart = function () {
                     </div>
                   </td>
                   <td className="inp-soluong_cart">
-                    {formatPrice(item.soLuong * item.Gia)}
+                    {formatPrice(item.SoLuong * item.Gia)}
                   </td>
                   <td className="inp-soluong_cart">
                     <Popconfirm

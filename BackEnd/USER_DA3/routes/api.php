@@ -5,6 +5,7 @@ use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\BinhLuanController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ChuDeBaiVietController;
 use App\Http\Controllers\DatHangController;
 use App\Http\Controllers\DetailController;
@@ -57,6 +58,24 @@ Route::group([
         Route::post('/updatectusers/{id}', [UsersController::class, 'updateCTusers'])->name('taikhoan.updatectusers');
         Route::post('/changepassword', [UsersController::class, 'changePassword'])->name('taikhoan.changepassword');
     });
+
+    Route::group([
+        'prefix' => 'checkout',
+    ], function () {
+        Route::post('/datxe', [CheckoutController::class, 'DatXe'])->name('checkout.dat');
+        Route::get('/ordersuccess/{id?}', [CheckoutController::class, 'ordersuccess'])->name('checkout.ordersuccess');
+
+
+        Route::post('/search', [CheckoutController::class, 'search'])->name('checkout.search');
+        Route::post('/yeucauhuy', [CheckoutController::class, 'search_YeuCauHuy'])->name('checkout.yeucauhuy');
+        Route::get('/getkhachhangbycheckout/{id?}', [CheckoutController::class, 'getkhachhangbycheckout'])->name('checkout.getkhachhangbycheckout');
+        Route::post('/nhanvienxacnhan', [CheckoutController::class, 'NhanVienXacNhan'])->name('checkout.nhanvienxacnhan');
+        Route::post('/giaoxe', [CheckoutController::class, 'GiaoXe'])->name('checkout.giaoxe');
+        Route::post('/hoantat', [CheckoutController::class, 'HoanTat'])->name('checkout.hoantat');
+        Route::delete('/huydonhang/{id}', [CheckoutController::class, 'huydonhang'])->name('checkout.huydonhang');
+        Route::delete('/xacnhanyeucauhuy/{id}', [CheckoutController::class, 'XacNhanYeuCauHuy'])->name('checkout.xacnhanyeucauhuy');
+        Route::post('/search_yeucauhuy/{id}', [CheckoutController::class, 'search_yeucauhuy'])->name('checkout.search_yeucauhuy');
+    });
 });
 
 
@@ -106,18 +125,5 @@ Route::group([
     });
 
     //Đặt xe
-    Route::group([
 
-        'prefix' => 'datxe',
-    ], function () {
-        Route::post('/search', [DatHangController::class, 'search'])->name('DatXe.search');
-        Route::post('/yeucauhuy', [DatHangController::class, 'search_YeuCauHuy'])->name('DatXe.yeucauhuy');
-        Route::post('/dat', [DatHangController::class, 'DatXe'])->name('DatXe.DatXe');
-        Route::post('/nhanvienxacnhan', [DatHangController::class, 'NhanVienXacNhan'])->name('DatXe.nhanvienxacnhan');
-        Route::post('/giaoxe', [DatHangController::class, 'GiaoXe'])->name('DatXe.giaoxe');
-        Route::post('/hoantat', [DatHangController::class, 'HoanTat'])->name('DatXe.hoantat');
-        Route::delete('/huydonhang/{id}', [DatHangController::class, 'huydonhang'])->name('DatXe.huydonhang');
-        Route::delete('/xacnhanyeucauhuy/{id}', [DatHangController::class, 'XacNhanYeuCauHuy'])->name('DatXe.xacnhanyeucauhuy');
-        Route::post('/search_yeucauhuy/{id}', [DatHangController::class, 'search_yeucauhuy'])->name('DatXe.search_yeucauhuy');
-    });
 });
