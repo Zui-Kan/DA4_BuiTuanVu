@@ -5,6 +5,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\HeaderController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UsersController;
@@ -38,9 +39,13 @@ Route::group([
     Route::group([
         'prefix' => 'taikhoan'
     ],  function () {
-        Route::get('/gettaikhoanct/{id}', [UsersController::class, 'getTaiKhoanCT'])->name('taikhoan.gettaikhoanct');
         Route::post('/updatectusers/{id}', [UsersController::class, 'updateCTusers'])->name('taikhoan.updatectusers');
         Route::post('/changepassword', [UsersController::class, 'changePassword'])->name('taikhoan.changepassword');
+    });
+    Route::group([
+        'prefix' => 'header'
+    ],  function () {
+        Route::get('/gettaikhoanct/{id}', [HeaderController::class, 'getTaiKhoanCT'])->name('header.gettaikhoanct');
     });
 
     Route::group([
@@ -49,16 +54,9 @@ Route::group([
         Route::post('/datxe', [CheckoutController::class, 'DatXe'])->name('checkout.dat');
         Route::get('/ordersuccess/{id?}', [CheckoutController::class, 'ordersuccess'])->name('checkout.ordersuccess');
 
-
-        Route::post('/search', [CheckoutController::class, 'search'])->name('checkout.search');
         Route::post('/yeucauhuy', [CheckoutController::class, 'search_YeuCauHuy'])->name('checkout.yeucauhuy');
         Route::get('/getkhachhangbycheckout/{id?}', [CheckoutController::class, 'getkhachhangbycheckout'])->name('checkout.getkhachhangbycheckout');
         Route::post('/nhanvienxacnhan', [CheckoutController::class, 'NhanVienXacNhan'])->name('checkout.nhanvienxacnhan');
-        Route::post('/giaoxe', [CheckoutController::class, 'GiaoXe'])->name('checkout.giaoxe');
-        Route::post('/hoantat', [CheckoutController::class, 'HoanTat'])->name('checkout.hoantat');
-        Route::delete('/huydonhang/{id}', [CheckoutController::class, 'huydonhang'])->name('checkout.huydonhang');
-        Route::delete('/xacnhanyeucauhuy/{id}', [CheckoutController::class, 'XacNhanYeuCauHuy'])->name('checkout.xacnhanyeucauhuy');
-        Route::post('/search_yeucauhuy/{id}', [CheckoutController::class, 'search_yeucauhuy'])->name('checkout.search_yeucauhuy');
     });
 
     Route::group([
@@ -78,6 +76,13 @@ Route::group([
         'prefix' => 'taikhoan'
     ],  function () {
         Route::post('/signup', [UsersController::class, 'signup'])->name('taikhoan.signup');
+    });
+
+    
+    Route::group([
+        'prefix' => 'header'
+    ],  function () {
+        Route::get('/getmenu', [HeaderController::class, 'getmenu'])->name('header.getmenu');
     });
 
 

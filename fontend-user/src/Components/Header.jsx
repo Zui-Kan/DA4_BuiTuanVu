@@ -1,19 +1,23 @@
 import { useRecoilState } from "recoil";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getCTUser, apiLogout } from "../services/auth.service";
+import { apiLogout } from "../services/auth.service";
 import { uploads } from "../constant/api";
 import { message } from "antd";
 import { getCartDetails, getTotalQuantity } from "../services/cart.service";
 import TokenRefresher from "../constant/refreshToken";
 import { cartState } from "../constant/recoil";
+import { getCTUser, getMenu } from "../services/header.service";
 
 const Header = function () {
   const [controlUser, setControlUser] = useState(false);
   const [data, setData] = useState(null);
+  const [isMenu, setIsMenu] = useState(null);
   const [totalCart, setTotalCart] = useState(0);
   const [messageApi, contextHolder] = message.useMessage();
+
   const [cart, setCart] = useRecoilState(cartState);
+
   const navigate = useNavigate();
   const profile = useMemo(
     () => JSON.parse(localStorage.getItem("profile") || "{}"),
@@ -33,6 +37,13 @@ const Header = function () {
       }
     }
   }, [profile, token]);
+
+  const loadMenu = useCallback(async () => {
+    const menu = await getMenu();
+    if (menu?.status_code === 200) {
+      setIsMenu(menu);
+    }
+  }, []);
 
   const loadTotal = useCallback(async () => {
     setCart(getTotalQuantity() || 0);
@@ -55,6 +66,7 @@ const Header = function () {
   }, [token.access_token, messageApi]);
 
   useEffect(() => {
+    loadMenu();
     if (profile?.id) {
       loadData();
       loadTotal();
@@ -77,51 +89,29 @@ const Header = function () {
             <div className="submenu black-c">
               <ul>
                 <li className="submenu-item_title">HÃNG XE PHỔ BIẾN</li>
-                {[
-                  "Toyota",
-                  "Honda",
-                  "Mercedes-Benz",
-                  "Ford",
-                  "BMW",
-                  "Hyundai",
-                  "Kia",
-                  "Mazda",
-                  "Vinfast",
-                ].map((brand) => (
-                  <li className="submenu-item" key={brand}>
-                    <a href="#">{brand}</a>
-                  </li>
+                {isMenu?.data?.hangxe?.data.map((brand) => (
+                  <Link to={`/carcompany/${brand.MaHang}`} key={brand.MaHang}>
+                    <li className="submenu-item">{brand.TenHang}</li>
+                  </Link>
                 ))}
               </ul>
               <ul>
                 <li className="submenu-item_title">DÒNG XE PHỔ BIẾN</li>
-                {[
-                  "Mercedes-Benz GL className",
-                  "Mercedes-Benz E className",
-                  "Mitsubishi Xpander Cross",
-                  "Toyota Fortuner",
-                  "Mercedes-Benz S className",
-                  "Hyundai Santafe",
-                  "Toyota Corolla Cross",
-                  "Ford Everest",
-                  "Toyota Vios",
-                ].map((model) => (
-                  <li className="submenu-item" key={model}>
-                    <a href="#">{model}</a>
-                  </li>
+                {isMenu?.data?.topxe.map((model) => (
+                  <Link to={`/detail/${model.MaModel}`} key={model.MaModel}>
+                    <li className="submenu-item">{model.TenModel}</li>
+                  </Link>
                 ))}
               </ul>
               <ul>
-                <li className="submenu-item_title">GIÁ XE</li>
-                {[
-                  "Dưới 500 triệu",
-                  "Từ 500 - 700 triệu",
-                  "Từ 700 - 1 tỷ",
-                  "Trên 1 tỷ",
-                ].map((priceRange) => (
-                  <li className="submenu-item" key={priceRange}>
-                    <a href="#">{priceRange}</a>
-                  </li>
+                <li className="submenu-item_title">LOẠI XE</li>
+                {isMenu?.data?.loaixe?.data.map((priceRange) => (
+                  <Link
+                    to={`/detail/${priceRange.MaLoaiXe}`}
+                    key={priceRange.MaLoaiXe}
+                  >
+                    <li className="submenu-item">{priceRange.TenLoaiXe}</li>
+                  </Link>
                 ))}
               </ul>
             </div>

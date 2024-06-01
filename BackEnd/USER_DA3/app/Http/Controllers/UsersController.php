@@ -102,21 +102,5 @@ class UsersController extends Controller
     }
 
 
-    /**
-     * @OA\Get(
-     *     path="/api/taikhoan/gettaikhoanct/{id}",
-     *    tags={"taikhoan"},
-     *     @OA\Response(response="200", description="Success"),
-     * )
-     */
-    public function getTaiKhoanCT($id)
-    {
-        $db = DB::table('users')
-            ->join('ctusers', 'users.id', '=', 'ctusers.TaiKhoanID')
-            ->where('users.id', $id)
-            ->select('users.*', 'ctusers.*')
-            ->first();
-
-        return $db ? $this->ok($db) : $this->errors(null);
-    }
+   
 }

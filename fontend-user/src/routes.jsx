@@ -13,6 +13,10 @@ import OrderSuccess from "./pages/OrderSuccess";
 import Purchase from "./pages/Purchase";
 import PurchaseDetail from "./pages/PurchaseDetail";
 
+import Post from "./pages/Post";
+import Topic from "./pages/Topic";
+import Forum from "./pages/Forum";
+
 export const router = createBrowserRouter([
   {
     path: "",
@@ -55,6 +59,19 @@ export const router = createBrowserRouter([
       {
         path: "/purchasedetail/:id",
         element: <PurchaseDetail />,
+      },
+
+      {
+        path: "/forum",
+        element: <Forum />,
+      },
+      {
+        path: "/topic/:id",
+        element: <Topic />,
+      },
+      {
+        path: "/post/:id",
+        element: <Post />,
       },
     ],
   },

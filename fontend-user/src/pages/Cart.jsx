@@ -8,7 +8,7 @@ import {
   removeFromCart,
   updateQuantityInCart,
 } from "../services/cart.service";
-import { formatPrice } from "../shares/formatPrice";
+import { formatPrice } from "../shares/format";
 import { uploads } from "../constant/api";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Button, Popconfirm, message } from "antd";
@@ -20,7 +20,6 @@ import debounce from "lodash.debounce"; // Thêm lodash.debounce để sử dụ
 
 const Cart = function () {
   document.title = "Giỏ hàng";
-
   const [data, setData] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -56,7 +55,6 @@ const Cart = function () {
   const handleDeleteChange = async (maMauNoiThat) => {
     await removeFromCart(maMauNoiThat);
     messageAPI.success("Sản phẩm đã được xóa khỏi giỏ hàng.");
-
     loadData();
   };
 
@@ -89,7 +87,6 @@ const Cart = function () {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateQuantity = useCallback(
     debounce((index, newQuantity) => {
       const selectedNoiThat = data.listCart[index].MaMauNoiThat;

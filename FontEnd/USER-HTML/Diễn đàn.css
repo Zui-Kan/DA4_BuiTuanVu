@@ -1,0 +1,483 @@
+*{
+    box-sizing: border-box;
+    position: 0px;
+  }
+
+  body {
+        color: black;
+        font-family: "Mulish", sans-serif;
+    }  
+
+main{
+        width: 88%;
+        margin: 0 auto;      
+        z-index: 30;
+}
+a{
+    color: rgb(21, 21, 21);
+    text-decoration: none;
+}
+  /* <!-- START--------------------------------------------------------------------------------------Chủ đề  --> */
+#chudes{
+    width: 100%;
+    height: auto;
+ 
+    
+}
+
+.chude-tieude{
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 35px;
+}
+.chude-tieude h1 {
+    width: 100%;
+font-size: 36px;
+font-weight: 300;
+
+}
+
+.cards-chude{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -30px; 
+}
+.card-chude{
+    position: relative;
+    margin-left: 30px;
+    overflow: hidden;
+    background-color: #fff;
+    width: calc(25% - 30px);
+    z-index: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    height: 176px;
+ 
+}
+.card-noidung{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    padding:20px 20px;
+    flex-direction: column;
+    justify-content: end;
+    background-image: linear-gradient(to top, rgba(26, 26, 26, 0.6),rgba(52, 52, 52, 0.302),rgba(103, 102, 102, 0.111));}
+
+.card-chude img{
+    width: 100%;
+    height: 100%;
+
+}
+
+.tieude-card{
+    font-weight: 300;
+    font-size: 23px;
+    letter-spacing: -0.02em;
+}
+
+.card-chude_tuongtac{
+    font-size: 13px;
+    font-weight: 300;
+}
+  /* <!-- END--------------------------------------------------------------------------------------Chủ đề  --> */
+/* 
+  <!-- Chủ đề- diễn đàn -------------------------------------------------------------START --> */
+.chude-diendans{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+
+.baiviets{
+    width: 75% ;
+    padding: 30px;
+}
+.list_baiviets{
+    width: 100%;
+
+}
+.tieude-baiviets{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.tieude-baiviets_trai{
+    width: 60%;
+}
+.tieude-baiviets_phai{
+    display: flex;
+    width: 40%;
+    justify-content: flex-end;
+
+    
+}
+.tieude-baiviets_trai a{
+    font-size: 15px;
+    font-weight: 600;
+
+
+}
+.tieude-baiviets_phai a{
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 40px;
+
+}
+
+
+  /* start ----------------------------------------------------------------Tạo bài viết */
+.taobaiviet{
+    width: 100%;
+display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    background-color: #e6e6e8;
+    padding: 10px 20px;
+    border-radius: 10px;
+    align-items:  center;
+}
+.taobaiviet img{
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+#btn_taobaiviet{
+    width: 100%;
+    border: 0px  #5c5b5b solid ;
+    background-color: #ffffff;
+height: 40px;
+font-size: 18px;
+border-radius: 50px;
+color: #444444;
+font-style: italic;
+font-weight: 500;
+}
+
+#btn_taobaiviet:hover{
+    background-color: #c1c1c1;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.345);
+  }
+  h2{
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    width: 80%;
+    max-height: 630px;
+    padding: 15px;
+    margin-top: 25px;
+    border-radius: 10px;
+    z-index: 4;
+
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: end;
+    z-index: 5;
+  }
+  .close img{
+    width: 20px;
+    height: 20px;
+    background-color: #ef3f3f;
+    z-index: 3;
+    border-radius: 5px;
+
+  }
+
+  .khung_dienchitiet{
+    max-height: 250px;
+    overflow: auto;
+    font-size: 15px;
+    font-weight: 500;
+    color: #4a4949;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .khung_themchitiet{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 0.8px solid #595858;
+
+  }
+
+  #btn_thembaiviet{
+    border: 0px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    margin-bottom: 5px;
+  }
+  #btn_thembaiviet:hover{
+
+    background-color: #98989836;
+    border-radius: 20px;
+
+  }
+.dienchitiet{
+    border-top: 0.3px dashed #595858;
+    margin-top: 8px;
+    padding-top: 5px;
+}
+.dienthongtin{
+    margin-top: 10px;
+    width: 100%;
+}
+.edit_chung input{
+border: 0px;
+}
+
+.tieude_input{
+    margin-left: 10px;
+    margin-bottom:4px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #4a4949;
+}
+#dienthongtin_chude,#dienthongtin_tieude{
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: #F0F2F5;
+    height: 30px;
+    border-radius: 10px;
+    padding: 5px 10px;
+    border: 0.5px rgba(142, 142, 142, 0.347) solid;
+}
+.btn_hienthitheoaz{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #fff;
+    border: 0;
+    padding: 5px;
+}
+.list_binhluan{
+    margin-right: 70px;
+}
+.btn_hienthibinhluantheoaz{
+    margin-right: 20px;
+}
+.btn_hienthitheoaz:hover{
+    background-color: #dbdbdb;
+    border-radius: 6px;
+    
+}
+.btn_hienthitheoaz img{
+    margin-left: 5px;
+    
+}
+ .inp_chung{
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: #F0F2F5;
+    resize: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 15px;
+    border: 0.5px rgba(142, 142, 142, 0.347) solid;
+}
+#dienthongtin_chude:focus,#dienthongtin_tieude:focus, .inp_chung:focus{
+    outline: none;
+    border: 0.5px rgba(96, 96, 96, 0.74) solid;
+
+}
+#dienthongtin_hinhanh{
+    margin-top: 10px;
+}
+.chucnang{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+#btn_dangbaiviet{
+    background-color: #3b7bf3;
+    border: 0;
+    border-radius: 10px;
+    width: 150px;
+    height: 30px;
+    color: #fff;
+    font-size: 17px;
+}
+#btn_dangbaiviet:hover{
+    background-color: #1464F4;
+
+}
+  /* end ----------------------------------------------------------------Tạo bài viết */
+
+.tieudechinh-baiviet:hover{
+    color: #4650da;
+  }
+
+
+  .linkbaiviet{
+    width: 100%;
+    display: flex;
+    margin-top: 20px;
+    overflow: hidden;
+  }
+
+
+.avt-baiviet {
+    width:  60px;
+    height: 60px;
+    border-radius: 50px;
+    margin-right: 20px;
+    margin-right: 10px;
+}
+.tacgia {
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.thoigiandang{
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.view-binhluan{
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 14px;
+}
+.binhluan h3{
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.view-luotxem{
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 14px; 
+}
+
+.luotxem h3{
+    font-size: 14px;
+    font-weight: 300;
+}
+.tieudes-baiviet{
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.tieudechinh-baiviet{
+    width: 100%;
+    font-size: 20px;
+}
+
+.list_thich{
+    margin-right: 40px;
+}
+.binhluan{
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+hr{
+border: 0.5px solid rgba(40, 39, 39, 0.075);
+
+}
+
+.anhmot-moinhat1{
+    position: relative;
+   
+    z-index:4;
+
+}
+
+.anhmot-moinhat2{
+    position: relative;
+    z-index: 5;
+    left: -10px;
+
+
+}
+.anhmot-moinhat3{
+    position: relative;
+    z-index: 6;
+    left: -20px;
+
+
+}
+
+.quangcao-trangchude{
+    margin-top: 100px;
+    width: 25% ;
+    margin-bottom: 40px;
+
+}
+.quangcao-hinhanh1{
+    width: 100%;
+    height: 400px;
+    margin-bottom: 30px;
+}
+
+.quangcao-hinhanh1 img{
+    width: 100%;
+    height: 100%;
+}
+
+
+.khung_chucnangxemthem{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#btn_xemthem_baiviet{
+    width: 40%;
+    height: 35px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: #595858 1px solid;
+    color: #595858;
+}
+
+#btn_xemthem_baiviet:hover{
+
+    border: #5c87e3 1px solid;
+    color: #5c87e3;
+    font-weight: bold;
+}
+  /* <!-- Chủ đề- diễn đàn -------------------------------------------------------------END --> */
+
+
+
+  

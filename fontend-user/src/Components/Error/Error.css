@@ -4,7 +4,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40em;
+
+  height: 100vh; /* Chiều cao của toàn bộ màn hình */
+  width: 100vw; /* Chiều rộng của toàn bộ màn hình */
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
 }
 
 .main {

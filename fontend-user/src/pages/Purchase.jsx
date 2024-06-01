@@ -4,11 +4,7 @@ import "../style/purchase.css";
 import { Button, notification, Space } from "antd";
 import { lc_profile, lc_tn } from "../services/auth.service";
 import { apiGetAllPurchase } from "../services/purchase.service";
-import {
-  formatPrice,
-  formatPriceStringVND,
-  formatPriceVND,
-} from "../shares/formatPrice";
+import { formatDatetime, formatPrice } from "../shares/format";
 import { uploads } from "../constant/api";
 import { Loading } from "../Components/Loading/Loading";
 import { Link } from "react-router-dom";
@@ -38,7 +34,7 @@ function Purchase() {
   useEffect(() => {
     loadData(profile, tn);
   }, []);
-
+  console.log(data);
   if (!isLoading) {
     return <Loading />;
   }
@@ -51,7 +47,7 @@ function Purchase() {
             <div className="carts-purchase" key={key}>
               <div className="carts-purchase_trangthai_thoigian">
                 <div className="carts-purchase_thoigian">
-                  {item.dathang?.NgayTao}
+                  {formatDatetime(item.dathang?.NgayTao)}
                 </div>
                 <div className="carts-purchase_trangthai">
                   {item.trangthai?.TrangThai}

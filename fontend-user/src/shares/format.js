@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export const formatPrice = (price) => {
   // Function to format price with billions and millions
 
@@ -30,4 +32,10 @@ export const formatPriceVND = (price) => {
 
 export const formatPriceStringVND = (price) => {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+
+export const formatDatetime = (datetimeStr) => {
+  if (!datetimeStr) return "";
+  const date = new Date(datetimeStr);
+  return format(date, "dd/MM/yyyy 'lúc' HH:mm:ss");
 };

@@ -12,10 +12,11 @@ import { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  formatDatetime,
   formatPrice,
   formatPriceStringVND,
   formatPriceVND,
-} from "../shares/formatPrice";
+} from "../shares/format";
 
 function PurchaseDetail() {
   document.title = "Chi tiết đơn hàng";
@@ -67,7 +68,7 @@ function PurchaseDetail() {
                 MÃ ĐƠN HÀNG: {data.data.dathang.MaDatHang}
               </div>
               <div className="infor-title_key">
-                THỜI GIAN ĐẶT: {data.data.dathang.NgayTao}
+                THỜI GIAN ĐẶT: {formatDatetime(data.data.dathang.NgayTao)}
               </div>
             </div>
             <div className="purchasedetail-infor_clients">
@@ -147,7 +148,7 @@ function PurchaseDetail() {
                 <Timeline
                   mode={"right"}
                   items={data?.data?.trangthai?.map((status, index) => ({
-                    label: status.NgayTao,
+                    label: formatDatetime(status.NgayTao),
                     children: status.TrangThai,
                   }))}
                 />

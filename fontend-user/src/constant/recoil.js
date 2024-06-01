@@ -10,6 +10,7 @@ export const cartCheckout = atom({
   default: "",
 });
 
+//lưu số lượng trong giỏ hàng
 export const cartState = atom({
   key: "cartState",
   default: [],

@@ -15,7 +15,7 @@ import {
   getMauNoiThat,
   saveBinhLuan,
 } from "../services/detail.service";
-import { formatPrice } from "../shares/formatPrice";
+import { formatPrice } from "../shares/format";
 import { uploads } from "../constant/api";
 import { Input, message } from "antd";
 
@@ -38,11 +38,15 @@ function Detail() {
   const navigate = useNavigate();
 
   const [messageApi, contextHolder] = message.useMessage();
+
   const [quantity, setQuantity] = useState(1);
 
   const token = lc_tn();
   const profile = lc_profile();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [versions, setVersions] = useState([]);
+  const [allMauNgoaiThat, setAllMauNgoaiThat] = useState([]);
+  const [allMauNoiThat, setAllMauNoiThat] = useState([]);
   const [mauNgoaiThat, setMauNgoaiThat] = useState([]);
   const [mauNoiThat, setMauNoiThat] = useState([]);
   const [selectedVersion, setSelectedVersion] = useState(null);
@@ -58,6 +62,7 @@ function Detail() {
     TaiKhoanID: profile.id,
     NoiDung: "",
   });
+
   const [activeCommentId, setActiveCommentId] = useState(null);
   const [cart, setCart] = useRecoilState(cartState);
   const [checkout, setcheckout] = useRecoilState(cartCheckout);
@@ -83,20 +88,13 @@ function Detail() {
   const handleIncrease = () => {
     setQuantity((prevQuantity) => {
       const newQuantity = Math.min(prevQuantity + 1, soLuongTon);
-      setFormDataGioHang((prevState) => ({
-        ...prevState,
-        soLuong: newQuantity,
-      }));
       return newQuantity;
     });
   };
+
   const handleDecrease = () => {
     setQuantity((prevQuantity) => {
       const newQuantity = Math.max(prevQuantity - 1, 1);
-      setFormDataGioHang((prevState) => ({
-        ...prevState,
-        soLuong: newQuantity,
-      }));
       return newQuantity;
     });
   };
@@ -105,17 +103,33 @@ function Detail() {
     const value = parseInt(event.target.value, 10);
     const newQuantity = Math.max(1, Math.min(value, soLuongTon));
     setQuantity(newQuantity);
-    setFormDataGioHang((prevState) => ({
-      ...prevState,
-      soLuong: newQuantity,
-    }));
   };
+
   async function loadData(id) {
     const [detail] = await Promise.all([getDetail(id)]);
     setData(detail);
+
+    // Tải dữ liệu các phiên bản và màu sắc khi component mount
+    const versions = detail?.phienBan || [];
+    setVersions(versions);
+
+    // Tải trước dữ liệu màu ngoại thất và nội thất cho tất cả các phiên bản
+    const allMauNgoaiThat = await Promise.all(
+      versions.map((version) => getMauNgoaiThat(version.MaPhienBan))
+    );
+
+    const allMauNoiThat = await Promise.all(
+      allMauNgoaiThat
+        .flat()
+        .map((ngoaiThat) => getMauNoiThat(ngoaiThat.MaMauNgoaiThat))
+    );
+
+    setAllMauNgoaiThat(allMauNgoaiThat);
+    setAllMauNoiThat(allMauNoiThat);
+
     setIsDataLoaded(true);
   }
-
+  // const switchToTheNextPage
   let sliderRef1 = useRef(null);
   let sliderRef2 = useRef(null);
 
@@ -139,6 +153,7 @@ function Detail() {
       }));
     }
   }, [data]);
+  //chức năng bình luận
   const handleSubmit = async () => {
     if (!formDataBinhLuan.NoiDung) {
       messageApi.open({
@@ -151,7 +166,6 @@ function Detail() {
       const response = await saveBinhLuan(formDataBinhLuan, token.access_token);
 
       if (response && response.status_code === 200) {
-        // Kiểm tra phản hồi từ API để đảm bảo data không bị undefined
         if (response.data) {
           setData((prevData) => ({
             ...prevData,
@@ -183,19 +197,23 @@ function Detail() {
     }
   };
 
-  const handleVersionChange = async (versionId) => {
+  const handleVersionChange = (versionId) => {
     setSelectedVersion(versionId);
-    const mauNgoaiThatData = await getMauNgoaiThat(versionId);
-    setMauNgoaiThat(mauNgoaiThatData);
+    const ngoaiThatData = allMauNgoaiThat.find(
+      (ngoaiThat) => ngoaiThat[0]?.MaPhienBan === versionId
+    );
+    setMauNgoaiThat(ngoaiThatData || []);
     setMauNoiThat([]);
     setSoLuongTon(1);
     setQuantity(1);
   };
 
-  const handleNgoaiThatChange = async (ngoaiThatId) => {
+  const handleNgoaiThatChange = (ngoaiThatId) => {
     setSelectedNgoaiThat(ngoaiThatId);
-    const mauNoiThatData = await getMauNoiThat(ngoaiThatId);
-    setMauNoiThat(mauNoiThatData);
+    const noiThatData = allMauNoiThat.find(
+      (noiThat) => noiThat[0]?.MaMauNgoaiThat === ngoaiThatId
+    );
+    setMauNoiThat(noiThatData || []);
     setSoLuongTon(1);
     setQuantity(1);
   };
@@ -207,14 +225,14 @@ function Detail() {
     return noiThatItem ? noiThatItem.SoLuong : null;
   };
 
-  const handleNoiThatChange = async (noiThatId) => {
+  const handleNoiThatChange = (noiThatId) => {
     setSelectedNoiThat(noiThatId);
     setFormDataGioHang((prevState) => ({
       ...prevState,
       maNoiThat: noiThatId,
     }));
 
-    const soLuongTon = await getSoLuongTon(noiThatId);
+    const soLuongTon = getSoLuongTon(noiThatId);
     setSoLuongTon(soLuongTon);
   };
 
@@ -249,6 +267,7 @@ function Detail() {
     setcheckout(buyNow);
     navigate("/checkout");
   };
+
   if (!isDataLoaded) {
     return (
       <div>

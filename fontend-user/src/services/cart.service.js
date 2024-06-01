@@ -2,6 +2,7 @@ import { message } from "antd";
 import { apiClient } from "../constant/api";
 // Khởi tạo message API
 const messageApi = message;
+
 // Hàm để tính tổng số lượng sản phẩm trong giỏ hàng
 export const getTotalQuantity = () => {
   const cart = getCartFromLocalStorage();
@@ -29,8 +30,11 @@ export const getDetailCart = async (id) => {
 
 export const addToCart = async (selectedNoiThat, quantity) => {
   try {
+    //Phần này gọi từ api lên
     const response = await getDetailCart(selectedNoiThat);
-    const cart = getCartFromLocalStorage();
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    // const cart = getCartFromLocalStorage();
+
     const product = {
       MaModel: response.data.data.MaModel,
       TenModel: response.data.data.TenModel,
@@ -65,10 +69,10 @@ export const addToCart = async (selectedNoiThat, quantity) => {
   }
 };
 
-// Hàm để lấy thông tin giỏ hàng, bao gồm tổng số lượng và tổng giá tiền
+// Hàm để lấy thông tin giỏ hàng để hiển thị ra trang giỏ hàng
 export const getCartDetails = async () => {
   try {
-    const listCart = getCartFromLocalStorage();
+    const listCart = JSON.parse(localStorage.getItem("cart")) || [];
     return { listCart };
   } catch (error) {
     messageApi.error("Có lỗi xảy ra khi lấy thông tin giỏ hàng.");

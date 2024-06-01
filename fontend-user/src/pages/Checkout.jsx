@@ -3,7 +3,7 @@ import Header from "../Components/Header";
 import "../style/Checkout.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartCheckout, cartState } from "../constant/recoil";
-import { formatPriceStringVND, formatPriceVND } from "../shares/formatPrice"; // Assuming formatPriceVND is a function that formats prices to VND
+import { formatPriceStringVND, formatPriceVND } from "../shares/format"; // Assuming formatPriceVND is a function that formats prices to VND
 import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { apiDatXe, getKhachHang } from "../services/checkout.service";

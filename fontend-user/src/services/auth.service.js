@@ -66,21 +66,6 @@ export const getProfile = async (token) => {
   }
 };
 
-export const getCTUser = async (id, token) => {
-  try {
-    if (token) {
-      const res = await apiClient?.get(`/taikhoan/gettaikhoanct/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return res?.data;
-    }
-  } catch (error) {
-    console.error("Lỗi khi lấy dữ liệu:", error);
-    return null;
-  }
-};
 
 export const apiLogout = async (token) => {
   try {

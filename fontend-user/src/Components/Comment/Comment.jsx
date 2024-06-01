@@ -3,6 +3,7 @@ import { uploads } from "../../constant/api";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Popconfirm, message } from "antd";
 import { apiDeleteBinhLuan } from "../../services/detail.service";
+import { formatDatetime } from "../../shares/format";
 
 export function Comment({
   maBinhLuan,
@@ -49,7 +50,7 @@ export function Comment({
             <a href="#" className="user-name">
               {hoTen}
             </a>
-            <div className="user-datetime"> {thoiGian}</div>
+            <div className="user-datetime"> {formatDatetime(thoiGian)}</div>
           </div>
 
           <div className="card-control">

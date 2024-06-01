@@ -10,7 +10,7 @@ import {
   getNamSanXuat,
   getNhienLieu,
 } from "../services/carCompany.service";
-import { formatPrice } from "../shares/formatPrice";
+import { formatPrice } from "../shares/format";
 import { Loading } from "../Components/Loading/Loading";
 import CardCar from "../Components/CardCar";
 

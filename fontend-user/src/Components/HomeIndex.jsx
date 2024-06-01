@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "../style/style.css";
 import CardCar from "./CardCar";
 import { Link } from "react-router-dom";
-import { formatPrice } from "../shares/formatPrice";
+import { formatPrice } from "../shares/format";
 import { uploads } from "../constant/api";
 
 const HomeIndex = function ({ data }) {
@@ -74,7 +74,7 @@ const HomeIndex = function ({ data }) {
           <div className="col news-title blueDark-c">Model mới</div>
         </div>
         <div className="row">
-          {data?.modelMoi.status_code === 200 ? (
+          {data?.modelMoi?.status_code === 200 ? (
             data?.modelMoi?.data.map((item) => (
               <CardCar
                 key={item.MaModel}
@@ -191,7 +191,7 @@ const HomeIndex = function ({ data }) {
         {/* Top sản phẩm bán CHẠY */}
         <div className="topCars">
           <Slider {...topCars}>
-            {data?.topXeBanChay.status_code === 200 ? (
+            {data?.topXeBanChay?.status_code === 200 ? (
               data?.topXeBanChay?.data.map((item) => (
                 <div className="topCar_khung" key={item.MaModel}>
                   <CardCar
