@@ -6,6 +6,8 @@ use App\Models\HangXe;
 use App\Traits\TrangThaiTrait;
 use Illuminate\Http\Request;
 
+use function Psy\debug;
+
 class HangXeController extends Controller
 {
     use TrangThaiTrait;
@@ -19,23 +21,24 @@ class HangXeController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $totalPage = $request->input('totalPage');
+        $page = $request->input('page');
+        $totalPage = $request->input('pageSize');
 
         $query = HangXe::query();
         if ($search) {
             $query->where(function ($query) use ($search) {
                 $query->where('MaHang', 'like', '%' . $search . '%')
-
                     ->orWhere('TenHang', 'like', '%' . $search . '%');
             });
         }
 
-        $db = $query->paginate($totalPage ?? 5);
+        $db = $query->paginate($totalPage ?? ($page ?? 1));
 
-        $kq =  ['ketqua' => $db, 'timkiem' => $query];
 
-        return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
+
+        return $db->total() > 0 ? $this->ok($db) : $this->errors(null);
     }
+
     /**
      * @OA\Get(
      *     path="/api/hangxe/{total}",
@@ -59,9 +62,11 @@ class HangXeController extends Controller
      */
     public function delete($id)
     {
-        $db = HangXe::where('MaHangXe', $id)->first()->delete();
+        $db = HangXe::where('MaHang', $id)->first()->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
+
+
     /**
      * @OA\delete(
      *     path="/api/hangxe/deletes",
@@ -72,12 +77,9 @@ class HangXeController extends Controller
     public function deletes(Request $request)
     {
         $ids = $request->input('ids');
-
-        $db = HangXe::whereIn('MaHangXe', $ids)->delete();
-
+        $db = HangXe::whereIn('MaHang', $ids)->delete();
         return $db ? $this->ok($db) : $this->errors(null);
     }
-
     /**
      * @OA\post(
      *     path="/api/hangxe/save/{id}",
@@ -85,26 +87,51 @@ class HangXeController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
-    public function save(Request $res, $id = null)
+    // public function save(Request $res)
+    // {
+
+    //     $file_name = null;
+
+    //     $id = $res->MaHang ? $res->MaHang : null;
+
+    //     $file_name = $this->uploadFile($res, 'image_upload', 'HangXe');
+
+    //     $tk = $id ?  HangXe::where('MaHang', $id)->first() : new HangXe();
+
+    //     $tk->TenHang = $res->TenHang;
+
+
+    //     if ($file_name !== null) {
+    //         $tk->HinhAnhHangXe = $file_name;
+    //     }
+
+    //     if ($tk->save()) {
+    //         $db =  $tk;
+    //     }
+    //     return $db ? $this->ok($db) : $this->errors(null);
+    // }
+
+    public function save(Request $request)
     {
         $file_name = null;
+        $id = $request->MaHang ? $request->MaHang : null;
 
-        if ($res->has('image_upload')) {
-            $file = $res->image_upload;
-            $file_name = $file->getClientoriginalName();
-            $file->move(public_path('uploads'), $file_name);
-        }
+        // Gọi phương thức uploadFile để xử lý file upload
+        $file_name = $this->uploadFile($request, 'HinhAnhHangXe', 'HangXe');
 
-        $tk = $id ?  HangXe::where('MaHangXe', $id)->first() : new HangXe();
-
-        $tk->TenHang = $res->TenHang;
+        $hangXe = $id ? HangXe::find($id) : new HangXe();
+        $hangXe->TenHang = $request->TenHang;
 
         if ($file_name !== null) {
-            $tk->HinhAnhHangXe = $file_name;
+            $hangXe->HinhAnhHangXe = 'hangxe/' . $file_name;
         }
-        $db = $tk->save();
-        return $db ? $this->ok($db) : $this->errors(null);
+
+        if ($hangXe->save()) {
+            return response()->json(['data' => $hangXe, 'status_code' => 200, 'message' => 'ok']);
+        }
+        return response()->json(['data' => null, 'status_code' => 500, 'message' => 'error']);
     }
+
 
 
     /**

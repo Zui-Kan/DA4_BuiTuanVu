@@ -5,17 +5,17 @@ import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import "../style/Category.css";
 import {
-  getBoLocCategory,
+  getBoLocCarCompany,
   getLoaiXe,
   getNamSanXuat,
   getNhienLieu,
-} from "../services/carCompany.service";
+} from "../services/category.service";
 import { formatPrice } from "../shares/format";
 import { Loading } from "../Components/Loading/Loading";
 import CardCar from "../Components/CardCar";
 
 function CarCompany(props) {
-  document.title = "Danh mục hàng xe";
+  document.title = "Hãng xe";
 
   const { id } = useParams();
   const [data, setData] = useState(null);
@@ -37,7 +37,7 @@ function CarCompany(props) {
     setIsLoading(true);
 
     const [boLoc, loaiXe, namSanXuat, nhienLieu] = await Promise.all([
-      getBoLocCategory(id, currentPage, filters),
+      getBoLocCarCompany(id, currentPage, filters),
       getLoaiXe(),
       getNamSanXuat(),
       getNhienLieu(),

@@ -52,13 +52,16 @@ header {
   border-radius: 5px;
   padding: 30px 15px;
   font-size: 16px;
+  height: auto;
 }
 .menu-item:hover {
   background-color: #d7d7d77d;
 }
+
 .menu-item:hover > .submenu {
   display: flex;
 }
+
 .submenu {
   min-width: 120px;
   gap: 30px;
@@ -69,6 +72,25 @@ header {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(182, 182, 182, 0.399);
   padding: 20px 40px;
+  overflow: hidden;
+  display: none;
+  left: 0px;
+}
+
+.menu-item:hover > .submenu-forum {
+  display: flex;
+}
+
+.submenu-forum {
+  min-width: 120px;
+  gap: 30px;
+  position: absolute;
+  background-color: #fff;
+  top: 72px;
+  min-width: 120px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(182, 182, 182, 0.399);
+  padding: 10px 10px;
   overflow: hidden;
   display: none;
   left: 0px;

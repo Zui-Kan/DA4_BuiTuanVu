@@ -84,7 +84,11 @@ const Header = function () {
         </div>
 
         <div className="hearder-menu_items">
-          <div className="menu-item blue-c">
+          {" "}
+          <Link to={"/"} className="menu-item blue-c">
+            Trang chủ
+          </Link>
+          <div className="menu-item">
             Mua xe
             <div className="submenu black-c">
               <ul>
@@ -96,6 +100,17 @@ const Header = function () {
                 ))}
               </ul>
               <ul>
+                <li className="submenu-item_title">LOẠI XE {"         "}</li>
+                {isMenu?.data?.loaixe?.data.map((priceRange) => (
+                  <Link
+                    to={`/category/${priceRange.MaLoaiXe}`}
+                    key={priceRange.MaLoaiXe}
+                  >
+                    <li className="submenu-item">{priceRange.TenLoaiXe}</li>
+                  </Link>
+                ))}
+              </ul>
+              <ul>
                 <li className="submenu-item_title">DÒNG XE PHỔ BIẾN</li>
                 {isMenu?.data?.topxe.map((model) => (
                   <Link to={`/detail/${model.MaModel}`} key={model.MaModel}>
@@ -103,22 +118,22 @@ const Header = function () {
                   </Link>
                 ))}
               </ul>
+            </div>
+          </div>
+          <Link to={"/forum"} className="menu-item">
+            Diễn đàn
+            <div className="submenu-forum black-c">
               <ul>
-                <li className="submenu-item_title">LOẠI XE</li>
-                {isMenu?.data?.loaixe?.data.map((priceRange) => (
-                  <Link
-                    to={`/detail/${priceRange.MaLoaiXe}`}
-                    key={priceRange.MaLoaiXe}
-                  >
-                    <li className="submenu-item">{priceRange.TenLoaiXe}</li>
+                <li className="submenu-item_title">CHỦ ĐỀ BÀI VIẾT</li>
+                {isMenu?.data?.chude?.data.map((model) => (
+                  <Link to={`/topic/${model.MaChuDe}`} key={model.MaChuDe}>
+                    <li className="submenu-item">{model.TenChuDe}</li>
                   </Link>
                 ))}
               </ul>
             </div>
-          </div>
-          <div className="menu-item">Bán xe</div>
-          <div className="menu-item">Giới thiệu</div>
-          <div className="menu-item">Tin tức</div>
+          </Link>
+          <Link className="menu-item">Giới thiệu</Link>
         </div>
 
         <div className="header-controls">

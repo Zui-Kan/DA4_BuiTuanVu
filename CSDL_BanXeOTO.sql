@@ -13,6 +13,19 @@ CREATE TABLE users (
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
 );
+CREATE TABLE ctusers (
+  `MaCTusers` int NOT NULL AUTO_INCREMENT,
+  `TaiKhoanID` bigint unsigned DEFAULT NULL,
+  `HoVaTen` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `DiaChi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `SDT` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `AnhDaiDien` text COLLATE utf8mb4_unicode_ci,
+  `CMND` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`MaCTusers`),
+  UNIQUE KEY `TaiKhoanID` (`TaiKhoanID`),
+  CONSTRAINT `ctusers_ibfk_1` FOREIGN KEY (`TaiKhoanID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
+
 
 -- Bảng chứa thông tin về loại xe
 CREATE TABLE LoaiXe (
@@ -197,8 +210,9 @@ FOREIGN KEY (MaModel) REFERENCES ModelXe(MaModel)
 
 create table ChuDeBaiViet(
     MaChuDe int primary key auto_increment,
-    TenChuDu nvarchar(255),
+    TenChuDe nvarchar(255),
     HinhAnhChuDe text,
+	HinhAnhTo text ,
     GhiChu nvarchar(255),
     NgayTao datetime default NOW()
 );

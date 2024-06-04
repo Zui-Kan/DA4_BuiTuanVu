@@ -50,7 +50,7 @@ export function Comment({
             <a href="#" className="user-name">
               {hoTen}
             </a>
-            <div className="user-datetime"> {formatDatetime(thoiGian)}</div>
+            <div className="user-datetime"> {thoiGian}</div>
           </div>
 
           <div className="card-control">

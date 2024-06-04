@@ -1,6 +1,32 @@
 import "../style/topic.css";
+import React, { useEffect, useState } from "react";
+import { Button, Modal } from "antd";
+import { apiGetForum } from "../services/topic.service";
+import { Loading } from "../Components/Loading/Loading";
+import { Link } from "react-router-dom";
+import { uploads } from "../constant/api";
 
 const Forum = () => {
+  const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const loadData = async () => {
+    const res = await apiGetForum();
+    if (res?.status_code === 200) {
+      setData(res);
+      setIsLoading(true);
+    } else {
+      setIsLoading(true);
+      console.error("Lỗi không load được data");
+    }
+  };
+  useEffect(() => {
+    loadData();
+  }, []);
+  if (!isLoading) {
+    return <Loading></Loading>;
+  }
+  console.log(data);
   return (
     <>
       <div className="main_topics">
@@ -11,101 +37,22 @@ const Forum = () => {
           </div>
           <div className="cards-chude">
             {/* 1 */}
-            <div className="card-chude">
-              <a href="#">
-                <img src="https://cmu-cdn.vinfast.vn/2024/05/41105de9-box-vf7.jpg" />
-                <div className="card-noidung">
-                  <div className="topic-tieude-card">tiêu đề</div>
-                  <div className="card-chude_tuongtac">
-                    1.8k Chủ đề | 13.3K Trả lời
+            {data?.data?.chude.map((item) => (
+              <div className="card-chude">
+                <Link to={`/topic/${item.chude.MaChuDe}`}>
+                  <img src={uploads() + item.chude.HinhAnhChuDe} />
+                  <div className="card-noidung">
+                    <div className="topic-tieude-card">
+                      {item.chude.TenChuDe}
+                    </div>
+                    <div className="card-chude_tuongtac">
+                      {item.tongSoBaiVietChuDe} Bài viết |{" "}
+                      {item.tongBinhLuanChuDe} Bình luận
+                    </div>
                   </div>
-                </div>
-              </a>
-            </div>
-
-            <div className="card-chude">
-              <a href="#">
-                <img src="https://cmu-cdn.vinfast.vn/2024/05/41105de9-box-vf7.jpg" />
-                <div className="card-noidung">
-                  <div className="topic-tieude-card">tiêu đề</div>
-                  <div className="card-chude_tuongtac">
-                    1.8k Chủ đề | 13.3K Trả lời
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div className="card-chude">
-              <a href="#">
-                <img src="https://cmu-cdn.vinfast.vn/2024/05/41105de9-box-vf7.jpg" />
-                <div className="card-noidung">
-                  <div className="topic-tieude-card">tiêu đề</div>
-                  <div className="card-chude_tuongtac">
-                    1.8k Chủ đề | 13.3K Trả lời
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div className="card-chude">
-              <a href="#">
-                <img src="https://cmu-cdn.vinfast.vn/2024/05/41105de9-box-vf7.jpg" />
-                <div className="card-noidung">
-                  <div className="topic-tieude-card">tiêu đề</div>
-                  <div className="card-chude_tuongtac">
-                    1.8k Chủ đề | 13.3K Trả lời
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div className="card-chude">
-              <a href="#">
-                <img src="https://cmu-cdn.vinfast.vn/2024/05/41105de9-box-vf7.jpg" />
-                <div className="card-noidung">
-                  <div className="topic-tieude-card">tiêu đề</div>
-                  <div className="card-chude_tuongtac">
-                    1.8k Chủ đề | 13.3K Trả lời
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div className="card-chude">
-              <a href="#">
-                <img src="https://cmu-cdn.vinfast.vn/2024/05/41105de9-box-vf7.jpg" />
-                <div className="card-noidung">
-                  <div className="topic-tieude-card">tiêu đề</div>
-                  <div className="card-chude_tuongtac">
-                    1.8k Chủ đề | 13.3K Trả lời
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div className="card-chude">
-              <a href="#">
-                <img src="https://cmu-cdn.vinfast.vn/2024/05/41105de9-box-vf7.jpg" />
-                <div className="card-noidung">
-                  <div className="topic-tieude-card">tiêu đề</div>
-                  <div className="card-chude_tuongtac">
-                    1.8k Chủ đề | 13.3K Trả lời
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div className="card-chude">
-              <a href="#">
-                <img src="https://cmu-cdn.vinfast.vn/2024/05/41105de9-box-vf7.jpg" />
-                <div className="card-noidung">
-                  <div className="topic-tieude-card">tiêu đề</div>
-                  <div className="card-chude_tuongtac">
-                    1.8k Chủ đề | 13.3K Trả lời
-                  </div>
-                </div>
-              </a>
-            </div>
+                </Link>
+              </div>
+            ))}
           </div>
           {/* Chủ đề- diễn đàn -------------------------------------------------------------START */}
           <div className="chude-diendans">
@@ -116,6 +63,7 @@ const Forum = () => {
                   <input
                     id="btn_taobaiviet"
                     type="button"
+                    onClick={() => setOpen(true)}
                     defaultValue="Tạo bài viết"
                   />
                 </div>
@@ -124,7 +72,6 @@ const Forum = () => {
                   <button
                     type="submit"
                     className="btn_hienthibaiviettheoaz btn_hienthitheoaz"
-                    ng-click="search_desc_and_asc()"
                     style={{ color: "#464646" }}
                   >
                     BÀI VIẾT
@@ -141,14 +88,6 @@ const Forum = () => {
                     BÌNH LUẬN
                   </button>
                   {/* lượt thích */}
-                  <button
-                    type="submit"
-                    className="btn_hienthithichtheoaz btn_hienthitheoaz"
-                    ng-click="search_luotthich_desc_and_asc()"
-                    style={{ color: "#464646" }}
-                  >
-                    LƯỢT THÍCH
-                  </button>
                 </div>
               </div>
               <div
@@ -157,26 +96,31 @@ const Forum = () => {
               >
                 <hr />
                 {/* bài viết 1 */}
-                <a href="./Bài viết.html" className="linkbaiviet">
-                  <img
-                    className="avt-baiviet"
-                    src="../IMAGE/logo4.png"
-                    alt=""
-                  />
-                  <div className="tieudes-baiviet">
-                    <div className="tieudechinh-baiviet"> Tiêu đề bài viết</div>
-                    <div className="tacgia">Người dùng</div>
-                    <div className="thoigiandang"> 28/10 lúc 10h </div>
-                  </div>
-                  <div className="list_binhluan binhluan">
-                    <div className="view-binhluan">30</div>
-                    <h3>Bình luận</h3>
-                  </div>
-                  <div className="list_thich binhluan">
-                    <div className="view-binhluan">20</div>
-                    <h3>Lượt thích</h3>
-                  </div>
-                </a>
+                {data?.data?.baiviet.map((item) => (
+                  <Link
+                    href="./Bài viết.html"
+                    to={`/post/${item.baiviet.MaBaiViet}`}
+                    className="linkbaiviet"
+                  >
+                    <img
+                      className="avt-baiviet"
+                      src={uploads() + item.ctuser.AnhDaiDien}
+                      alt=""
+                    />
+                    <div className="tieudes-baiviet">
+                      <div className="tieudechinh-baiviet">
+                        {" "}
+                        {item.baiviet.TieuDe}
+                      </div>
+                      <div className="tacgia">{item.ctuser.HoVaTen}</div>
+                      <div className="thoigiandang">{item.baiviet.NgayTao}</div>
+                    </div>
+                    <div className="list_binhluan binhluan">
+                      <div className="view-binhluan">{item.soBinhLuan}</div>
+                      <h3>Bình luận</h3>
+                    </div>
+                  </Link>
+                ))}
               </div>
               <div className="khung_chucnangxemthem">
                 <button id="btn_xemthem_baiviet" ng-click="btn_xemthem()">
@@ -196,6 +140,18 @@ const Forum = () => {
           {/* END--------------------------------------------------------------------------------------Chủ đề  */}{" "}
         </div>
       </div>
+      <Modal
+        title="Modal 1000px width"
+        centered
+        open={open}
+        onOk={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
+        width={1000}
+      >
+        <p>some contents...</p>
+        <p>some contents...</p>
+        <p>some contents...</p>
+      </Modal>
     </>
   );
 };

@@ -10,6 +10,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SwaggerController;
+use App\Http\Controllers\TopicController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -78,7 +79,7 @@ Route::group([
         Route::post('/signup', [UsersController::class, 'signup'])->name('taikhoan.signup');
     });
 
-    
+
     Route::group([
         'prefix' => 'header'
     ],  function () {
@@ -100,7 +101,9 @@ Route::group([
         'prefix' => 'category'
     ],  function () {
         Route::post('/boloccategory/{id}', [CategoryController::class, 'BoLocCategory'])->name('category.boloccategory');
+        Route::post('/boloccarcompany/{id}', [CategoryController::class, 'boloccarcompany'])->name('category.boloccarcompany');
         Route::get('/getloaixe', [CategoryController::class, 'getloaixe'])->name('category.getloaixe');
+        Route::get('/gethangxe', [CategoryController::class, 'gethangxe'])->name('category.gethangxe');
         Route::get('/getnamsanxuat', [CategoryController::class, 'getnamsanxuat'])->name('category.getnamsanxuat');
         Route::get('/getnhienlieu', [CategoryController::class, 'getnhienlieu'])->name('category.getnhienlieu');
     });
@@ -120,6 +123,9 @@ Route::group([
         Route::get('/getDetailCart/{id?}', [CartController::class, 'getDetailCart'])->name('detail.getDetailCart');
     });
 
-    //Đặt xe
-
+    Route::group([
+        'prefix' => 'topic',
+    ], function () {
+        Route::get('/getforum', [TopicController::class, 'getforum'])->name('topic.getforum');
+    });
 });

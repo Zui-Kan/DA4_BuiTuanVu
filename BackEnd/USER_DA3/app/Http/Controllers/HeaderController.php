@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BinhLuan;
+use App\Models\ChuDeBaiViet;
 use App\Models\HangXe;
 use App\Models\LoaiXe;
 use App\Models\MauNgoaiThat;
@@ -56,7 +57,9 @@ class HeaderController extends Controller
             ->get();
         $lx = LoaiXe::paginate(10);
 
-        $db = ["hangxe" => $hx, "topxe" => $topCars, "loaixe" => $lx];
+        $topic = ChuDeBaiViet::paginate(10);
+
+        $db = ["hangxe" => $hx, "topxe" => $topCars, "loaixe" => $lx, "chude" => $topic,];
         return $db ? $this->ok($db) : $this->errors(null);
     }
 }

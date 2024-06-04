@@ -30,6 +30,77 @@ class CategoryController extends Controller
         $namSanXuat = $request->input('namsanxuat');
         $nhienlieu = $request->input('nhienlieu');
         $search = $request->input('timkiem');
+        $maHangXe = $request->input('mahangxe');
+
+        $query = ModelXe::query();
+        if ($id !== null) {
+            $query->where('ModelXe.MaLoaiXe', $id);
+        }
+
+        if ($search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('ModelXe.TenModel', 'like', '%' . $search . '%')
+                    ->orWhere('ModelXe.MaModel', 'like', '%' . $search . '%');
+            });
+        }
+
+        if ($minPrice !== null) {
+            $query->where('ModelXe.Gia', '>=', $minPrice);
+        }
+
+        if ($maxPrice !== null) {
+            $query->where('ModelXe.Gia', '<=', $maxPrice);
+        }
+
+        if ($namSanXuat !== null) {
+            if (!is_array($namSanXuat)) {
+                $namSanXuat = explode(',', $namSanXuat);
+            }
+            $query->whereIn('ModelXe.NamSanXuat', $namSanXuat);
+        }
+
+        if ($nhienlieu !== null) {
+            if (!is_array($namSanXuat)) {
+                $namSanXuat = explode(',', $nhienlieu);
+            }
+            $query->whereIn('ModelXe.NhienLieu', $namSanXuat);
+        }
+
+        if ($maHangXe !== null) {
+            if (!is_array($maHangXe)) {
+                $maHangXe = explode(',', $maHangXe);
+            }
+            $query->whereIn('ModelXe.MaHang', $maHangXe);
+        }
+
+        $tenloai = LoaiXe::where('MaLoaiXe', $id)->first();
+
+        $result = $query->paginate(10);
+
+        if ($result->isEmpty()) {
+            return response()->json([
+                'tenloaixe' => $tenloai->TenLoaiXe,
+                'data' => [],
+                'status_code' => 404,
+                'message' => 'Không có thông tin cần tìm.'
+            ]);
+        }
+
+        return response()->json([
+            'tenloaixe' => $tenloai->TenLoaiXe,
+            'data' => $result,
+            'status_code' => 200,
+            'message' => 'ok'
+        ]);
+    }
+
+    public function BoLocCarCompany(Request $request, $id)
+    {
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+        $namSanXuat = $request->input('namsanxuat');
+        $nhienlieu = $request->input('nhienlieu');
+        $search = $request->input('timkiem');
         $maLoaiXe = $request->input('maloaixe');
 
         $query = ModelXe::query();
@@ -97,7 +168,6 @@ class CategoryController extends Controller
 
 
 
-
     /**
      * @OA\get(
      *     path="/api/category/getloaixe",
@@ -117,6 +187,11 @@ class CategoryController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
+    public function getHangXe()
+    {
+        $db = HangXe::get();
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
     public function getNamSanXuat()
     {
         $db = ModelXe::distinct('NamSanXuat')->orderBy('NamSanXuat', 'desc')->pluck('NamSanXuat');

@@ -112,17 +112,18 @@ Route::group([
     });
     //Bình luận
     Route::group([
-
         'prefix' => 'hangxe',
     ], function () {
-        Route::get('/get/{id}', [HangXeController::class, 'gethangxe'])->name('hangxe.gethangxe');
+        Route::get('/get/{id?}', [HangXeController::class, 'gethangxe'])->name('hangxe.gethangxe');
         Route::get('/{total?}', [HangXeController::class, 'index'])->name('hangxe.index');
         Route::delete('/delete/{id}', [HangXeController::class, 'delete'])->name('hangxe.delete');
         Route::delete('/deletes', [HangXeController::class, 'deletes'])->name('hangxe.deletes');
-        Route::post('/save/{id?}', [HangXeController::class, 'save'])->name('hangxe.save');
+        Route::post('/save', [HangXeController::class, 'save'])->name('hangxe.save');
         Route::post('/search', [HangXeController::class, 'search'])->name('hangxe.search');
     });
     //Xe oto
+    Route::post('/uploadfile', [HangXeController::class, 'uploadFile2'])->name('hangxe.upload');
+
     Route::group([
 
         'prefix' => 'modelxe',

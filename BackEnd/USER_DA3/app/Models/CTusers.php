@@ -11,4 +11,10 @@ class CTusers extends Model
     protected $table = 'CTusers';
     protected $primaryKey = 'MaCTusers';
     public $timestamps = false;
+
+
+    public function Users()
+    {
+        return $this->belongsTo(Users::class, 'TaiKhoanID');
+    }
 }

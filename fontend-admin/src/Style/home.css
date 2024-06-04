@@ -1,0 +1,34 @@
+.container_home {
+  margin: 10px 0;
+}
+
+.control-btn_them {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 0 10px;
+}
+.ant-input {
+  height: 25px;
+  color: black;
+}
+
+
+.ant-input-search-button {
+  height: 35px !important;
+  width: 40px !important;
+}
+
+.control-btn_themAxoa button {
+  margin-left: 10px;
+}
+
+.table-img_khung {
+  width: 80px;
+  height: 80px;
+}
+.table-img_khung img {
+  width: 100%;
+  height: 100%;
+}

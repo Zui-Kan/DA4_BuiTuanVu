@@ -9,6 +9,6 @@ class HangXe extends Model
 {
     use HasFactory;
     protected $table = 'HangXe';
-    protected $primaryKey = 'MaHangXe';
+    protected $primaryKey = 'MaHang';
     public $timestamps = false;
 }

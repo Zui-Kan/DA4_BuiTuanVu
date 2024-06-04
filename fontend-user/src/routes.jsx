@@ -16,6 +16,7 @@ import PurchaseDetail from "./pages/PurchaseDetail";
 import Post from "./pages/Post";
 import Topic from "./pages/Topic";
 import Forum from "./pages/Forum";
+import Category from "./pages/Category";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "/carcompany/:id",
         element: <CarCompany />,
+      },
+      {
+        path: "/category/:id",
+        element: <Category />,
       },
       {
         path: "/ordersuccess/:id",

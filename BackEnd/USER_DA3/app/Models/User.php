@@ -51,4 +51,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+    public function ctusers()
+    {
+        return $this->hasOne(Ctusers::class, 'TaiKhoanID');
+    }
 }
