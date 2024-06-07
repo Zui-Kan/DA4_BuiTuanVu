@@ -46,6 +46,85 @@ class TrangThaiController extends Controller
         return  $db ? $this->ok($db) : $this->errors(null);
     }
 
+    public function HienThiTrangThai_2(Request $request)
+    {
+        $search = $request->input('search');
+        $maNhanVien = $request->input('MaNhanVien');
+        $page = $request->input('page');
+        $totalPage = $request->input('pageSize');
+
+        $query = DatHang::select('dathang.*', 'trangthaidathang.TrangThai', 'trangthaidathang.CoTrangThai', 'trangthaidathang.MaTrangThai')
+            ->join('trangthaidathang', 'trangthaidathang.MaDatHang', '=', 'dathang.MaDatHang')
+            ->where('trangthaidathang.CoTrangThai', 1)
+            ->where('dathang.MaNhanVien', $maNhanVien)
+            ->where('trangthaidathang.TrangThai', 'Nhân viên xác nhận đơn hàng, đang tiến hành thủ tục');
+
+        if ($search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('dathang.MaDatHang', 'like', '%' . $search . '%')
+                    ->orWhere('dathang.MaKhachHang', 'like', '%' . $search . '%')
+                    ->orWhere('dathang.DiaChiNhanXe', 'like', '%' . $search . '%');
+            });
+        }
+
+        $db = $query->paginate($totalPage ?? ($page ?? 1));
+
+        return  $db ? $this->ok($db) : $this->errors(null);
+    }
+
+    public function HienThiTrangThai_3(Request $request)
+    {
+        $search = $request->input('search');
+        $maNhanVien = $request->input('MaNhanVien');
+        $page = $request->input('page');
+        $totalPage = $request->input('pageSize');
+
+        $query = DatHang::select('dathang.*', 'trangthaidathang.TrangThai', 'trangthaidathang.CoTrangThai', 'trangthaidathang.MaTrangThai')
+            ->join('trangthaidathang', 'trangthaidathang.MaDatHang', '=', 'dathang.MaDatHang')
+            ->where('trangthaidathang.CoTrangThai', 1)
+            ->where('dathang.MaNhanVien', $maNhanVien)
+            ->where('trangthaidathang.TrangThai', 'Hoàn thành thủ tục, đang tiến hành giao xe ô tô');
+
+        if ($search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('dathang.MaDatHang', 'like', '%' . $search . '%')
+                    ->orWhere('dathang.MaKhachHang', 'like', '%' . $search . '%')
+                    ->orWhere('dathang.DiaChiNhanXe', 'like', '%' . $search . '%');
+            });
+        }
+
+        $db = $query->paginate($totalPage ?? ($page ?? 1));
+
+        return  $db ? $this->ok($db) : $this->errors(null);
+    }
+
+    public function HienThiTrangThai_4(Request $request)
+    {
+        $search = $request->input('search');
+        $maNhanVien = $request->input('MaNhanVien');
+        $page = $request->input('page');
+        $totalPage = $request->input('pageSize');
+
+        $query = DatHang::select('dathang.*', 'trangthaidathang.TrangThai', 'trangthaidathang.CoTrangThai', 'trangthaidathang.MaTrangThai')
+            ->join('trangthaidathang', 'trangthaidathang.MaDatHang', '=', 'dathang.MaDatHang')
+            ->where('trangthaidathang.CoTrangThai', 1)
+            ->where('dathang.MaNhanVien', $maNhanVien)
+            ->where('trangthaidathang.TrangThai', 'Hoàn thành giao xe và thanh toán');
+
+        if ($search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('dathang.MaDatHang', 'like', '%' . $search . '%')
+                    ->orWhere('dathang.MaKhachHang', 'like', '%' . $search . '%')
+                    ->orWhere('dathang.DiaChiNhanXe', 'like', '%' . $search . '%');
+            });
+        }
+
+        $db = $query->paginate($totalPage ?? ($page ?? 1));
+
+        return  $db ? $this->ok($db) : $this->errors(null);
+    }
+
+
     public function HienThiChiTietDatHang($id)
     {
         // Paginate các đơn đặt hàng, mỗi trang có 10 đơn hàng
@@ -120,6 +199,46 @@ class TrangThaiController extends Controller
         $newTrangThai = new TrangThaiDatHang();
         $newTrangThai->MaDatHang = $madatHang;
         $newTrangThai->TrangThai = "Nhân viên xác nhận đơn hàng, đang tiến hành thủ tục";
+        $newTrangThai->CoTrangThai = 1;
+
+        return  $newTrangThai->save() ? $this->ok($newTrangThai) : $this->errors(null);
+    }
+
+    public function NhanVienXuLyHoSo(Request $res)
+    {
+        $madatHang = $res->MaDatHang;
+
+        $db = DatHang::where("MaDatHang", $madatHang)->first();
+        $db->MaNhanVien = $res->MaNhanVien;
+        $db->save();
+
+        $oldTrangThai = TrangThaiDatHang::where("MaTrangThai", $res->MaTrangThai)->first();
+        $oldTrangThai->CoTrangThai = 2;
+        $oldTrangThai->save();
+
+        $newTrangThai = new TrangThaiDatHang();
+        $newTrangThai->MaDatHang = $madatHang;
+        $newTrangThai->TrangThai = "Hoàn thành thủ tục, đang tiến hành giao xe ô tô";
+        $newTrangThai->CoTrangThai = 1;
+
+        return  $newTrangThai->save() ? $this->ok($newTrangThai) : $this->errors(null);
+    }
+
+    public function NhanVienGiaoXe(Request $res)
+    {
+        $madatHang = $res->MaDatHang;
+
+        $db = DatHang::where("MaDatHang", $madatHang)->first();
+        $db->MaNhanVien = $res->MaNhanVien;
+        $db->save();
+
+        $oldTrangThai = TrangThaiDatHang::where("MaTrangThai", $res->MaTrangThai)->first();
+        $oldTrangThai->CoTrangThai = 2;
+        $oldTrangThai->save();
+
+        $newTrangThai = new TrangThaiDatHang();
+        $newTrangThai->MaDatHang = $madatHang;
+        $newTrangThai->TrangThai = "Hoàn thành giao xe và thanh toán";
         $newTrangThai->CoTrangThai = 1;
 
         return  $newTrangThai->save() ? $this->ok($newTrangThai) : $this->errors(null);

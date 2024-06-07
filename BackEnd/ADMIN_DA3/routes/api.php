@@ -255,12 +255,16 @@ Route::group([
 
     //Trạng thái
     Route::group([
-
         'prefix' => 'trangthai',
     ], function () {
         Route::post('/hienthitrangthainhanvienxacnhan', [TrangThaiController::class, 'HienThiTrangThai_1']);
+        Route::post('/hienthidonxulyhoso', [TrangThaiController::class, 'HienThiTrangThai_2']);
+        Route::post('/hienthidongiaoxe', [TrangThaiController::class, 'HienThiTrangThai_3']);
+        Route::post('/hienthidonthanhcong', [TrangThaiController::class, 'HienThiTrangThai_4']);
         Route::get('/hienthichitietdathangtheoid/{id?}', [TrangThaiController::class, 'HienThiChiTietDatHang']);
         Route::post('/nhanvienxacnhan', [TrangThaiController::class, 'NhanVienNhanDonHang']);
+        Route::post('/nhanvienxulyhoso', [TrangThaiController::class, 'NhanVienXuLyHoSo']);
+        Route::post('/nhanviengiaoxe', [TrangThaiController::class, 'NhanVienGiaoXe']);
     });
 
 

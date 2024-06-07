@@ -35,6 +35,7 @@ let items = [
   ]),
   getItem("Đơn đặt hàng", "sub2", <TeamOutlined />, [
     getItem(<Link to={"/nvnhandonhang"}>Nhận đơn hàng</Link>, "5"),
+    getItem(<Link to={"/quanlydon"}>Quản lý đơn đặt</Link>, "10"),
   ]),
 
   getItem("Files", "11", <FileOutlined />),
@@ -78,6 +79,9 @@ const AppLayout = () => {
       break;
     case "/modelxe":
       defaultSelectedKeys = ["9"];
+      break;
+    case "/quanlydon":
+      defaultSelectedKeys = ["10"];
       break;
 
     default:

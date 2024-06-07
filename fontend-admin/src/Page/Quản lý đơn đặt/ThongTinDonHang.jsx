@@ -4,7 +4,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Modal, message, Table, Row, Col, Timeline } from "antd";
 
 import moment from "moment";
-import { apiGetChiTietDatHang } from "../../services/TrangThai/TrangThai1.service";
+import { apiGetChiTietDatHang } from "../../services/DatHang.service";
 import { uploads } from "../../constant/api";
 import { formatDatetime, formatPrice } from "../../shares/format";
 

@@ -12,7 +12,8 @@ import Login from "./Page/Login";
 import ProtectedComponent from "./shares/ProtectedComponent";
 import NhanVien from "./Page/Quản lý nhân viên/NhanVien";
 import KhachHang from "./Page/Quản lý khách hàng/KhachHang";
-import NVNhanDonHang from "./Page/TrangThai/Nhận đơn/NVNhanDonHang";
+import NVNhanDonHang from "./Page/Quản lý đơn đặt/Nhận đơn/NVNhanDonHang";
+import QuanLyDonByNV from "./Page/Quản lý đơn đặt/QuanLyDonByNV";
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +78,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedComponent>
             <NVNhanDonHang />
+          </ProtectedComponent>
+        ),
+      },
+      {
+        path: "/quanlydon",
+        element: (
+          <ProtectedComponent>
+            <QuanLyDonByNV></QuanLyDonByNV>
           </ProtectedComponent>
         ),
       },

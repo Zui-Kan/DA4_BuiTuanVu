@@ -10,14 +10,13 @@ import {
 
 import { Link } from "react-router-dom";
 
-import { apiHienThiTrangThai_1 } from "../../../services/DatHang.service";
+import { apiHienThiTrangThai_4 } from "../../../services/DatHang.service";
 import { formatPrice } from "../../../shares/format";
-import ConfirmNVNhanDonHang from "./ConfirmNVNhanDonHang";
+import { apiGetNhanVienbyTK } from "../../../services/NhanVien.service";
+import ChiTietDonThanhCong from "./ChiTietDonThanhCong";
 
-const NVNhanDonHang = () => {
-  document.title = "Quản lý khách hàng";
+const DonHangThanhCong = () => {
   const messageApi = message;
-
   const { confirm } = Modal;
   const { Search } = Input;
 
@@ -34,23 +33,28 @@ const NVNhanDonHang = () => {
     total: 1,
   });
   const [data, setData] = useState([]);
+  const profile = JSON.parse(sessionStorage.getItem("profile"));
 
   const loadData = async () => {
     setLoading(true);
-    const results = await apiHienThiTrangThai_1({
-      ...tableParams,
-      search: valueSearch,
-    });
-    if (Array.isArray(results?.data?.data)) {
-      setTableParams({
+    const getNV = await apiGetNhanVienbyTK(profile.id);
+    if (getNV && getNV.status_code === 200) {
+      const results = await apiHienThiTrangThai_4({
         ...tableParams,
-        total: results?.data?.total,
+        search: valueSearch,
+        MaNhanVien: getNV?.data?.MaNhanVien,
       });
-      setData(results?.data?.data);
+      if (Array.isArray(results?.data?.data)) {
+        setTableParams({
+          ...tableParams,
+          total: results?.data?.total,
+        });
+        setData(results?.data?.data);
 
-      setLoading(false);
-    } else {
-      console.error("Lỗi rồi:", results?.message);
+        setLoading(false);
+      } else {
+        console.error("Lỗi rồi:", results?.message);
+      }
     }
   };
 
@@ -105,7 +109,7 @@ const NVNhanDonHang = () => {
               setMaTrangThai(record.MaTrangThai);
             }}
           >
-            Nhận đơn
+            Chi tiết
           </Button>
         </Flex>
       ),
@@ -124,31 +128,12 @@ const NVNhanDonHang = () => {
     setIsOpenModal(false);
   };
 
-  //chọn checkbox
-  const onSelectChange = (newSelectedRowKeys) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-
   return (
     <>
-      <Breadcrumb
-        style={{ margin: "16px 0" }}
-        items={[
-          { title: <Link to={"/"}>Trang chủ</Link> },
-          { title: "Nhận đơn hàng" },
-        ]}
-      />
       <div
         style={{
-          padding: 24,
           minHeight: 360,
           background: "#fff",
-          borderRadius: "8px",
         }}
       >
         <div className="control-btn_them">
@@ -180,16 +165,14 @@ const NVNhanDonHang = () => {
           loading={loading}
         />
       </div>
-      <ConfirmNVNhanDonHang
+
+      <ChiTietDonThanhCong
         open={isOpenModal}
         cancelModal={handleCancelModal}
         maDatHang={maDatHang}
-        maTrangThai={maTrangThai}
-        loadData={loadData}
-        messageApi={messageApi}
-      ></ConfirmNVNhanDonHang>
+      ></ChiTietDonThanhCong>
     </>
   );
 };
 
-export default NVNhanDonHang;
+export default DonHangThanhCong;

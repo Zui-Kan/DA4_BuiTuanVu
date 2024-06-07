@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import { Modal, message, Table, Row, Col, Timeline } from "antd";
-import { apiNhanVienXacNhan } from "../../../services/DatHang.service";
+import { apiNhanVienGiaoXe } from "../../../services/DatHang.service";
 import { apiGetNhanVienbyTK } from "../../../services/NhanVien.service";
 import ThongTinDonHang from "../ThongTinDonHang";
 
-const ConfirmNVNhanDonHang = (props) => {
+const ConfirmNVGiaoXe = (props) => {
   const messageApi = message;
   const profile = JSON.parse(sessionStorage.getItem("profile"));
 
@@ -17,9 +17,9 @@ const ConfirmNVNhanDonHang = (props) => {
         MaNhanVien: getNV?.data?.MaNhanVien,
         MaTrangThai: props.maTrangThai,
       };
-      const res = await apiNhanVienXacNhan(dulieu);
+      const res = await apiNhanVienGiaoXe(dulieu);
       if (res?.status_code === 200) {
-        messageApi.success("Nhận đơn hàng thành công");
+        messageApi.success("Giao xe thành công.");
         handleCancelModal();
         props.loadData();
       }
@@ -37,7 +37,7 @@ const ConfirmNVNhanDonHang = (props) => {
       onOk={handleConfirmModal}
       onCancel={handleCancelModal}
       width={1000}
-      okText="Xác nhận"
+      okText="Hoàn thành"
       cancelText="Huỷ bỏ"
     >
       <ThongTinDonHang maDatHang={props.maDatHang}></ThongTinDonHang>
@@ -45,4 +45,4 @@ const ConfirmNVNhanDonHang = (props) => {
   );
 };
 
-export default ConfirmNVNhanDonHang;
+export default ConfirmNVGiaoXe;
