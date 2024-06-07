@@ -20,6 +20,7 @@ use App\Http\Controllers\TaiKhoanController;
 use App\Http\Controllers\ThongSoKyThuatXeController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SwaggerController;
+use App\Http\Controllers\TrangThaiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,7 @@ Route::group([
 
 
 Route::group([
-    // 'middleware' => 'auth.jwt',
+    'middleware' => 'auth.jwt',
 ], function () {
     //Nhanvien
     Route::group([
@@ -46,11 +47,12 @@ Route::group([
     ], function () {
 
         Route::get('/get/{id}', [NhanVienController::class, 'getnhanvien'])->name('nhanvien.getnhanvien');
-        Route::get('/{total?}', [NhanVienController::class, 'index'])->name('taikhoan.index');
+        Route::get('/getbytk/{id}', [NhanVienController::class, 'getNhanVienbyTK']);
         Route::delete('/delete/{id}', [NhanVienController::class, 'delete'])->name('nhanvien.delete');
         Route::delete('/deletes', [NhanVienController::class, 'deletes'])->name('nhanvien.deletes');
-        Route::post('/save/{id?}', [NhanVienController::class, 'save'])->name('nhanvien.save');
+        Route::post('/save', [NhanVienController::class, 'save'])->name('nhanvien.save');
         Route::post('/search', [NhanVienController::class, 'search'])->name('nhanvien.search');
+        Route::get('/gettaikhoan', [NhanVienController::class, 'getrolenhanvien'])->name('nhanvien.gettaikhoan');
     });
 
     //tài khoản
@@ -60,17 +62,18 @@ Route::group([
         Route::get('/get/{id}', [UsersController::class, 'getTaiKhoan'])->name('taikhoan.getTaiKhoan');
         Route::get('/{total?}', [UsersController::class, 'index'])->name('taikhoan.index');
         Route::post('/signup', [UsersController::class, 'signup'])->name('taikhoan.signup');
-        Route::post('/login', [UsersController::class, 'login'])->name('taikhoan.login');
         Route::delete('/delete/{id}', [UsersController::class, 'delete'])->name('taikhoan.delete');
         Route::delete('/deletes', [UsersController::class, 'deletes'])->name('taikhoan.deletes');
-        Route::post('/save/{id?}', [UsersController::class, 'save'])->name('taikhoan.save');
+        Route::post('/save', [UsersController::class, 'save'])->name('taikhoan.save');
         Route::post('/search', [UsersController::class, 'search'])->name('taikhoan.search');
         Route::get('/gettaikhoanct/{id}', [UsersController::class, 'getTaiKhoanCT'])->name('taikhoan.gettaikhoanct');
+        Route::get('/getcttaikhoan/{id?}', [UsersController::class, 'getCTTaiKhoan'])->name('taikhoan.getcttaikhoan');
         Route::post('/updatectusers/{id}', [UsersController::class, 'updateCTusers'])->name('taikhoan.updatectusers');
         Route::post('/changepassword', [UsersController::class, 'changePassword'])->name('taikhoan.changepassword');
     });
 
 
+    Route::get('/khachhang/gettaikhoan', [KhachHangController::class, 'getRoleKhachHang'])->name('khachhang.getRoleKhachHang');
 
     //KhachHang
     Route::group([
@@ -80,6 +83,7 @@ Route::group([
         Route::get('/{total?}', [KhachHangController::class, 'index'])->name('khachhang.index');
         Route::delete('/delete/{id}', [KhachHangController::class, 'delete'])->name('khachhang.delete');
         Route::delete('/deletes', [KhachHangController::class, 'deletes'])->name('khachhang.deletes');
+
         Route::post('/save/{id?}', [KhachHangController::class, 'save'])->name('khachhang.save');
         Route::post('/search', [KhachHangController::class, 'search'])->name('khachhang.search');
     });
@@ -107,9 +111,11 @@ Route::group([
         Route::get('/{total?}', [LoaiXeController::class, 'index'])->name('loaixe.index');
         Route::delete('/delete/{id}', [LoaiXeController::class, 'delete'])->name('loaixe.delete');
         Route::delete('/deletes', [LoaiXeController::class, 'deletes'])->name('loaixe.deletes');
-        Route::post('/save/{id?}', [LoaiXeController::class, 'save'])->name('loaixe.save');
+        Route::post('/save', [LoaiXeController::class, 'save'])->name('loaixe.save');
         Route::post('/search', [LoaiXeController::class, 'search'])->name('loaixe.search');
     });
+
+
     //Bình luận
     Route::group([
         'prefix' => 'hangxe',
@@ -245,6 +251,18 @@ Route::group([
         Route::delete('/xacnhanyeucauhuy/{id}', [DatHangController::class, 'XacNhanYeuCauHuy'])->name('DatXe.xacnhanyeucauhuy');
         Route::post('/search_yeucauhuy/{id}', [DatHangController::class, 'search_yeucauhuy'])->name('DatXe.search_yeucauhuy');
     });
+
+
+    //Trạng thái
+    Route::group([
+
+        'prefix' => 'trangthai',
+    ], function () {
+        Route::post('/hienthitrangthainhanvienxacnhan', [TrangThaiController::class, 'HienThiTrangThai_1']);
+        Route::get('/hienthichitietdathangtheoid/{id?}', [TrangThaiController::class, 'HienThiChiTietDatHang']);
+        Route::post('/nhanvienxacnhan', [TrangThaiController::class, 'NhanVienNhanDonHang']);
+    });
+
 
     //Quảng cáo
     Route::group([

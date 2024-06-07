@@ -28,6 +28,7 @@ import {
 import { cartCheckout, cartState } from "../constant/recoil";
 import { useRecoilState } from "recoil";
 import { lc_profile, lc_tn } from "../services/auth.service";
+import AsNavFor from "../Components/AsNavFor";
 const { TextArea } = Input;
 
 function Detail() {
@@ -82,9 +83,6 @@ function Detail() {
     autoplaySpeed: 6000,
   };
 
-  const [nav1, setNav1] = useState(null);
-  const [nav2, setNav2] = useState(null);
-
   const handleIncrease = () => {
     setQuantity((prevQuantity) => {
       const newQuantity = Math.min(prevQuantity + 1, soLuongTon);
@@ -129,14 +127,6 @@ function Detail() {
 
     setIsDataLoaded(true);
   }
-  // const switchToTheNextPage
-  let sliderRef1 = useRef(null);
-  let sliderRef2 = useRef(null);
-
-  useEffect(() => {
-    setNav1(sliderRef1.current);
-    setNav2(sliderRef2.current);
-  }, [sliderRef1, sliderRef2]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -286,47 +276,7 @@ function Detail() {
             <div className="col-lg-7 col-md-6">
               <div className="row">
                 <div className="Slider-Syncing">
-                  <div className="slider-for">
-                    <Slider
-                      asNavFor={nav2}
-                      // ref={sliderRef1}
-
-                      ref={(slider) => (sliderRef1 = slider)}
-                    >
-                      {JSON.parse(data.modelXe.DSHinhAnhXe).map(
-                        (hinhAnh, index) => (
-                          <div className="slider-anhto" key={index}>
-                            <img
-                              src={`${uploads()}${hinhAnh}`}
-                              style={{ width: "100%" }}
-                            />
-                          </div>
-                        )
-                      )}
-                    </Slider>
-                  </div>
-
-                  <div className="slider-nav">
-                    <Slider
-                      asNavFor={nav1}
-                      ref={(slider) => (sliderRef2 = slider)}
-                      // ref={sliderRef2}
-                      slidesToShow={3}
-                      swipeToSlide={true}
-                      focusOnSelect={true}
-                    >
-                      {JSON.parse(data.modelXe.DSHinhAnhXe).map(
-                        (hinhAnh, index) => (
-                          <div className="slider-anhnho" key={index}>
-                            <img
-                              src={`${uploads()}${hinhAnh}`}
-                              style={{ width: "100%" }}
-                            />
-                          </div>
-                        )
-                      )}
-                    </Slider>
-                  </div>
+                  <AsNavFor data={data}></AsNavFor>
                 </div>
                 <div className="specifications">
                   <div className="spec-title blueDark-c">THÔNG SỐ KỸ THUẬT</div>

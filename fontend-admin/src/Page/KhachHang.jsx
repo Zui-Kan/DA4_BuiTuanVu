@@ -1,6 +1,8 @@
 import { Breadcrumb } from "antd";
 
 const KhachHang = () => {
+  document.title = "Quản lý khách hàng";
+
   return (
     <>
       <Breadcrumb style={{ margin: "16px 0" }}>

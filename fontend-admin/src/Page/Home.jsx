@@ -43,6 +43,7 @@ const count = [
 
 const Home = () => {
   const { Title, Text } = Typography;
+  document.title = "Trang chủ";
 
   return (
     <div className="container_home">

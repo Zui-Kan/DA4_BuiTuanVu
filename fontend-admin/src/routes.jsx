@@ -3,10 +3,16 @@ import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "./shares/AppLayout";
 import ErrorBoundary from "./Component/Error/Error";
 import Home from "./Page/Home";
-import LoaiXe from "./Page/LoaiXe";
+import LoaiXe from "./Page/Quản lý loại xe/LoaiXe";
 import PhienBan from "./Page/PhienBan";
 import ModelXe from "./Page/ModelXe";
 import HangXe from "./Page/Quản lý hãng xe/HangXe";
+import TaiKhoan from "./Page/Quản lý tài khoản/TaiKhoan";
+import Login from "./Page/Login";
+import ProtectedComponent from "./shares/ProtectedComponent";
+import NhanVien from "./Page/Quản lý nhân viên/NhanVien";
+import KhachHang from "./Page/Quản lý khách hàng/KhachHang";
+import NVNhanDonHang from "./Page/TrangThai/Nhận đơn/NVNhanDonHang";
 
 export const router = createBrowserRouter([
   {
@@ -20,24 +26,81 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <ProtectedComponent>
+            <Home />
+          </ProtectedComponent>
+        ),
       },
       {
         path: "/hangxe",
-        element: <HangXe />,
+        element: (
+          <ProtectedComponent>
+            <HangXe />
+          </ProtectedComponent>
+        ),
       },
       {
         path: "/loaixe",
-        element: <LoaiXe />,
+        element: (
+          <ProtectedComponent>
+            <LoaiXe />
+          </ProtectedComponent>
+        ),
       },
       {
         path: "/phienban",
-        element: <PhienBan />,
+        element: (
+          <ProtectedComponent>
+            <PhienBan />
+          </ProtectedComponent>
+        ),
       },
       {
         path: "/modelxe",
-        element: <ModelXe />,
+        element: (
+          <ProtectedComponent>
+            <ModelXe />
+          </ProtectedComponent>
+        ),
+      },
+      {
+        path: "/khachhang",
+        element: (
+          <ProtectedComponent>
+            <KhachHang />
+          </ProtectedComponent>
+        ),
+      },
+      {
+        path: "/nvnhandonhang",
+        element: (
+          <ProtectedComponent>
+            <NVNhanDonHang />
+          </ProtectedComponent>
+        ),
+      },
+      {
+        path: "/taikhoan",
+        element: (
+          <ProtectedComponent requiredRole={0}>
+            <TaiKhoan />
+          </ProtectedComponent>
+        ),
+      },
+      {
+        path: "/nhanvien",
+        element: (
+          <ProtectedComponent requiredRole={0}>
+            <NhanVien />
+          </ProtectedComponent>
+        ),
       },
     ],
+  },
+
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);

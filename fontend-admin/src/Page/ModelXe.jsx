@@ -1,6 +1,8 @@
 import { Breadcrumb } from "antd";
 
 const ModelXe = () => {
+  document.title = "Quản lý xe";
+
   return (
     <>
       <Breadcrumb style={{ margin: "16px 0" }}>

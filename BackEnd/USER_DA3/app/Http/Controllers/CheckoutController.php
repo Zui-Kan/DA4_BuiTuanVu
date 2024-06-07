@@ -84,6 +84,7 @@ class CheckoutController extends Controller
         $tt = new TrangThaiDatHang();
         $tt->MaDatHang = $maDH;
         $tt->TrangThai = "Chờ liên hệ xác nhận";
+        $tt->CoTrangThai = 1;
         $tt->save();
         // Lưu các chi tiết đơn hàng
         foreach ($request->ChiTietDatHang as $ctdhRequest) {

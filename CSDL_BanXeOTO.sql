@@ -163,6 +163,7 @@ CREATE TABLE TrangThaiDatHang (
 	MaDatHang int,
     TrangThai nvarchar(255),
     NgayTao Datetime default NOW(),
+    CoTrangThai int,
     FOREIGN KEY (MaDatHang) REFERENCES DatHang(MaDatHang)
 );
 

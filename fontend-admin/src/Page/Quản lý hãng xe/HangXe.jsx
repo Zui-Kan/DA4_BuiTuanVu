@@ -8,29 +8,28 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import { uploads } from "../../constant/api";
+
 import {
   apiDeleteHangXe,
   apiDeletesHangXe,
   apiSearchHangXe,
 } from "../../services/HangXe.service";
-import { id } from "date-fns/locale";
-import { render } from "@testing-library/react";
+
 import HangXeUpdate from "./HangXeUpdate";
+import { Link } from "react-router-dom";
 
 const HangXe = () => {
   document.title = "Quản lý hãng xe";
-
-  const [messageApi, contextHolder] = message.useMessage();
 
   const { confirm } = Modal;
   const { Search } = Input;
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
-  const [valueSearch, setValueSearch] = useState(null);
   const [maHangXe, setMaHangXe] = useState("");
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
+  const [valueSearch, setValueSearch] = useState(null);
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     page: 1,
@@ -41,7 +40,6 @@ const HangXe = () => {
 
   const loadData = async () => {
     setLoading(true);
-
     const results = await apiSearchHangXe({
       ...tableParams,
       search: valueSearch,
@@ -95,6 +93,7 @@ const HangXe = () => {
       render: (_, record) => (
         <Flex justify="center">
           <Button
+            title="Sửa"
             onClick={() => {
               setIsOpenModal(true);
               setMaHangXe(record.MaHang);
@@ -104,6 +103,7 @@ const HangXe = () => {
           </Button>
 
           <Button
+            title="Xoá"
             danger
             style={{ marginLeft: "5px" }}
             onClick={() => {
@@ -116,18 +116,16 @@ const HangXe = () => {
       ),
     },
   ];
+
   useEffect(() => {
     loadData();
-  }, [JSON.stringify(tableParams)]);
-
-  const handleCancelModal = () => {
-    setIsOpenModal(false);
-  };
-
+  }, [JSON.stringify(tableParams), valueSearch]);
   //button tìm kiếm
   const onSearch = async (value) => {
     setValueSearch(value);
-    await loadData();
+  };
+  const handleCancelModal = () => {
+    setIsOpenModal(false);
   };
 
   //chọn checkbox
@@ -139,6 +137,7 @@ const HangXe = () => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
+
   //Show delete
   const showPromiseConfirmDelete = (maHangXe) => {
     confirm({
@@ -148,7 +147,10 @@ const HangXe = () => {
       onOk: async () => {
         const res = await apiDeleteHangXe(maHangXe);
         if (res?.status_code === 200) {
-          console.log("xoá thành công");
+          message.open({
+            type: "success",
+            content: "Xoá thành công.",
+          });
         }
         loadData();
       },
@@ -164,7 +166,10 @@ const HangXe = () => {
       onOk: async () => {
         const res = await apiDeletesHangXe({ ids: selectedRowKeys });
         if (res?.status_code === 200) {
-          console.log("xoá thành công");
+          message.open({
+            type: "success",
+            content: "Xoá thành công.",
+          });
         }
         loadData();
       },
@@ -174,12 +179,13 @@ const HangXe = () => {
 
   return (
     <>
-      {contextHolder}
-
-      <Breadcrumb style={{ margin: "16px 0" }}>
-        <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
-        <Breadcrumb.Item>Hãng xe</Breadcrumb.Item>
-      </Breadcrumb>
+      <Breadcrumb
+        style={{ margin: "16px 0" }}
+        items={[
+          { title: <Link to={"/"}>Trang chủ</Link> },
+          { title: "Hãng xe" },
+        ]}
+      />
       <div
         style={{
           padding: 24,
@@ -212,7 +218,7 @@ const HangXe = () => {
               danger
               onClick={() => {
                 if (selectedRowKeys.length === 0) {
-                  messageApi.open({
+                  message.open({
                     type: "error",
                     content: "Vui lòng chọn thông tin cần xoá.",
                   });

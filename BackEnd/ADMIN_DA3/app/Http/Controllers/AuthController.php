@@ -72,7 +72,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully logged out', 'status_code' => 200]);
     }
 
 
@@ -113,7 +113,8 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => config('jwt.ttl') * 60
+            'expires_in' => config('jwt.ttl') * 60,
+            'status_code' => 200
         ]);
     }
 }

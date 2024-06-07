@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CTusers;
+use App\Models\NhanVien;
 use App\Models\Users;
 use App\Traits\TrangThaiTrait;
 use Illuminate\Http\Request;
@@ -15,8 +16,6 @@ use Illuminate\Support\Facades\DB;
 class UsersController extends Controller
 {
     use TrangThaiTrait;
-
-
     /**
      * @OA\post(
      *     path="/api/taikhoan/search",
@@ -28,7 +27,8 @@ class UsersController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $totalPage = $request->input('totalPage');
+        $page = $request->input('page');
+        $totalPage = $request->input('pageSize');
 
         $query = Users::query();
         if ($search) {
@@ -39,24 +39,11 @@ class UsersController extends Controller
             });
         }
 
-        $db = $query->paginate($totalPage ?? 5);
-        $kq =  ['ketqua' => $db, 'timkiem' => $query];
+        $db = $query->paginate($totalPage ?? ($page ?? 1));
 
-        return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
+        return $db->total() > 0 ? $this->ok($db) : $this->errors(null);
     }
-    /**
-     * @OA\Get(
-     *     path="/api/taikhoan/{total}",
-     *    tags={"taikhoan"},
-     *     @OA\Response(response="200", description="Success"),
-     * )
-     */
 
-    public function index($total = null)
-    {
-        $db = Users::paginate($total);
-        return $db ? $this->ok($db) : $this->errors(null);
-    }
 
 
     /**
@@ -149,30 +136,43 @@ class UsersController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
-    public function save(Request $res, $id = null)
+    public function save(Request $res)
     {
-        // Kiểm tra xem tên tài khoản đã tồn tại chưa
-        if (Users::where('name', $res->name)->exists()) {
-            return $this->errors('Tên tài khoản đã tồn tại !');
-        }
+        $id = $res->id;
 
-        // Kiểm tra xem email đã tồn tại chưa
-        if (Users::where('email', $res->email)->exists()) {
-            return $this->errors('Email đã tồn tại !');
-        }
 
-        $tk = $id ? Users::where('id', $id)->first() : new Users();
+        $tk = $id ? Users::find($id) : new Users();
         if (!$id) {
+            // Kiểm tra xem tên tài khoản đã tồn tại chưa
+            if (Users::where('name', $res->name)->exists()) {
+                return $this->errors('Tên tài khoản đã tồn tại !');
+            }
+
+            // Kiểm tra xem email đã tồn tại chưa
+            if (Users::where('email', $res->email)->exists()) {
+                return $this->errors('Email đã tồn tại !');
+            }
+
             $tk->name = $res->name;
         }
-        $tk->email = $res->email;
-        $tk->password = Hash::make($res->password);
 
-        if ($tk->role !== 0) {
-            $tk->role = $res->role;
+        $tk->email = $res->email;
+
+        if ($res->pass) {
+            $tk->password = Hash::make($res->pass);
         }
 
+        $tk->role = intval($res->role);
+
+
         $db = $tk->save();
+
+        if ($res->role !== "2" && !$id) {
+            $nv = new NhanVien();
+            $nv->TaiKhoanID = $tk->id;
+            $nv->TenNhanVien = $tk->name;
+            $nv->save();
+        }
 
         if (!$id) {
             $ct = new CTusers();
@@ -181,7 +181,9 @@ class UsersController extends Controller
             $ct->AnhDaiDien = "img_1.jpg";
             $ct->save();
         }
-        return $db ? $this->ok($db) : $this->errors(null);
+
+
+        return $db ? $this->ok($tk) : $this->errors(null);
     }
 
     /**
@@ -195,13 +197,16 @@ class UsersController extends Controller
     {
         $db = Users::where('id', $res->id)->first();
 
-        if (Hash::make($res->password) !== $db->password) {
-            return $this->errors('Mật khẩu cũ không khớp !');
+        if (!$db) {
+            return response()->json(['error' => 'Người dùng không tồn tại.'], 404);
         }
 
-        $db->password = Hash::make($res->password);
+        if (!Hash::check($res->password, $db->password)) {
+            return response()->json(['error' => 'Mật khẩu cũ không khớp!'], 400);
+        }
+        $db->password = Hash::make($res->confirmPassword);
 
-        return $db->save() ? $this->ok($db) : $this->errors(null);
+        return $db->save() ? $this->ok("Đổi mật khẩu thành công.") : $this->errors(null);
     }
 
     /**
@@ -219,12 +224,12 @@ class UsersController extends Controller
         $ct->DiaChi = $request->DiaChi;
         $ct->SDT = $request->SDT;
         $ct->CMND = $request->CMND;
-        $file_name = $this->uploadFile($request, 'image_upload', 'uploads');
+        $file_name = $this->uploadFile($request, 'upload_file', 'TaiKhoan');
         if ($file_name !== null) {
-            $ct->AnhDaiDien = $file_name;
+            $ct->AnhDaiDien = 'TaiKhoan/' . $file_name;
         }
-        $db = $ct->save();
-        return $db->save() ? $this->ok($db) : $this->errors(null);
+
+        return  $ct->save() ? $this->ok($ct) : $this->errors(null);
     }
     /**
      * @OA\Get(
@@ -254,6 +259,11 @@ class UsersController extends Controller
     public function getTaiKhoan($id)
     {
         $db = Users::find($id);
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
+    public function getCTTaiKhoan($id)
+    {
+        $db = CTusers::where("TaiKhoanID", $id)->first();
         return $db ? $this->ok($db) : $this->errors(null);
     }
 }

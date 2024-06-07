@@ -27,7 +27,7 @@ export const getDetailCart = async (id) => {
   const response = await apiClient.get(`/cart/getDetailCart/${id}`);
   return response;
 };
-
+d
 export const addToCart = async (selectedNoiThat, quantity) => {
   try {
     //Phần này gọi từ api lên

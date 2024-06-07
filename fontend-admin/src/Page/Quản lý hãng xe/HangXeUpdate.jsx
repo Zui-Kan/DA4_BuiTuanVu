@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
-import { Modal, Button, Form, Input, Upload } from "antd";
+import { Modal, Button, Form, Input, Upload, message } from "antd";
 import { apiGetHangXe, apiSaveHangXe } from "../../services/HangXe.service";
+import { uploads } from "../../constant/api";
 
 const formItemLayout = {
   labelCol: {
@@ -16,27 +17,28 @@ const formItemLayout = {
 
 const HangXeUpdate = (props) => {
   const [form] = Form.useForm();
-  const [file, setFile] = useState(null);
+  const [fileList, setFileList] = useState([]);
 
   const saveHangXe = async () => {
     try {
       const values = await form.validateFields();
-      const formData = new FormData();
-      if (props.maHangXe) {
-        formData.append("MaHang", props.maHangXe);
-      }
-      formData.append("TenHang", values.TenHang);
-      formData.append("HinhAnhHangXe", values.HinhAnhHangXe.file);
+
+      const formData = {
+        MaHang: props.maHangXe || null,
+        TenHang: values.TenHang,
+        HinhAnhHangXe: values.HinhAnhHangXe.file,
+      };
 
       const res = await apiSaveHangXe(formData);
       if (res) {
-        console.log("Save successful", res);
+        message.success("Cập nhập thành công.");
         props.loadData();
         props.cancelModal();
         form.resetFields();
+        setFileList([]);
       }
     } catch (error) {
-      console.error("Failed to save HangXe:", error);
+      message.open("Lỗi: " + error);
     }
   };
 
@@ -44,11 +46,23 @@ const HangXeUpdate = (props) => {
     let res = await apiGetHangXe(id);
     if (res?.status_code === 200) {
       form.setFieldsValue(res.data);
+
+      if (res?.data?.HinhAnhHangXe) {
+        setFileList([
+          {
+            uid: "-1",
+            name: res?.data.HinhAnhHangXe,
+            status: "done",
+            url: uploads() + res?.data.HinhAnhHangXe,
+          },
+        ]);
+      }
     }
   };
 
   useEffect(() => {
     form.resetFields();
+    setFileList([]);
     if (props.maHangXe !== "") {
       loadDataUpdate(props.maHangXe);
     }
@@ -56,8 +70,10 @@ const HangXeUpdate = (props) => {
 
   const handleCancelModal = () => {
     props.cancelModal();
-    form.resetFields(); //cho các input trở về null
   };
+
+  const handleChange = ({ fileList }) => setFileList(fileList);
+
   return (
     <Modal
       title="Cập nhật thông tin Hãng Xe"
@@ -81,7 +97,13 @@ const HangXeUpdate = (props) => {
           name="HinhAnhHangXe"
           rules={[{ required: true, message: "Vui lòng chọn hình ảnh!" }]}
         >
-          <Upload beforeUpload={() => false} listType="picture" maxCount={1}>
+          <Upload
+            beforeUpload={() => false}
+            listType="picture"
+            maxCount={1}
+            fileList={fileList}
+            onChange={handleChange}
+          >
             <Button icon={<UploadOutlined />}>Tải lên hình ảnh</Button>
           </Upload>
         </Form.Item>

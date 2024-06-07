@@ -3,25 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\NhanVien;
+use App\Models\Users;
 use App\Traits\TrangThaiTrait;
 use Illuminate\Http\Request;
 
 class NhanVienController extends Controller
 {
     use TrangThaiTrait;
-    /**
-     * @OA\Get(
-     *     path="/api/nhanvien/{total}",
-     *    tags={"nhanvien"},
-     *     @OA\Response(response="200", description="Success"),
-     * )
-     */
-
-    public function index($total = null)
-    {
-        $db = NhanVien::paginate($total);
-        return $db ? $this->ok($db) : $this->errors(null);
-    }
     /**
      * @OA\post(
      *     path="/api/nhanvien/search",
@@ -32,23 +20,22 @@ class NhanVienController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $totalPage = $request->input('totalPage');
+        $page = $request->input('page');
+        $totalPage = $request->input('pageSize');
 
         $query = NhanVien::query();
         if ($search) {
             $query->where(function ($query) use ($search) {
-                $query->where('MaTaiKhoan', 'like', '%' . $search . '%')
+                $query->where('MaNhanVien', 'like', '%' . $search . '%')
                     ->orWhere('TenNhanVien', 'like', '%' . $search . '%')
-                    ->orWhere('DiaChi', 'like', '%' . $search . '%')
                     ->orWhere('ChucVu', 'like', '%' . $search . '%')
                     ->orWhere('SoDienThoai', 'like', '%' . $search . '%');
             });
         }
 
-        $db = $query->paginate($totalPage ?? 5);
-        $kq =  ['ketqua' => $db, 'timkiem' => $query];
+        $db = $query->paginate($totalPage ?? ($page ?? 1));
 
-        return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
+        return $db->total() > 0 ? $this->ok($db) : $this->errors(null);
     }
 
     /**
@@ -88,18 +75,26 @@ class NhanVienController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
-    public function save(Request $res, $id = null)
+    public function save(Request $res)
     {
+        $id = $res->MaNhanVien || null;
+
         $tk = $id ? NhanVien::where('MaNhanVien', $id)->first() : new NhanVien();
 
-        $tk->MaTaiKhoan = $res->MaTaiKhoan;
+        $file_name = $this->uploadFile($res, 'upload_file', 'TaiKhoan');
+
+        $tk->TaiKhoanID = $res->TaiKhoanID;
         $tk->ChucVu = $res->ChucVu;
         $tk->TenNhanVien = $res->TenNhanVien;
         $tk->DiaChi = $res->DiaChi;
         $tk->SoDienThoai = $res->SoDienThoai;
         $tk->Luong = $res->Luong;
-        $db = $tk->save();
-        return $db ? $this->ok($db) : $this->errors(null);
+        if ($file_name !== null) {
+            $tk->AnhDaiDien = 'TaiKhoan/' . $file_name;
+        }
+
+
+        return $tk->save() ? $this->ok($tk) : $this->errors(null);
     }
 
 
@@ -113,6 +108,26 @@ class NhanVienController extends Controller
     public function getNhanVien($id)
     {
         $db = NhanVien::find($id);
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
+
+    public function getNhanVienbyTK($id)
+    {
+        $db = NhanVien::where("TaiKhoanID", $id)->first();
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/taikhoan/{total}",
+     *    tags={"taikhoan"},
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+
+    public function getRoleNhanVien()
+    {
+        $db = Users::where('role', '!=', 2)->get();
         return $db ? $this->ok($db) : $this->errors(null);
     }
 }

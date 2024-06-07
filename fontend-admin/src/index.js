@@ -5,14 +5,11 @@ import { RouterProvider } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import reportWebVitals from "./reportWebVitals";
 import { router } from "./routes";
-import TokenRefresher from "./constant/refreshToken";
-import Header from "./Component/Header";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RecoilRoot>
-      <TokenRefresher></TokenRefresher>
       <RouterProvider router={router}></RouterProvider>
     </RecoilRoot>
   </React.StrictMode>

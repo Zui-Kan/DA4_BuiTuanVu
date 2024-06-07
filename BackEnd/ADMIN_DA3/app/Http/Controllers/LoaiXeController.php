@@ -4,17 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\LoaiXe;
 use Illuminate\Http\Request;
+use App\Traits\TrangThaiTrait;
 
 class LoaiXeController extends Controller
 {
-    public function errors($loi)
-    {
-        return response()->json([
-            'data' => null,
-            'status_code' => 404,
-            'message' => $loi ?? "lỗi rồi!"
-        ]);
-    }
+    use TrangThaiTrait;
 
     /**
      * @OA\post(
@@ -26,7 +20,8 @@ class LoaiXeController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $totalPage = $request->input('totalPage');
+        $page = $request->input('page');
+        $totalPage = $request->input('pageSize');
 
         $query = LoaiXe::query();
         if ($search) {
@@ -36,16 +31,9 @@ class LoaiXeController extends Controller
             });
         }
 
-        $db = $query->paginate($totalPage ?? 5);
-        if ($db) {
-            return response()->json([
-                'data' => ['ketqua' => $db, 'timkiem' => $query],
-                'status_code' => 200,
-                'message' => 'ok'
-            ]);
-        } else {
-            return $this->errors(null);
-        }
+        $db = $query->paginate($totalPage ?? ($page ?? 1));
+
+        return $db->total() > 0 ? $this->ok($db) : $this->errors(null);
     }
 
 
@@ -98,9 +86,10 @@ class LoaiXeController extends Controller
      * )
      */
 
-    public function save(Request $res, $id = null)
+    public function save(Request $res)
     {
-        $file_name = $this->uploadFile($res, 'image_upload', 'uploads');
+        $id = $res->MaLoaiXe;
+        $file_name = $this->uploadFile($res, 'HinhAnhLoaiXe', 'LoaiXe');
 
         if ($id == 0) {
             $tk = new LoaiXe();
@@ -110,9 +99,15 @@ class LoaiXeController extends Controller
 
         $tk->TenLoaiXe = $res->TenLoaiXe;
         if ($file_name !== null) {
-            $tk->HinhAnhLoaiXe = $file_name;
+            $tk->HinhAnhLoaiXe = 'LoaiXe/' . $file_name;
         }
         $db = $tk->save();
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
+
+    public function getLoaiXe($id)
+    {
+        $db = LoaiXe::find($id);
         return $db ? $this->ok($db) : $this->errors(null);
     }
 }

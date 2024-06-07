@@ -45,6 +45,8 @@ trait TrangThaiTrait
         }
         return null;
     }
+
+
     //upload nhiều file
     public function uploadFiles($request, $fieldName, $path = null)
     {

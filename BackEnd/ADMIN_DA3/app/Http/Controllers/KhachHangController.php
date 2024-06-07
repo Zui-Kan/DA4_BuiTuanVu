@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KhachHang;
+use App\Models\Users;
 use App\Traits\TrangThaiTrait;
 use Illuminate\Http\Request;
 
@@ -22,22 +23,21 @@ class KhachHangController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $totalPage = $request->input('totalPage');
+        $page = $request->input('page');
+        $totalPage = $request->input('pageSize');
 
         $query = KhachHang::query();
         if ($search) {
             $query->where(function ($query) use ($search) {
                 $query->where('HoVaTen', 'like', '%' . $search . '%')
                     ->orWhere('SDT', 'like', '%' . $search . '%')
+                    ->orWhere('TaiKhoanID', 'like', '%' . $search . '%')
                     ->orWhere('MaKhachHang', 'like', '%' . $search . '%')
                     ->orWhere('Email', 'like', '%' . $search . '%');
             });
         }
-
-        $db = $query->paginate($totalPage ?? 5);
-        $kq =  ['ketqua' => $db, 'timkiem' => $query];
-
-        return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
+        $db = $query->paginate($totalPage ?? ($page ?? 1));
+        return $db->total() > 0 ? $this->ok($db) : $this->errors(null);
     }
 
     /**
@@ -88,17 +88,20 @@ class KhachHangController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
-    public function save(Request $res, $id = null)
+    public function save(Request $res)
     {
+        $id = $res->maKhachHang;
 
         $tk = $id ? KhachHang::where('MaKhachHang', $id)->first() : new KhachHang();
-        $tk->MaTaiKhoan = $res->MaTaiKhoan;
+        $tk->TaiKhoanID = $res->TaiKhoanID;
+        $tk->HoVaTen = $res->HoVaTen;
         $tk->Email = $res->Email;
         $tk->SDT = $res->SDT;
-        $tk->HoVaTen = $res->HoVaTen;
+        $tk->GioiTinh = $res->GioiTinh;
         $tk->CMND = $res->CMND;
-        $db = $tk->save();
-        return $db ? $this->ok($db) : $this->errors(null);
+        $tk->DiaChi = $res->DiaChi;
+
+        return $tk->save() ? $this->ok($tk) : $this->errors(null);
     }
 
 
@@ -113,6 +116,12 @@ class KhachHangController extends Controller
     public function getkhachhang($id)
     {
         $db = KhachHang::find($id);
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
+
+    public function getRoleKhachHang()
+    {
+        $db = Users::get();
         return $db ? $this->ok($db) : $this->errors(null);
     }
 }

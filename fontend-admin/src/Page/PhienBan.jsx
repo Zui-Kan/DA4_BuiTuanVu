@@ -1,6 +1,8 @@
 import { Breadcrumb } from "antd";
 
 const PhienBan = () => {
+  document.title = "Quản lý phiên bản";
+
   return (
     <>
       <Breadcrumb style={{ margin: "16px 0" }}>

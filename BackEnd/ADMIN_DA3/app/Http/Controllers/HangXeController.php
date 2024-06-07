@@ -87,39 +87,20 @@ class HangXeController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
-    // public function save(Request $res)
-    // {
 
-    //     $file_name = null;
-
-    //     $id = $res->MaHang ? $res->MaHang : null;
-
-    //     $file_name = $this->uploadFile($res, 'image_upload', 'HangXe');
-
-    //     $tk = $id ?  HangXe::where('MaHang', $id)->first() : new HangXe();
-
-    //     $tk->TenHang = $res->TenHang;
-
-
-    //     if ($file_name !== null) {
-    //         $tk->HinhAnhHangXe = $file_name;
-    //     }
-
-    //     if ($tk->save()) {
-    //         $db =  $tk;
-    //     }
-    //     return $db ? $this->ok($db) : $this->errors(null);
-    // }
 
     public function save(Request $request)
     {
         $file_name = null;
+        
         $id = $request->MaHang ? $request->MaHang : null;
 
         // Gọi phương thức uploadFile để xử lý file upload
         $file_name = $this->uploadFile($request, 'HinhAnhHangXe', 'HangXe');
 
         $hangXe = $id ? HangXe::find($id) : new HangXe();
+
+
         $hangXe->TenHang = $request->TenHang;
 
         if ($file_name !== null) {

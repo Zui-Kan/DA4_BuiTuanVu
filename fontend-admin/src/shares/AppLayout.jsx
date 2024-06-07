@@ -21,22 +21,33 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-const items = [
+
+const profile = JSON.parse(sessionStorage.getItem("profile") || null);
+
+let items = [
   getItem(<Link to={"/"}>Trang chủ</Link>, "1", <DesktopOutlined />),
-
-  getItem("Tài khoản", "2", <PieChartOutlined />),
-
-  getItem("Tài khoản", "sub1", <UserOutlined />, [
-    getItem("Đổi mật khẩu", "3"),
-  ]),
-  getItem("Quản lý", "sub2", <TeamOutlined />, [
+  getItem("Quản lý", "sub1", <TeamOutlined />, [
     getItem(<Link to={"/hangxe"}>Hãng xe</Link>, "6"),
+    getItem(<Link to={"/khachhang"}>Khách hàng</Link>, "4"),
     getItem(<Link to={"/phienban"}>Phiên bản</Link>, "7"),
     getItem(<Link to={"/loaixe"}>Loại xe</Link>, "8"),
     getItem(<Link to={"/modelxe"}>Model Xe</Link>, "9"),
   ]),
-  getItem("Files", "10", <FileOutlined />),
+  getItem("Đơn đặt hàng", "sub2", <TeamOutlined />, [
+    getItem(<Link to={"/nvnhandonhang"}>Nhận đơn hàng</Link>, "5"),
+  ]),
+
+  getItem("Files", "11", <FileOutlined />),
 ];
+
+if (profile?.role === 0) {
+  items.splice(
+    1,
+    0,
+    getItem(<Link to={"/taikhoan"}>Tài khoản</Link>, "2", <UserOutlined />),
+    getItem(<Link to={"/nhanvien"}>Nhân viên</Link>, "3", <UserOutlined />)
+  );
+}
 
 const AppLayout = () => {
   const location = useLocation();
@@ -44,6 +55,18 @@ const AppLayout = () => {
 
   let defaultSelectedKeys;
   switch (location.pathname) {
+    case "/taikhoan":
+      defaultSelectedKeys = ["2"];
+      break;
+    case "/nhanvien":
+      defaultSelectedKeys = ["3"];
+      break;
+    case "/khachhang":
+      defaultSelectedKeys = ["4"];
+      break;
+    case "/nvnhandonhang":
+      defaultSelectedKeys = ["5"];
+      break;
     case "/hangxe":
       defaultSelectedKeys = ["6"];
       break;
@@ -56,6 +79,7 @@ const AppLayout = () => {
     case "/modelxe":
       defaultSelectedKeys = ["9"];
       break;
+
     default:
       defaultSelectedKeys = ["1"];
   }

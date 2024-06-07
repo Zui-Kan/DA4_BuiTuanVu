@@ -30,7 +30,7 @@ export const apiDeletesHangXe = async (data) => {
 export const apiSaveHangXe = async (data) => {
   try {
     debugger;
-    
+
     const res = await apiClient?.post(`/hangxe/save`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -45,15 +45,6 @@ export const apiSaveHangXe = async (data) => {
 export const apiGetHangXe = async (id) => {
   try {
     const res = await apiClient?.get(`/hangxe/get/${id}`);
-    return res?.data;
-  } catch (error) {
-    console.error("Lỗi: ", error);
-  }
-};
-
-export const apiUploadFile = async (data) => {
-  try {
-    const res = await apiClient?.get(`/uploadfile`, data);
     return res?.data;
   } catch (error) {
     console.error("Lỗi: ", error);
