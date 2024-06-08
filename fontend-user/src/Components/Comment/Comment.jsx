@@ -14,14 +14,13 @@ export function Comment({
   deleteBinhLuan,
   handleDeleteBinhLuan,
   loadData,
-  token,
   profile,
   taiKhoanID,
 }) {
   const [messageApi, contextHolder] = message.useMessage();
 
   const onDeleteComment = async () => {
-    const response = await apiDeleteBinhLuan(maBinhLuan, token.access_token);
+    const response = await apiDeleteBinhLuan(maBinhLuan);
     if (response && response.status_code === 200) {
       messageApi.open({
         type: "success",

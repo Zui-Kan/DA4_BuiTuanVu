@@ -241,13 +241,7 @@ create table BinhLuan(
 FOREIGN KEY (TaiKhoanID) REFERENCES users(id),
 );
 
-CREATE TABLE YeuCauHuy (
-    MaYeuCauHuy INT PRIMARY KEY AUTO_INCREMENT,
-    MaDatHang INT,
-    TrangThai NVARCHAR(100) DEFAULT 'Đang chờ xác nhận từ admin',
-    NgayYeuCau DATETIME DEFAULT NOW(),
-    FOREIGN KEY (MaDatHang) REFERENCES DatHang(MaDatHang)
-);
+
 CREATE TABLE QuangCao (
     MaQuangCao INT PRIMARY KEY AUTO_INCREMENT,
     HinhAnh text,

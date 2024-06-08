@@ -2,12 +2,13 @@ import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import { Loading } from "../Components/Loading/Loading";
 import { uploads } from "../constant/api";
-import { lc_profile, lc_tn } from "../services/auth.service";
-import { apiGetPurchase } from "../services/purchase.service";
+import { lc_profile } from "../services/auth.service";
+import { apiGetPurchase, apiYeuCauHuyDon } from "../services/purchase.service";
 import "../style/Checkout.css";
 import "../style/purchasedetail.css";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 
-import { Button, Timeline } from "antd";
+import { Button, Timeline, Popconfirm, message } from "antd";
 import { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,29 +21,51 @@ import {
 
 function PurchaseDetail() {
   document.title = "Chi tiết đơn hàng";
+  const messageApi = message;
+  const [open, setOpen] = useState(false);
   const { id } = useParams();
-  const tn = lc_tn();
 
   const [data, setData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const loadData = async (id, tn) => {
+  const loadData = async (id) => {
     try {
-      const res = await apiGetPurchase(id, tn.access_token);
+      const res = await apiGetPurchase(id);
       if (res?.status_code === 200) {
         setData(res);
         setIsLoading(true);
       } else {
-        console.error("Có lỗi xảy ra.");
+        messageApi.error("Có lỗi xảy ra.");
         setIsLoading(true);
       }
     } catch (error) {
-      console.error("Có lỗi xảy ra.");
+      messageApi.error("Có lỗi xảy ra.");
+
       setIsLoading(true);
     }
   };
 
+  const handleRequestCancellation = async (maDonHang, maTrangThai) => {
+    const duLieuHuy = {
+      MaDatHang: maDonHang,
+      MaTrangThai: maTrangThai,
+    };
+    debugger;
+    const res = await apiYeuCauHuyDon(duLieuHuy);
+    if (res?.status_code === 200) {
+      loadData(id);
+      messageApi.success("Huỷ đơn đặt hàng thành công");
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const token = JSON.parse(localStorage.getItem("token") || null);
+
   useEffect(() => {
-    loadData(id, tn);
+    if (!token) {
+      navigate(-1);
+    }
+    loadData(id);
   }, []);
 
   if (!isLoading) {
@@ -58,7 +81,7 @@ function PurchaseDetail() {
               <img src="/IMAGE/icons8_unknown_status.svg" alt="#" />
             </div>
             <div className="purchasedetails-header_title">
-              {data?.data?.trangthai?.[0]?.TrangThai || "Chưa có trạng thái"}
+              THÔNG TIN ĐƠN HÀNG
             </div>
           </div>
 
@@ -102,9 +125,35 @@ function PurchaseDetail() {
               </div>
             </div>
             <div className="purchasedetail-control">
-              <Button type="text" danger>
-                Yêu cầu huỷ
-              </Button>
+              <Popconfirm
+                title="Huỷ đơn hàng"
+                cancelText="Huỷ"
+                okText="Xác nhận"
+                description="Bạn có chắc muốn huỷ đơn hàng ?"
+                icon={
+                  <QuestionCircleOutlined
+                    style={{
+                      color: "red",
+                    }}
+                  />
+                }
+              >
+                {data?.data?.trangthai?.[0]?.TrangThai ===
+                  "Chờ liên hệ xác nhận" && (
+                  <Button
+                    type="text"
+                    danger
+                    onClick={() =>
+                      handleRequestCancellation(
+                        data?.data?.dathang.MaDatHang,
+                        data?.data?.trangthai?.[0]?.MaTrangThai
+                      )
+                    }
+                  >
+                    Yêu cầu huỷ
+                  </Button>
+                )}
+              </Popconfirm>
               <Button>Liên hệ nhân viên</Button>
             </div>
           </div>

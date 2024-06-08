@@ -1,15 +1,11 @@
 import { apiClient } from "../constant/api";
 
-export const getCTUser = async (id, token) => {
+export const getCTUser = async (id) => {
   try {
-    if (token) {
-      const res = await apiClient?.get(`/header/gettaikhoanct/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  
+      const res = await apiClient?.get(`/header/gettaikhoanct/${id}`);
       return res?.data;
-    }
+    
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
     return null;

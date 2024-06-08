@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HangXe;
+use App\Models\LoaiXe;
+use App\Models\MauNgoaiThat;
+use App\Models\MauNoiThat;
 use App\Models\ModelXe;
+use App\Models\PhienBanXe;
 use App\Traits\TrangThaiTrait;
 use Illuminate\Http\Request;
 
@@ -31,23 +36,25 @@ class ModelXeController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $totalPage = $request->input('totalPage');
+        $totalPage = $request->input('pageSize');
+        $page = $request->input('page');
+
 
         $query = ModelXe::query();
         if ($search) {
             $query->where(function ($query) use ($search) {
                 $query->where('TenModel', 'like', '%' . $search . '%')
-                    ->orWhere('MaHang', 'like', '%' . $search . '%')
-                    ->orWhere('Gia', 'like', '%' . $search . '%')
-                    ->orWhere('NamSanXuat', 'like', '%' . $search . '%');
+                    ->orWhere('MaModel', 'like', '%' . $search . '%');
             });
         }
 
-        $db = $query->paginate($totalPage ?? 5);
-        $kq =  ['ketqua' => $db, 'timkiem' => $query];
+        $db = $query->paginate($totalPage ?? ($page ?? 1));
 
-        return $db->total() > 0 ? $this->ok($kq) : $this->errors(null);
+
+        return $db->total() > 0 ? $this->ok($db) : $this->errors(null);
     }
+
+
     /**
      * @OA\delete(
      *     path="/api/modelxe/delete/{id}",
@@ -76,14 +83,7 @@ class ModelXeController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-    /**
-     * @OA\post(
-     *     path="/api/modelxe/save/{id}",
-     *    tags={"modelxe"},
-     *     @OA\Response(response="200", description="Success"),
-     * )
-     */
-    public function save(Request $res, $id = null)
+    public function save2(Request $res, $id = null)
     {
         $file_name = $this->uploadFile($res, 'image_upload', 'uploads');
 
@@ -91,7 +91,6 @@ class ModelXeController extends Controller
         $file_names = $this->uploadFiles($res, 'image_uploads', 'uploads');
 
         $tk = $id ? ModelXe::where('MaModel', $id)->first() : new ModelXe();
-
 
         $tk->TenModel = $res->TenModel;
         $tk->MaHang = $res->MaHang;
@@ -111,46 +110,83 @@ class ModelXeController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-
-    /**
-     * @OA\post(
-     *     path="/api/modelxe/filtermodels",
-     *    tags={"modelxe"},
-     *     @OA\Response(response="200", description="Success"),
-     * )
-     */
-    public function filterModels(Request $request)
+    public function save(Request $req)
     {
-        $minPrice = $request->input('min_price');
-        $maxPrice = $request->input('max_price');
-        $namSanXuat = $request->input('namsanxuat');
-        $maHang = $request->input('mahang');
-        $maLoaiXe = $request->input('maloaixe');
+        $id = $req->MaModelxe;
 
-        $query = ModelXe::query();
+        $file_name = $this->uploadFile($req, 'image_upload', 'uploads');
 
-        if ($minPrice !== null) {
-            $query->where('Gia', '>=', $minPrice);
+        $file_names = $this->uploadFiles($req, 'image_uploads', 'uploads');
+
+
+        // Lưu thông tin ModelXe
+        $modelXe = $id ? ModelXe::where('MaModel', $id)->first() : new ModelXe();
+
+        $modelXe->TenModel = $req->TenModel;
+        $modelXe->MaHang = $req->MaHang;
+        $modelXe->MaLoaiXe = $req->MaLoaiXe;
+        $modelXe->NamSanXuat = $req->NamSanXuat;
+        $modelXe->Gia = $req->Gia;
+        $modelXe->MoTa = $req->MoTa;
+        if ($file_name !== null) {
+            $modelXe->HinhAnhXe = $file_name;
+        }
+        if (!empty($file_names)) {
+            $modelXe->DSHinhAnhXe = json_encode($file_names);
         }
 
-        if ($maxPrice !== null) {
-            $query->where('Gia', '<=', $maxPrice);
+        $modelXe->save();
+
+        // Lưu thông tin PhiênBanXe liên kết với ModelXe
+        $phienBans = $req->input('phienBans');
+        foreach ($phienBans as $phienBanData) {
+            $maphienban = $phienBanData['MaPhienBan'];
+            $phienBan = $maphienban ? PhienBanXe::where('MaPhienBan',  $maphienban)->first() : new PhienBanXe();
+            $phienBan->MaModel = $modelXe->MaModel;
+            $phienBan->TenPhienBan = $phienBanData['TenPhienBan'];
+            $phienBan->save();
+
+            // Lưu thông tin MauNgoaiThat liên kết với PhiênBanXe
+            $mauNgoaiThats = $phienBanData['mauNgoaiThats'];
+            foreach ($mauNgoaiThats as $mauNgoaiThatData) {
+                $mamaungoaithat = $mauNgoaiThatData['MaMauNgoaiThat'];
+                $mauNgoaiThat = $mamaungoaithat ? MauNgoaiThat::where('MaMauNgoaiThat',  $mamaungoaithat)->first() : new MauNgoaiThat();
+                $mauNgoaiThat->MaPhienBan = $phienBan->MaPhienBan;
+                $mauNgoaiThat->TenMauNgoaiThat = $mauNgoaiThatData['TenMauNgoaiThat'];
+                $mauNgoaiThat->HinhAnhMau = $mauNgoaiThatData['HinhAnhMau'];
+                $mauNgoaiThat->save();
+
+                // Lưu thông tin MauNoiThat liên kết với MauNgoaiThat
+                $mauNoiThats = $mauNgoaiThatData['mauNoiThats'];
+                foreach ($mauNoiThats as $mauNoiThatData) {
+                    $mamaunoithat = $mauNgoaiThatData['MaMauNoiThat'];
+                    $mauNoiThat = $mamaunoithat ? MauNoiThat::where('MaMauNoiThat',  $mamaunoithat)->first() : new MauNoiThat();
+                    $mauNoiThat->MaMauNgoaiThat = $mauNgoaiThat->MaMauNgoaiThat;
+                    $mauNoiThat->TenMauNoiThat = $mauNoiThatData['TenMauNoiThat'];
+
+                    $mauNoiThat->save();
+                }
+            }
         }
 
-        if ($namSanXuat !== null) {
-            $query->where('NamSanXuat', $namSanXuat);
-        }
+        return $modelXe ? $this->ok($modelXe) : $this->errors(null);
+    }
+    public function getModelXe($id)
+    {
+        $db = ModelXe::where("MaModel", $id)->first();
+        return $db ? $this->ok($db) : $this->errors(null);
+    }
 
-        if ($maHang !== null) {
-            $query->where('MaHang', $maHang);
-        }
+    public function selectHangandLoai()
+    {
+        $lx = LoaiXe::all();
+        $hx = HangXe::all();
 
-        if ($maLoaiXe !== null) {
-            $query->where('MaLoaiXe', $maLoaiXe);
-        }
+        $db = [
+            "LoaiXe" => $lx,
+            "HangXe" => $hx,
+        ];
 
-        $result = $query->get();
-
-        return $result ? $this->ok($result) : $this->errors(null);
+        return $db ? $this->ok($db) : $this->errors(null);
     }
 }

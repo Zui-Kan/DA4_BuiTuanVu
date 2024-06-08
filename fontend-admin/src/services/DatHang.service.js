@@ -1,5 +1,16 @@
 import { apiClient } from "../constant/api";
 
+export const apiHienThiTrangThai_0 = async (data) => {
+  try {
+    const res = await apiClient?.post(`/trangthai/hienthidondahuy`, data);
+    if (res?.data?.status_code === 200) {
+      return res?.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const apiHienThiTrangThai_1 = async (data) => {
   try {
     const res = await apiClient?.post(

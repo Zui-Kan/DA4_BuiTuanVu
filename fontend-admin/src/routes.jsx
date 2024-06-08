@@ -4,8 +4,6 @@ import AppLayout from "./shares/AppLayout";
 import ErrorBoundary from "./Component/Error/Error";
 import Home from "./Page/Home";
 import LoaiXe from "./Page/Quản lý loại xe/LoaiXe";
-import PhienBan from "./Page/PhienBan";
-import ModelXe from "./Page/ModelXe";
 import HangXe from "./Page/Quản lý hãng xe/HangXe";
 import TaiKhoan from "./Page/Quản lý tài khoản/TaiKhoan";
 import Login from "./Page/Login";
@@ -14,6 +12,9 @@ import NhanVien from "./Page/Quản lý nhân viên/NhanVien";
 import KhachHang from "./Page/Quản lý khách hàng/KhachHang";
 import NVNhanDonHang from "./Page/Quản lý đơn đặt/Nhận đơn/NVNhanDonHang";
 import QuanLyDonByNV from "./Page/Quản lý đơn đặt/QuanLyDonByNV";
+import DonDaHuy from "./Page/Quản lý đơn đặt/Đơn đã huỷ/DonDaHuy";
+import ModelXe from "./Page/Quản lý model xe/ModelXe";
+import ModelXeUpdate from "./Page/Quản lý model xe/ModelXeUpdate";
 
 export const router = createBrowserRouter([
   {
@@ -49,19 +50,20 @@ export const router = createBrowserRouter([
           </ProtectedComponent>
         ),
       },
-      {
-        path: "/phienban",
-        element: (
-          <ProtectedComponent>
-            <PhienBan />
-          </ProtectedComponent>
-        ),
-      },
+
       {
         path: "/modelxe",
         element: (
           <ProtectedComponent>
             <ModelXe />
+          </ProtectedComponent>
+        ),
+      },
+      {
+        path: "/updatemodelxe/:id?",
+        element: (
+          <ProtectedComponent>
+            <ModelXeUpdate />
           </ProtectedComponent>
         ),
       },
@@ -78,6 +80,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedComponent>
             <NVNhanDonHang />
+          </ProtectedComponent>
+        ),
+      },
+      {
+        path: "/dondahuy",
+        element: (
+          <ProtectedComponent>
+            <DonDaHuy />
           </ProtectedComponent>
         ),
       },

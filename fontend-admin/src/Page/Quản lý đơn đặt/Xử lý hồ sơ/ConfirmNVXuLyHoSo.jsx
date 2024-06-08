@@ -10,19 +10,15 @@ const ConfirmNVXuLyHoSo = (props) => {
   const profile = JSON.parse(sessionStorage.getItem("profile"));
 
   const handleConfirmModal = async () => {
-    const getNV = await apiGetNhanVienbyTK(profile.id);
-    if (getNV && getNV.status_code === 200) {
-      const dulieu = {
-        MaDatHang: props.maDatHang,
-        MaNhanVien: getNV?.data?.MaNhanVien,
-        MaTrangThai: props.maTrangThai,
-      };
-      const res = await apiNhanVienXuLyHoSo(dulieu);
-      if (res?.status_code === 200) {
-        messageApi.success("Thủ tục hồ sơ hoàn thành.");
-        handleCancelModal();
-        props.loadData();
-      }
+    const dulieu = {
+      MaDatHang: props.maDatHang,
+      MaTrangThai: props.maTrangThai,
+    };
+    const res = await apiNhanVienXuLyHoSo(dulieu);
+    if (res?.status_code === 200) {
+      messageApi.success("Thủ tục hồ sơ hoàn thành.");
+      handleCancelModal();
+      props.loadData();
     }
   };
 

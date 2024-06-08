@@ -27,7 +27,7 @@ import {
 } from "../services/cart.service";
 import { cartCheckout, cartState } from "../constant/recoil";
 import { useRecoilState } from "recoil";
-import { lc_profile, lc_tn } from "../services/auth.service";
+import { lc_profile, lc_token } from "../services/auth.service";
 import AsNavFor from "../Components/AsNavFor";
 const { TextArea } = Input;
 
@@ -42,8 +42,8 @@ function Detail() {
 
   const [quantity, setQuantity] = useState(1);
 
-  const token = lc_tn();
   const profile = lc_profile();
+  const token = lc_token();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [versions, setVersions] = useState([]);
   const [allMauNgoaiThat, setAllMauNgoaiThat] = useState([]);
@@ -153,7 +153,7 @@ function Detail() {
       return;
     }
     try {
-      const response = await saveBinhLuan(formDataBinhLuan, token.access_token);
+      const response = await saveBinhLuan(formDataBinhLuan);
 
       if (response && response.status_code === 200) {
         if (response.data) {
@@ -244,18 +244,20 @@ function Detail() {
         "Vui lòng chọn phiên bản, màu ngoại thất và màu nội thất."
       );
       return;
+    } else if (!token) {
+      messageApi.error("Vui lòng đăng nhập để mua sản phẩm.");
+      return;
+    } else {
+      const response = await getDetailCart(selectedNoiThat);
+      const buyNow = await [
+        {
+          ...response.data.data,
+          SoLuong: quantity,
+        },
+      ];
+      setcheckout(buyNow);
+      navigate("/checkout");
     }
-
-    const response = await getDetailCart(selectedNoiThat);
-
-    const buyNow = await [
-      {
-        ...response.data.data,
-        SoLuong: quantity,
-      },
-    ];
-    setcheckout(buyNow);
-    navigate("/checkout");
   };
 
   if (!isDataLoaded) {
@@ -638,7 +640,7 @@ function Detail() {
                 <div className="col news-title blueDark-c">Bình luận</div>
               </div>
 
-              {token?.access_token && (
+              {token && (
                 <div className="user-binhluan">
                   <div className="form-group">
                     <TextArea
@@ -670,7 +672,6 @@ function Detail() {
                   data?.binhLuan?.map((item) => (
                     <Comment
                       key={item?.MaBinhLuan}
-                      token={token}
                       profile={profile}
                       taiKhoanID={item?.TaiKhoanID}
                       maBinhLuan={item?.MaBinhLuan}

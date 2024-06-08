@@ -1,6 +1,6 @@
 import { apiClient } from "../constant/api";
-export const lc_tn = () => {
-  return JSON.parse(localStorage.getItem("tn") || "{}");
+export const lc_token = () => {
+  return JSON.parse(localStorage.getItem("token") || null);
 };
 export const lc_profile = () => {
   return JSON.parse(localStorage.getItem("profile") || "{}");
@@ -16,34 +16,6 @@ export const apiLogin = async (username, password) => {
   }
 };
 
-export const apiRefreshToken = async (token) => {
-  if (!token) {
-    console.error("Token không hợp lệ.");
-    return null;
-  }
-
-  try {
-    const res = await apiClient?.post(`/auth/refresh`, null, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (res && res.data) {
-      return res.data;
-    } else {
-      console.error("Không nhận được dữ liệu từ máy chủ.");
-      return null;
-    }
-  } catch (error) {
-    console.error(
-      "Lỗi khi refresh token:",
-      error.response?.data || error.message || error
-    );
-    return null;
-  }
-};
-
 export const apiSignup = async (data) => {
   try {
     const res = await apiClient?.post(`/taikhoan/signup`, data);
@@ -54,11 +26,9 @@ export const apiSignup = async (data) => {
   }
 };
 
-export const getProfile = async (token) => {
+export const getProfile = async () => {
   try {
-    const res = await apiClient?.get(`/auth/profile`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await apiClient?.get(`/auth/profile`);
     return res?.data;
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
@@ -66,18 +36,10 @@ export const getProfile = async (token) => {
   }
 };
 
-
-export const apiLogout = async (token) => {
+export const apiLogout = async () => {
   try {
-    if (token) {
-      debugger;
-      const res = await apiClient?.post(`/auth/logout`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return res?.data;
-    }
+    const res = await apiClient?.post(`/auth/logout`, null);
+    return res?.data;
   } catch (error) {
     console.error("Lỗi khi đăng xuất:", error);
     return null;

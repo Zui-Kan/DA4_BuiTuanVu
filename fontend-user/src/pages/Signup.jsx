@@ -51,7 +51,7 @@ const Signup = function () {
   };
 
   useEffect(() => {
-    const lc = localStorage.getItem("tn");
+    const lc = localStorage.getItem("token");
     if (lc) {
       navigate("/");
     }

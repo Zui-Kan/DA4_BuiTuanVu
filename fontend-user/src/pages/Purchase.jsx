@@ -2,24 +2,22 @@ import { useEffect, useState } from "react";
 import "../style/purchase.css";
 
 import { Button, notification, Space } from "antd";
-import { lc_profile, lc_tn } from "../services/auth.service";
+import { lc_profile } from "../services/auth.service";
 import { apiGetAllPurchase } from "../services/purchase.service";
 import { formatDatetime, formatPrice } from "../shares/format";
 import { uploads } from "../constant/api";
 import { Loading } from "../Components/Loading/Loading";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Purchase() {
   document.title = "Đơn hàng";
-
   const [api, contextHolder] = notification.useNotification();
 
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
-  const tn = lc_tn();
   const profile = lc_profile();
-  const loadData = async (profile, tn) => {
-    const res = await apiGetAllPurchase(profile.id, tn.access_token);
+  const loadData = async (profile) => {
+    const res = await apiGetAllPurchase(profile.id);
     if (res?.status_code === 200) {
       setData(res);
       setIsLoading(true);
@@ -30,21 +28,39 @@ function Purchase() {
       });
     }
   };
+  const navigate = useNavigate();
+
+  const token = JSON.parse(localStorage.getItem("token") || null);
 
   useEffect(() => {
-    loadData(profile, tn);
+    if (!token) {
+      navigate(-1);
+    }
+    loadData(profile);
   }, []);
   console.log(data);
   if (!isLoading) {
     return <Loading />;
   }
+
   return (
     <>
       <main>
         <div className="list-purchases">
           <div className="list-purchases-title">Đơn hàng</div>
           {data?.data?.map((item, key) => (
-            <div className="carts-purchase" key={key}>
+            <div
+              className={
+                `carts-purchase ` +
+                (item.trangthai?.TrangThai ===
+                "Hoàn thành giao xe và thanh toán"
+                  ? "khung-mauxanh"
+                  : item.trangthai?.TrangThai === "Đã huỷ"
+                  ? "khung-maudo"
+                  : "")
+              }
+              key={key}
+            >
               <div className="carts-purchase_trangthai_thoigian">
                 <div className="carts-purchase_thoigian">
                   {formatDatetime(item.dathang?.NgayTao)}
@@ -87,9 +103,6 @@ function Purchase() {
                 </span>
               </div>
               <div className="carts-purchase-control">
-                <Button type="text" danger>
-                  Yêu cầu huỷ
-                </Button>
                 <Link to={`/purchasedetail/${item.dathang.MaDatHang}`}>
                   <Button>Xem chi tiết</Button>
                 </Link>

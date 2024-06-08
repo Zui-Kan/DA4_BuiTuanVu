@@ -7,7 +7,7 @@ import { formatPriceStringVND, formatPriceVND } from "../shares/format"; // Assu
 import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { apiDatXe, getKhachHang } from "../services/checkout.service";
-import { lc_profile, lc_tn } from "../services/auth.service";
+import { lc_profile } from "../services/auth.service";
 import { message } from "antd";
 import {
   getCartFromLocalStorage,
@@ -17,7 +17,6 @@ import {
 import { useNavigate } from "react-router-dom";
 
 function CheckOut() {
-  const tn = lc_tn();
   const profile = lc_profile();
   const cart = getCartFromLocalStorage();
   const itemsCheckout = useRecoilValue(cartCheckout);
@@ -48,18 +47,19 @@ function CheckOut() {
     return { totalQuantity, totalPrice };
   };
 
-  const loadData = async (tn, profile) => {
-    const res = await getKhachHang(profile.id, tn.access_token);
+  const loadData = async (profile) => {
+    const res = await getKhachHang(profile.id);
     if (res) {
       setDataKhachHang(res);
     }
   };
+  const token = JSON.parse(localStorage.getItem("token") || null);
 
   useEffect(() => {
-    if (itemsCheckout.length < 1) {
+    if (itemsCheckout.length < 1 || !token) {
       navigate(-1);
     }
-    loadData(tn, profile);
+    loadData(profile);
   });
 
   const { totalQuantity, totalPrice } = calculateTotal();
@@ -149,7 +149,7 @@ function CheckOut() {
     }
 
     try {
-      const response = await apiDatXe(data, tn.access_token);
+      const response = await apiDatXe(data);
       if (response.success) {
         messageApi.success("Đặt hàng thành công.");
         validItemsCheckout.forEach((item) => {

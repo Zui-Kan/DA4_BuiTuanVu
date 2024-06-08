@@ -65,6 +65,7 @@ Route::group([
     ],  function () {
         Route::get('/getallpurchase/{id?}', [PurchaseController::class, 'getallpurchase'])->name('purchase.getallpurchase');
         Route::get('/getpurchase/{id?}', [PurchaseController::class, 'getpurchase'])->name('purchase.getpurchase');
+        Route::post('/yeucauhuydon', [PurchaseController::class, 'yeucauhuydon']);
     });
 });
 

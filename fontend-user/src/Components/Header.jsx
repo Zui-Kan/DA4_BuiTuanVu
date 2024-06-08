@@ -5,7 +5,6 @@ import { apiLogout } from "../services/auth.service";
 import { uploads } from "../constant/api";
 import { message } from "antd";
 import { getCartDetails, getTotalQuantity } from "../services/cart.service";
-import TokenRefresher from "../constant/refreshToken";
 import { cartState } from "../constant/recoil";
 import { getCTUser, getMenu } from "../services/header.service";
 
@@ -23,20 +22,16 @@ const Header = function () {
     () => JSON.parse(localStorage.getItem("profile") || "{}"),
     []
   );
-  const token = useMemo(
-    () => JSON.parse(localStorage.getItem("tn") || "{}"),
-    []
-  );
 
   const loadData = useCallback(async () => {
-    if (token && profile) {
-      const ctuser = await getCTUser(profile.id, token.access_token);
+    if (profile) {
+      const ctuser = await getCTUser(profile.id);
       if (ctuser?.status_code === 200) {
         setData(ctuser);
         setControlUser(true);
       }
     }
-  }, [profile, token]);
+  }, [profile]);
 
   const loadMenu = useCallback(async () => {
     const menu = await getMenu();
@@ -50,10 +45,10 @@ const Header = function () {
   }, []);
 
   const handleLogout = useCallback(async () => {
-    const logOut = await apiLogout(token.access_token);
+    const logOut = await apiLogout();
     if (logOut?.status_code === 200) {
       localStorage.removeItem("profile");
-      localStorage.removeItem("tn");
+      localStorage.removeItem("token");
       setControlUser(false);
       setData(null);
       messageApi.open({
@@ -63,7 +58,7 @@ const Header = function () {
     } else {
       console.error("Logout failed");
     }
-  }, [token.access_token, messageApi]);
+  }, [messageApi]);
 
   useEffect(() => {
     loadMenu();

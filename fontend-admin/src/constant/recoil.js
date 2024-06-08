@@ -15,3 +15,9 @@ export const cartState = atom({
   key: "cartState",
   default: [],
 });
+
+//lưu số lượng trong giỏ hàng
+export const modelState = atom({
+  key: "cartState",
+  default: [],
+});

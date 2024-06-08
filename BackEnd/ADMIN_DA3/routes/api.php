@@ -135,12 +135,15 @@ Route::group([
         'prefix' => 'modelxe',
     ], function () {
         Route::get('/{total?}', [ModelXeController::class, 'index'])->name('modelxe.index');
+        Route::get('/getmodel/{id?}', [ModelXeController::class, 'getModelXe']);
         Route::delete('/delete/{id}', [ModelXeController::class, 'delete'])->name('modelxe.delete');
         Route::delete('/deletes', [ModelXeController::class, 'deletes'])->name('modelxe.deletes');
         Route::post('/save/{id?}', [ModelXeController::class, 'save'])->name('modelxe.save');
         Route::post('/search', [ModelXeController::class, 'search'])->name('modelxe.search');
         Route::post('/filtermodels', [ModelXeController::class, 'filterModels'])->name('modelxe.filterModels');
     });
+
+    Route::get('/selecthangandloai', [ModelXeController::class, 'selectHangandLoai']);
 
 
     //Màu nội thất
@@ -257,6 +260,7 @@ Route::group([
     Route::group([
         'prefix' => 'trangthai',
     ], function () {
+        Route::post('/hienthidondahuy', [TrangThaiController::class, 'HienThiTrangThai_0']);
         Route::post('/hienthitrangthainhanvienxacnhan', [TrangThaiController::class, 'HienThiTrangThai_1']);
         Route::post('/hienthidonxulyhoso', [TrangThaiController::class, 'HienThiTrangThai_2']);
         Route::post('/hienthidongiaoxe', [TrangThaiController::class, 'HienThiTrangThai_3']);

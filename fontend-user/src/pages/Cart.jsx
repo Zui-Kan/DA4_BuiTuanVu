@@ -73,7 +73,7 @@ const Cart = function () {
 
     loadData();
   };
-
+  const token = JSON.parse(localStorage.getItem("token") || null);
   const handleCheckoputChange = async () => {
     const itemsCheckout = data.listCart.filter(
       (item, index) => selectedItems[index]
@@ -82,6 +82,8 @@ const Cart = function () {
 
     if (itemsCheckout.length < 1) {
       messageAPI.error("Vui lòng chọn xe cần thanh toán!!!");
+    } else if (!token) {
+      messageAPI.error("Vui lòng đăng nhập để thanh toán!!!");
     } else {
       navigate("/checkout");
     }

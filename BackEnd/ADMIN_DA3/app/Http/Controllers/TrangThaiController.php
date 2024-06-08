@@ -22,6 +22,31 @@ class TrangThaiController extends Controller
      * )
      */
 
+    public function HienThiTrangThai_0(Request $request)
+    {
+        $search = $request->input('search');
+        $page = $request->input('page');
+        $totalPage = $request->input('pageSize');
+
+        $query = DatHang::select('dathang.*', 'trangthaidathang.TrangThai', 'trangthaidathang.CoTrangThai', 'trangthaidathang.MaTrangThai')
+            ->join('trangthaidathang', 'trangthaidathang.MaDatHang', '=', 'dathang.MaDatHang')
+            ->where('trangthaidathang.CoTrangThai', 1)
+            ->where('trangthaidathang.TrangThai', 'Đã huỷ');
+
+        if ($search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('dathang.MaDatHang', 'like', '%' . $search . '%')
+                    ->orWhere('dathang.MaKhachHang', 'like', '%' . $search . '%')
+                    ->orWhere('dathang.DiaChiNhanXe', 'like', '%' . $search . '%');
+            });
+        }
+
+        $db = $query->paginate($totalPage ?? ($page ?? 1));
+
+        return  $db ? $this->ok($db) : $this->errors(null);
+    }
+
+
     public function HienThiTrangThai_1(Request $request)
     {
         $search = $request->input('search');
@@ -208,10 +233,6 @@ class TrangThaiController extends Controller
     {
         $madatHang = $res->MaDatHang;
 
-        $db = DatHang::where("MaDatHang", $madatHang)->first();
-        $db->MaNhanVien = $res->MaNhanVien;
-        $db->save();
-
         $oldTrangThai = TrangThaiDatHang::where("MaTrangThai", $res->MaTrangThai)->first();
         $oldTrangThai->CoTrangThai = 2;
         $oldTrangThai->save();
@@ -227,10 +248,6 @@ class TrangThaiController extends Controller
     public function NhanVienGiaoXe(Request $res)
     {
         $madatHang = $res->MaDatHang;
-
-        $db = DatHang::where("MaDatHang", $madatHang)->first();
-        $db->MaNhanVien = $res->MaNhanVien;
-        $db->save();
 
         $oldTrangThai = TrangThaiDatHang::where("MaTrangThai", $res->MaTrangThai)->first();
         $oldTrangThai->CoTrangThai = 2;

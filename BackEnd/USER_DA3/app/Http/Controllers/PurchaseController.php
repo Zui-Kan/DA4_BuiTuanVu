@@ -67,7 +67,7 @@ class PurchaseController extends Controller
         foreach ($listkh as $kh) {
             // Lấy danh sách đơn đặt hàng của từng khách hàng, mỗi trang có 10 đơn hàng
             $dhList = DatHang::where("MaKhachHang", $kh->MaKhachHang)
-                ->orderBy('NgayTao', 'desc') 
+                ->orderBy('NgayTao', 'desc')
                 ->paginate(20);
 
             // Duyệt qua từng đơn đặt hàng
@@ -176,5 +176,22 @@ class PurchaseController extends Controller
 
         // Trả về dữ liệu hoặc lỗi nếu không có dữ liệu
         return !empty($result) ? $this->ok($result) : $this->errors(null);
+    }
+
+
+    public function YeuCauHuyDon(Request $res)
+    {
+        $madatHang = $res->MaDatHang;
+
+        $oldTrangThai = TrangThaiDatHang::where("MaTrangThai", $res->MaTrangThai)->first();
+        $oldTrangThai->CoTrangThai = 2;
+        $oldTrangThai->save();
+
+        $newTrangThai = new TrangThaiDatHang();
+        $newTrangThai->MaDatHang = $madatHang;
+        $newTrangThai->TrangThai = "Đã huỷ";
+        $newTrangThai->CoTrangThai = 1;
+
+        return  $newTrangThai->save() ? $this->ok($newTrangThai) : $this->errors(null);
     }
 }

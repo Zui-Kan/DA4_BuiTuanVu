@@ -30,7 +30,7 @@
   font-weight: 600;
   color: rgb(20, 100, 244);
 }
-  
+
 .cart-purchase {
   overflow: hidden;
   display: flex;
@@ -90,4 +90,11 @@
 .carts-purchase-control button {
   font-size: 15px;
   font-weight: 600;
+}
+
+.khung-mauxanh {
+  border: 6px solid rgb(108, 239, 108);
+}
+.khung-maudo {
+  border: 6px solid rgb(228, 104, 95);
 }

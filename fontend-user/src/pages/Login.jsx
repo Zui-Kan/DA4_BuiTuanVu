@@ -13,7 +13,6 @@ const Login = function () {
   const [errorLogin, setErrorLogin] = useState(null);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useRecoilState(tokenState);
 
   const navigate = useNavigate();
 
@@ -22,11 +21,11 @@ const Login = function () {
     setIsLoading(true);
     try {
       const response = await apiLogin(userName, password);
+      debugger;
       if (response && response.access_token) {
-        setToken(response.access_token);
+        localStorage.setItem("token", JSON.stringify(response.access_token));
         const profile = await getProfile(response.access_token);
         localStorage.setItem("profile", JSON.stringify(profile));
-        localStorage.setItem("tn", JSON.stringify(response));
         navigate("/");
       } else {
         setErrorLogin("Tên tài khoản hoặc mật khẩu không đúng!");
@@ -39,11 +38,11 @@ const Login = function () {
   };
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("tn");
+    const storedToken = localStorage.getItem("token");
     if (storedToken) {
       navigate("/");
     }
-  }, [token, navigate]);
+  }, [navigate]);
 
   return (
     <>
