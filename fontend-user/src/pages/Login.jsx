@@ -21,9 +21,12 @@ const Login = function () {
     setIsLoading(true);
     try {
       const response = await apiLogin(userName, password);
-      debugger;
       if (response && response.access_token) {
-        localStorage.setItem("token", JSON.stringify(response.access_token));
+        await localStorage.setItem(
+          "token",
+          JSON.stringify(response.access_token)
+        );
+
         const profile = await getProfile(response.access_token);
         localStorage.setItem("profile", JSON.stringify(profile));
         navigate("/");

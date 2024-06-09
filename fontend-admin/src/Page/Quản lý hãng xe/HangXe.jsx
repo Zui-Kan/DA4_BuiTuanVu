@@ -33,7 +33,7 @@ const HangXe = () => {
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     page: 1,
-    pageSize: 5,
+    pageSize: 2,
     total: 1,
   });
   const [data, setData] = useState([]);

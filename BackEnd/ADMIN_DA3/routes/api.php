@@ -138,7 +138,7 @@ Route::group([
         Route::get('/getmodel/{id?}', [ModelXeController::class, 'getModelXe']);
         Route::delete('/delete/{id}', [ModelXeController::class, 'delete'])->name('modelxe.delete');
         Route::delete('/deletes', [ModelXeController::class, 'deletes'])->name('modelxe.deletes');
-        Route::post('/save/{id?}', [ModelXeController::class, 'save'])->name('modelxe.save');
+        Route::post('/save', [ModelXeController::class, 'save'])->name('modelxe.save');
         Route::post('/search', [ModelXeController::class, 'search'])->name('modelxe.search');
         Route::post('/filtermodels', [ModelXeController::class, 'filterModels'])->name('modelxe.filterModels');
     });

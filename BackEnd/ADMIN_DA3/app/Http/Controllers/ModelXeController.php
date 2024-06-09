@@ -83,41 +83,14 @@ class ModelXeController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-    public function save2(Request $res, $id = null)
-    {
-        $file_name = $this->uploadFile($res, 'image_upload', 'uploads');
-
-
-        $file_names = $this->uploadFiles($res, 'image_uploads', 'uploads');
-
-        $tk = $id ? ModelXe::where('MaModel', $id)->first() : new ModelXe();
-
-        $tk->TenModel = $res->TenModel;
-        $tk->MaHang = $res->MaHang;
-        $tk->MaLoaiXe = $res->MaLoaiXe;
-        $tk->NamSanXuat = $res->NamSanXuat;
-        $tk->Gia = $res->Gia;
-        $tk->MoTa = $res->MoTa;
-
-        if ($file_name !== null) {
-            $tk->HinhAnhXe = $file_name;
-        }
-        if (!empty($file_names)) {
-            $tk->DSHinhAnhXe = json_encode($file_names);
-        }
-
-        $db = $tk->save();
-        return $db ? $this->ok($db) : $this->errors(null);
-    }
 
     public function save(Request $req)
     {
-        $id = $req->MaModelxe;
+        $id = $req->MaModelxe ?? null;
 
-        $file_name = $this->uploadFile($req, 'image_upload', 'uploads');
-
-        $file_names = $this->uploadFiles($req, 'image_uploads', 'uploads');
-
+        // Upload HinhAnhXe và DSHinhAnhXe
+        $file_name = $this->uploadFile($req, 'HinhAnhXe', 'ModelXe');
+        $file_names = $this->uploadFiles($req, 'DSHinhAnhXe', 'ModelXe');
 
         // Lưu thông tin ModelXe
         $modelXe = $id ? ModelXe::where('MaModel', $id)->first() : new ModelXe();
@@ -127,21 +100,23 @@ class ModelXeController extends Controller
         $modelXe->MaLoaiXe = $req->MaLoaiXe;
         $modelXe->NamSanXuat = $req->NamSanXuat;
         $modelXe->Gia = $req->Gia;
-        $modelXe->MoTa = $req->MoTa;
         if ($file_name !== null) {
             $modelXe->HinhAnhXe = $file_name;
         }
         if (!empty($file_names)) {
             $modelXe->DSHinhAnhXe = json_encode($file_names);
         }
-
+        $modelXe->L100 = $req->L100;
+        $modelXe->NhienLieu = $req->NhienLieu;
+        $modelXe->HopSo = $req->HopSo;
+        $modelXe->MoTa = $req->MoTa;
         $modelXe->save();
 
         // Lưu thông tin PhiênBanXe liên kết với ModelXe
         $phienBans = $req->input('phienBans');
         foreach ($phienBans as $phienBanData) {
-            $maphienban = $phienBanData['MaPhienBan'];
-            $phienBan = $maphienban ? PhienBanXe::where('MaPhienBan',  $maphienban)->first() : new PhienBanXe();
+            $maphienban = $phienBanData['MaPhienBan'] ?? null;
+            $phienBan = $maphienban ? PhienBanXe::where('MaPhienBan', $maphienban)->first() : new PhienBanXe();
             $phienBan->MaModel = $modelXe->MaModel;
             $phienBan->TenPhienBan = $phienBanData['TenPhienBan'];
             $phienBan->save();
@@ -149,20 +124,32 @@ class ModelXeController extends Controller
             // Lưu thông tin MauNgoaiThat liên kết với PhiênBanXe
             $mauNgoaiThats = $phienBanData['mauNgoaiThats'];
             foreach ($mauNgoaiThats as $mauNgoaiThatData) {
-                $mamaungoaithat = $mauNgoaiThatData['MaMauNgoaiThat'];
-                $mauNgoaiThat = $mamaungoaithat ? MauNgoaiThat::where('MaMauNgoaiThat',  $mamaungoaithat)->first() : new MauNgoaiThat();
+                $mamaungoaithat = $mauNgoaiThatData['MaMauNgoaiThat'] ?? null;
+
+                $mauNgoaiThat = $mamaungoaithat ? MauNgoaiThat::where('MaMauNgoaiThat', $mamaungoaithat)->first() : new MauNgoaiThat();
                 $mauNgoaiThat->MaPhienBan = $phienBan->MaPhienBan;
                 $mauNgoaiThat->TenMauNgoaiThat = $mauNgoaiThatData['TenMauNgoaiThat'];
-                $mauNgoaiThat->HinhAnhMau = $mauNgoaiThatData['HinhAnhMau'];
+
+                $file_maungoai = $this->uploadFile($req, 'HinhAnhMauNgoaiThat', 'uploads');
+                if ($file_maungoai !== null) {
+                    $mauNgoaiThat->HinhAnhMau = $file_maungoai;
+                }
+
                 $mauNgoaiThat->save();
 
                 // Lưu thông tin MauNoiThat liên kết với MauNgoaiThat
                 $mauNoiThats = $mauNgoaiThatData['mauNoiThats'];
                 foreach ($mauNoiThats as $mauNoiThatData) {
-                    $mamaunoithat = $mauNgoaiThatData['MaMauNoiThat'];
-                    $mauNoiThat = $mamaunoithat ? MauNoiThat::where('MaMauNoiThat',  $mamaunoithat)->first() : new MauNoiThat();
+                    $mamaunoithat = $mauNoiThatData['MaMauNoiThat'] ?? null;
+                    $mauNoiThat = $mamaunoithat ? MauNoiThat::where('MaMauNoiThat', $mamaunoithat)->first() : new MauNoiThat();
                     $mauNoiThat->MaMauNgoaiThat = $mauNgoaiThat->MaMauNgoaiThat;
                     $mauNoiThat->TenMauNoiThat = $mauNoiThatData['TenMauNoiThat'];
+
+                    $file_maunoi = $this->uploadFile($req, 'HinhAnhMauNoiThat', 'uploads');
+                    if ($file_maunoi !== null) {
+                        $mauNoiThat->HinhAnhMau = $file_maunoi;
+                    }
+                    $mauNoiThat->SoLuong = $mauNoiThatData['SoLuong'];
 
                     $mauNoiThat->save();
                 }
@@ -171,6 +158,10 @@ class ModelXeController extends Controller
 
         return $modelXe ? $this->ok($modelXe) : $this->errors(null);
     }
+
+
+
+
     public function getModelXe($id)
     {
         $db = ModelXe::where("MaModel", $id)->first();

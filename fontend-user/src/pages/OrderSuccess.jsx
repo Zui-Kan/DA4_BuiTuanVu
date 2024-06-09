@@ -12,11 +12,7 @@ function OrderSuccess() {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    setTimeout(() => {
-      navigate(`/purchasedetail/${id}`);
-    }, 10000);
-  }, []);
+
   return (
     <>
       <main>
@@ -27,7 +23,16 @@ function OrderSuccess() {
             </div>
             <div className="checkout-header_title">Đặt hàng thành công</div>
           </div>
-          <div className="checkout-infor"></div>
+          <div className="checkout-success">
+            <Button type="primary" key="console" onClick={() => navigate("/")}>
+              Về trang chủ
+            </Button>
+            ,
+            <Button key="buy" onClick={() => navigate(`/purchasedetail/${id}`)}>
+              Chi tiết đơn
+            </Button>
+            ,
+          </div>
         </div>
       </main>
     </>

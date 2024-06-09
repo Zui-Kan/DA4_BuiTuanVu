@@ -1,7 +1,7 @@
 CREATE DATABASE DA3_BanXeOTO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 use DA3_BanXeOTO;
-select*from users
+
 CREATE TABLE users (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -13,17 +13,18 @@ CREATE TABLE users (
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
 );
+
 CREATE TABLE ctusers (
-  `MaCTusers` int NOT NULL AUTO_INCREMENT,
-  `TaiKhoanID` bigint unsigned DEFAULT NULL,
-  `HoVaTen` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `DiaChi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `SDT` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `AnhDaiDien` text COLLATE utf8mb4_unicode_ci,
-  `CMND` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`MaCTusers`),
-  UNIQUE KEY `TaiKhoanID` (`TaiKhoanID`),
-  CONSTRAINT `ctusers_ibfk_1` FOREIGN KEY (`TaiKhoanID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  MaCTusers int NOT NULL AUTO_INCREMENT,
+  TaiKhoanID bigint unsigned DEFAULT NULL,
+  HoVaTen varchar(100) ,
+  DiaChi varchar(255) ,
+  SDT varchar(20) ,
+  AnhDaiDien text ,
+  CMND varchar(12) ,
+  PRIMARY KEY (MaCTusers),
+  UNIQUE KEY TaiKhoanID (TaiKhoanID),
+  CONSTRAINT ctusers_ibfk_1 FOREIGN KEY (TaiKhoanID) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 
@@ -47,26 +48,32 @@ CREATE TABLE HangXe (
 
 -- Bảng chứa thông tin về các mẫu xe
 CREATE TABLE ModelXe (
-    MaModel INT PRIMARY KEY auto_increment,
-    TenModel NVARCHAR(100) NOT NULL,
-    MaHang INT,
-    MaLoaiXe INT,
-    NamSanXuat INT,
-    Gia DECIMAL(10, 2),
-	HinhAnhXe LONGTEXT,
-	DSHinhAnhXe LONGTEXT,
-	MoTa LONGTEXT,
-    NgayTao datetime default NOW(),
+  MaModel int NOT NULL AUTO_INCREMENT,
+  TenModel varchar(100) ,
+  MaHang int ,
+  MaLoaiXe int ,
+  NamSanXuat int ,
+  Gia decimal(10,0) ,
+  HinhAnhXe longtext ,
+  DSHinhAnhXe longtext ,
+  MoTa longtext ,
+  L100 varchar(245)  ,
+  NhienLieu varchar(245)  ,
+  HopSo varchar(245)  ,
+  NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (MaModel),
+  KEY modelxe_ibfk_1 (MaHang),
+  KEY modelxe_ibfk_2 (MaLoaiXe),
+  CONSTRAINT modelxe_ibfk_1 FOREIGN KEY (MaHang) REFERENCES hangxe (MaHang) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT modelxe_ibfk_2 FOREIGN KEY (MaLoaiXe) REFERENCES loaixe (MaLoaiXe) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-    FOREIGN KEY (MaHang) REFERENCES HangXe(MaHang),
-    FOREIGN KEY (MaLoaiXe) REFERENCES LoaiXe(MaLoaiXe)
-);
+
 create table PhienBanXe(
     MaPhienBan int primary key auto_increment,
     MaModel int,
     TenPhienBan nvarchar(100),
     NgayTao datetime default NOW(),
-
     FOREIGN KEY (MaModel) REFERENCES ModelXe(MaModel)
 );
 
@@ -251,22 +258,22 @@ CREATE TABLE QuangCao (
     NgayTao DATETIME DEFAULT NOW()
 );
 
-CREATE TABLE `laithu` (
-  `MaLaiThu` int NOT NULL AUTO_INCREMENT,
-  `MaKhachHang` int NOT NULL,
-  `MaModelXe` int NOT NULL,
-  `MaNhanVien` int DEFAULT NULL,
-  `NgayHen` datetime DEFAULT NULL,
-  `DiaChiShowroom` text,
-  `GhiChu` text,
-  `NgayTao` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`MaLaiThu`),
-  KEY `laithu_fk1_idx` (`MaKhachHang`),
-  KEY `laithu_fk2_idx` (`MaModelXe`),
-  KEY `laithu_fk3_idx` (`MaNhanVien`),
-  CONSTRAINT `laithu_fk1` FOREIGN KEY (`MaKhachHang`) REFERENCES `khachhang` (`MaKhachHang`),
-  CONSTRAINT `laithu_fk2` FOREIGN KEY (`MaModelXe`) REFERENCES `modelxe` (`MaModel`),
-  CONSTRAINT `laithu_fk3` FOREIGN KEY (`MaNhanVien`) REFERENCES `nhanvien` (`MaNhanVien`)
+CREATE TABLE laithu (
+  MaLaiThu int NOT NULL AUTO_INCREMENT,
+  MaKhachHang int NOT NULL,
+  MaModelXe int NOT NULL,
+  MaNhanVien int DEFAULT NULL,
+  NgayHen datetime DEFAULT NULL,
+  DiaChiShowroom text,
+  GhiChu text,
+  NgayTao datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (MaLaiThu),
+  KEY laithu_fk1_idx (MaKhachHang),
+  KEY laithu_fk2_idx (MaModelXe),
+  KEY laithu_fk3_idx (MaNhanVien),
+  CONSTRAINT laithu_fk1 FOREIGN KEY (MaKhachHang) REFERENCES khachhang (MaKhachHang),
+  CONSTRAINT laithu_fk2 FOREIGN KEY (MaModelXe) REFERENCES modelxe (MaModel),
+  CONSTRAINT laithu_fk3 FOREIGN KEY (MaNhanVien) REFERENCES nhanvien (MaNhanVien)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 -- ----------------------Thêm dữ liệu vào
 

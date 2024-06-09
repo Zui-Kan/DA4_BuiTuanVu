@@ -8,6 +8,8 @@ import {
 } from "../../services/ModelXe.service";
 import { uploads } from "../../constant/api";
 import { useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { modelState } from "../../constant/recoil";
 
 const formItemLayout = {
   labelCol: { xs: { span: 5 }, sm: { span: 5 } },
@@ -19,10 +21,9 @@ const UpdateXe = (props) => {
   const [dataSelect, setDataSelect] = useState({ HangXe: [], LoaiXe: [] });
   const [fileList, setFileList] = useState([]);
   const [fileLists, setFileLists] = useState([]);
-
+  const [dataModel, setDataModel] = useRecoilState(modelState);
   const loadDataUpdate = async (id) => {
     const res = await apiGetModelXe(id);
-    console.log(res.data);
     if (res?.status_code === 200) {
       form.setFieldsValue(res.data);
       if (res?.data?.HinhAnhXe) {
@@ -49,7 +50,6 @@ const UpdateXe = (props) => {
 
   const loadSelect = async () => {
     const res = await apiSelectLoaiAndHang();
-    console.log(res);
     if (res?.status_code === 200) {
       setDataSelect(res.data);
     }
@@ -66,8 +66,17 @@ const UpdateXe = (props) => {
   const handleChange = ({ fileList }) => setFileList(fileList);
   const handleListChange = ({ fileList }) => setFileLists(fileList);
 
+  const handleFinishChange = (values) => {
+    setDataModel(values);
+    props.nextPhu();
+  };
+
+  useEffect(() => {
+    props.registerFormSubmit(form.submit);
+  }, [form]);
+
   return (
-    <Form {...formItemLayout} form={form}>
+    <Form {...formItemLayout} form={form} onFinish={handleFinishChange}>
       <Form.Item
         label="Tên xe"
         name="TenModel"
@@ -108,8 +117,8 @@ const UpdateXe = (props) => {
         rules={[
           { required: true, message: "Vui lòng nhập năm sản xuất !" },
           {
-            min: 4,
             max: 4,
+            min: 4,
             message: "Yêu cầu nhập 4 số",
           },
         ]}
@@ -141,7 +150,7 @@ const UpdateXe = (props) => {
       </Form.Item>
       <Form.Item
         label="Tiêu hao nhiên liệu / 100km"
-        name="L/100"
+        name="L100"
         rules={[
           { required: true, message: "Vui lòng nhập tiêu hao nhiên liệu !" },
         ]}
@@ -190,6 +199,14 @@ const UpdateXe = (props) => {
           <Button icon={<UploadOutlined />}>Tải lên danh sách hình ảnh</Button>
         </Upload>
       </Form.Item>
+      {/* <hr />
+      <div className="khung-btn_xacnhan">
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Xác nhận
+          </Button>
+        </Form.Item>
+      </div> */}
     </Form>
   );
 };

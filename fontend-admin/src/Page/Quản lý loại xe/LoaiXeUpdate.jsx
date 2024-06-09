@@ -40,6 +40,7 @@ const LoaiXeUpdate = (props) => {
     }
   };
 
+
   const loadDataUpdate = async (id) => {
     let res = await apiGetLoaiXe(id);
     if (res?.status_code === 200) {
@@ -58,6 +59,7 @@ const LoaiXeUpdate = (props) => {
     props.cancelModal();
     form.resetFields(); //cho các input trở về null
   };
+  
   return (
     <Modal
       title="Cập nhật thông tin Hãng Xe"

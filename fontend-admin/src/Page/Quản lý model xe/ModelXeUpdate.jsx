@@ -1,39 +1,65 @@
-import React, { useEffect, useState } from "react";
-
-import { Button, message, Steps, theme, Modal, Flex, Breadcrumb } from "antd";
-
+// ModelXeUpdate.js
+import React, { useEffect, useState, useRef } from "react";
+import { Button, message, Steps, Breadcrumb } from "antd";
 import { Link, useParams } from "react-router-dom";
 import UpdateXe from "./UpdateXe";
+import UpdatePhienBan from "./UpdatePhienBan";
+import { useRecoilState } from "recoil";
+import { modelState } from "../../constant/recoil";
+import UpdateThongSoKyThuat from "./UpdateThongSoKyThuat";
 
-const ModelXeUpdate = (props) => {
-  const { id } = useParams(null);
-  const steps = [
-    {
-      title: "Xe ô tô",
-      content: <UpdateXe maModelXe={id} />,
-    },
-    {
-      title: "Phiên bản",
-      content: "Second-content",
-    },
-    {
-      title: "Thông số kỹ thuật",
-      content: "Last-content",
-    },
-  ];
-  const messageApi = message;
-  const { token } = theme.useToken();
+const ModelXeUpdate = () => {
+  const { id } = useParams();
+  const [dataModel, setDataModel] = useRecoilState(modelState);
   const [current, setCurrent] = useState(0);
+  const formSubmitRef = useRef(null);
+
   const next = () => {
-    setCurrent(current + 1);
+    if (current === 0 && formSubmitRef.current) {
+      formSubmitRef.current();
+    } else if (current === 1 && formSubmitRef.current) {
+      formSubmitRef.current();
+    } else {
+      setCurrent(current + 1);
+    }
   };
+
   const prev = () => {
     setCurrent(current - 1);
   };
+
+  const steps = [
+    {
+      title: "Xe ô tô",
+      content: (
+        <UpdateXe
+          maModelXe={id}
+          nextPhu={() => setCurrent(current + 1)}
+          registerFormSubmit={(submit) => (formSubmitRef.current = submit)}
+        />
+      ),
+    },
+    {
+      title: "Phiên bản",
+      content: (
+        <UpdatePhienBan
+          maModelXe={id}
+          nextPhu={() => setCurrent(current + 1)}
+          registerFormSubmit={(submit) => (formSubmitRef.current = submit)}
+        />
+      ),
+    },
+    {
+      title: "Thông số kỹ thuật",
+      content: <UpdateThongSoKyThuat />,
+    },
+  ];
+
   const items = steps.map((item) => ({
     key: item.title,
     title: item.title,
   }));
+
   const contentStyle = {
     minHeight: "200px",
     marginTop: 16,
