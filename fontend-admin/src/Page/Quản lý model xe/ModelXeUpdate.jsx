@@ -1,19 +1,23 @@
 // ModelXeUpdate.js
 import React, { useEffect, useState, useRef } from "react";
 import { Button, message, Steps, Breadcrumb } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import UpdateXe from "./UpdateXe";
 import UpdatePhienBan from "./UpdatePhienBan";
 import { useRecoilState } from "recoil";
-import { modelState } from "../../constant/recoil";
+import { modelState, phienBanState } from "../../constant/recoil";
 import UpdateThongSoKyThuat from "./UpdateThongSoKyThuat";
+import { apiModelSave } from "../../services/ModelXe.service";
 
 const ModelXeUpdate = () => {
   const { id } = useParams();
   const [dataModel, setDataModel] = useRecoilState(modelState);
+  const [dataPhienBan, setDataPhienBan] = useRecoilState(phienBanState);
+
   const [current, setCurrent] = useState(0);
   const formSubmitRef = useRef(null);
-
+  const messageApi = message;
+  const navigate = useNavigate();
   const next = () => {
     if (current === 0 && formSubmitRef.current) {
       formSubmitRef.current();
@@ -24,10 +28,17 @@ const ModelXeUpdate = () => {
     }
   };
 
+  const handleFinish = async () => {
+    if (formSubmitRef.current) {
+      await formSubmitRef.current();
+    }
+  };
+
   const prev = () => {
     setCurrent(current - 1);
   };
-
+  console.log("Dữ liệu của model: ", dataModel);
+  console.log("Dữ liệu của phien ban: ", dataPhienBan);
   const steps = [
     {
       title: "Xe ô tô",
@@ -51,7 +62,12 @@ const ModelXeUpdate = () => {
     },
     {
       title: "Thông số kỹ thuật",
-      content: <UpdateThongSoKyThuat />,
+      content: (
+        <UpdateThongSoKyThuat
+          maModelXe={id}
+          registerFormSubmit={(submit) => (formSubmitRef.current = submit)}
+        />
+      ),
     },
   ];
 
@@ -108,10 +124,7 @@ const ModelXeUpdate = () => {
             </Button>
           )}
           {current === steps.length - 1 && (
-            <Button
-              type="primary"
-              onClick={() => message.success("Processing complete!")}
-            >
+            <Button type="primary" onClick={handleFinish}>
               Hoàn thành
             </Button>
           )}

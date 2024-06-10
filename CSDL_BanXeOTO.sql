@@ -82,7 +82,7 @@ create table MauNgoaiThat(
     MaMauNgoaiThat int primary key auto_increment,
     MaPhienBan int,
     TenMauNgoaiThat nvarchar(100),
-    HinhAnhMau text,
+    HinhAnhMauNgoaiThat text,
     NgayTao datetime default NOW(),
 
     FOREIGN KEY (MaPhienBan) REFERENCES PhienBanXe(MaPhienBan)
@@ -92,7 +92,7 @@ create table MauNoiThat(
     MaMauNoiThat int primary key auto_increment,
     MaMauNgoaiThat int,
 	TenMauNoiThat nvarchar(100),
-    HinhAnhMau text,
+    HinhAnhMauNoiThat text,
     SoLuong int,
     NgayTao datetime default NOW(),
     FOREIGN KEY (MaMauNgoaiThat) REFERENCES MauNgoaiThat(MaMauNgoaiThat)

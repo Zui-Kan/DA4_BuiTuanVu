@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
 
 trait TrangThaiTrait
 {
@@ -30,12 +31,11 @@ trait TrangThaiTrait
         ]);
     }
 
-    // 1 upload file 
     public function uploadFile($request, $fieldName, $path = null)
     {
         if ($request->hasFile($fieldName)) {
             $file = $request->file($fieldName);
-            $file_name = $file->getClientOriginalName();
+            $file_name = uniqid() . '.' . $file->getClientOriginalExtension(); // Tạo tên duy nhất
             $destinationPath = 'D:\Đồ án 3\uploads' . DIRECTORY_SEPARATOR . $path;
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0755, true);
@@ -45,10 +45,20 @@ trait TrangThaiTrait
         }
         return null;
     }
+    public function uploadFile2($file, $path = null)
+    {
+        $file_name = uniqid() . '.' . $file->getClientOriginalExtension();
+        $destinationPath = 'D:\Đồ án 3\uploads' . DIRECTORY_SEPARATOR . $path;
+
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0755, true);
+        }
+        $file->move($destinationPath, $file_name);
+        return $file_name;
+    }
 
 
-    //upload nhiều file
-    public function uploadFiles($request, $fieldName, $path = null)
+    public function uploadFiles(Request $request, $fieldName, $path = null)
     {
         $file_names = [];
 
@@ -56,15 +66,15 @@ trait TrangThaiTrait
             $files = $request->file($fieldName);
 
             foreach ($files as $file) {
-                $file_name = $file->getClientOriginalName();
+                $file_name = uniqid() . '.' . $file->getClientOriginalExtension(); // Tạo tên duy nhất
                 $destinationPath = 'D:\Đồ án 3\uploads' . DIRECTORY_SEPARATOR . $path;
 
                 if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0755, true); // Tạo thư mục nếu chưa tồn tại
+                    mkdir($destinationPath, 0755, true);
                 }
 
                 $file->move($destinationPath, $file_name);
-                $file_names[] = $file_name;
+                $file_names[] = 'ModelXe/' . $file_name;
             }
         }
         return $file_names;

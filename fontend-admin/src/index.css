@@ -10,3 +10,19 @@ body {
   background-color: #fff !important;
   color: black !important;
 }
+.khung-my-ckeditor {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.my-ckeditor {
+  width: 100%;
+}
+/* .khung-cke .ant-form-item-row {
+  gap: 10px 10px;
+  justify-content: center;
+} */
+.ck-content {
+  min-height: 200px;
+}

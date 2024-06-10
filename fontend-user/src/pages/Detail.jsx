@@ -483,7 +483,10 @@ function Detail() {
                           className="pro-color"
                           htmlFor={`ngoai_color${mau.MaMauNgoaiThat}`}
                         >
-                          <img src={mau.HinhAnh} alt={mau.TenMauNgoaiThat} />
+                          <img
+                            src={uploads() + mau.HinhAnhMauNgoaiThat}
+                            alt={mau.TenMauNgoaiThat}
+                          />
                         </label>
                       </div>
                     ))}
@@ -510,7 +513,10 @@ function Detail() {
                           className="pro-color"
                           htmlFor={`noi_color${mau.MaMauNoiThat}`}
                         >
-                          <img src={mau.HinhAnh} alt={mau.TenMauNoiThat} />
+                          <img
+                            src={uploads() + mau.HinhAnhMauNoiThat}
+                            alt={mau.TenMauNoiThat}
+                          />
                         </label>
                       </div>
                     ))}
@@ -620,15 +626,13 @@ function Detail() {
                 <div className="tab-content">
                   <div className="tab-pane active" id="tabs-1" role="tabpanel">
                     <div className="product__details__tab__desc">
-                      <h4 className="center-t">
-                        Với thiết kế hiện đại, độc đáo, được trang bị các công
-                        nghệ và tính năng thông minh vượt trội, khả năng vận
-                        hành mạnh mẽ, an toàn, VF 5 Plus hội tụ đầy đủ các yếu
-                        tố người dùng trẻ tìm kiếm cho một chiếc xe điện đô thị
-                        lý tưởng.
-                      </h4>
-
-                      <p className="justify-t">{data.modelXe.MoTa}</p>
+                      <div className="product__details__tab__desc">
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: data.modelXe.MoTa,
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -16,8 +16,12 @@ export const cartState = atom({
   default: [],
 });
 
-//lưu số lượng trong giỏ hàng
 export const modelState = atom({
   key: "modelState",
+  default: [],
+});
+
+export const phienBanState = atom({
+  key: "phienBanState",
   default: [],
 });

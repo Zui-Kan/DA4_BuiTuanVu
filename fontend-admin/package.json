@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.4.2",
+    "@ckeditor/ckeditor5-react": "^7.0.0",
     "@hookform/resolvers": "^3.3.4",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -13,6 +15,7 @@
     "@types/react-dom": "^18.2.22",
     "antd": "^5.17.4",
     "axios": "^1.6.8",
+    "ckeditor5-custom-build": "file:ckeditor5",
     "date-fns": "^3.6.0",
     "jquery": "^3.7.1",
     "react": "^18.2.0",

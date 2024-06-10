@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Form, Input, Button, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { apiGetModelXe } from "../../services/ModelXe.service";
+import { apiGetModelXe, apiSavePhienBan } from "../../services/ModelXe.service";
 import "./UpdatePhienBan.css";
-import { modelState } from "../../constant/recoil";
+import { phienBanState } from "../../constant/recoil";
 import { useRecoilState } from "recoil";
 
 const formItemLayout = {
@@ -13,7 +13,7 @@ const formItemLayout = {
 
 const UpdatePhienBan = (props) => {
   const [form] = Form.useForm();
-  const [dataModel, setDataModel] = useRecoilState(modelState);
+  const [dataPhienBan, setDataPhienBan] = useRecoilState(phienBanState);
 
   const loadDataUpdate = async (id) => {
     const res = await apiGetModelXe(id);
@@ -52,29 +52,63 @@ const UpdatePhienBan = (props) => {
   }, [props.maModelXe]);
 
   const handleFormSubmit = async (values) => {
-    // Giải nén file từ thành phần tải lên
-    const modifiedValues = await { ...values };
-    modifiedValues.phienBans.forEach((phienBan) => {
-      phienBan.mauNgoaiThats.forEach((mauNgoaiThat) => {
-        mauNgoaiThat.HinhAnhMauNgoaiThat =
-          mauNgoaiThat.HinhAnhMauNgoaiThat.file;
-        mauNgoaiThat.mauNoiThats.forEach((mauNoiThat) => {
-          mauNoiThat.HinhAnhMauNoiThat = mauNoiThat.HinhAnhMauNoiThat.file;
+    try {
+      const formData = new FormData(); // Tạo một FormData mới
+
+      values.phienBans.forEach((phienBan, phienBanIndex) => {
+        formData.append(
+          `phienBans[${phienBanIndex}][TenPhienBan]`,
+          phienBan.TenPhienBan
+        );
+
+        phienBan.mauNgoaiThats.forEach((mauNgoaiThat, ngoaiThatIndex) => {
+          formData.append(
+            `phienBans[${phienBanIndex}][mauNgoaiThats][${ngoaiThatIndex}][TenMauNgoaiThat]`,
+            mauNgoaiThat.TenMauNgoaiThat
+          );
+
+          if (mauNgoaiThat.HinhAnhMauNgoaiThat.file instanceof File) {
+            formData.append(
+              `phienBans[${phienBanIndex}][mauNgoaiThats][${ngoaiThatIndex}][HinhAnhMauNgoaiThat]`,
+              mauNgoaiThat.HinhAnhMauNgoaiThat.file
+            );
+          }
+
+          mauNgoaiThat.mauNoiThats.forEach((mauNoiThat, noiThatIndex) => {
+            formData.append(
+              `phienBans[${phienBanIndex}][mauNgoaiThats][${ngoaiThatIndex}][mauNoiThats][${noiThatIndex}][TenMauNoiThat]`,
+              mauNoiThat.TenMauNoiThat
+            );
+            formData.append(
+              `phienBans[${phienBanIndex}][mauNgoaiThats][${ngoaiThatIndex}][mauNoiThats][${noiThatIndex}][SoLuong]`,
+              mauNoiThat.SoLuong
+            );
+
+            if (mauNoiThat.HinhAnhMauNoiThat.file instanceof File) {
+              formData.append(
+                `phienBans[${phienBanIndex}][mauNgoaiThats][${ngoaiThatIndex}][mauNoiThats][${noiThatIndex}][HinhAnhMauNoiThat]`,
+                mauNoiThat.HinhAnhMauNoiThat.file
+              );
+            }
+          });
         });
       });
-    });
 
-    await setDataModel((prevDataModel) => ({
-      ...prevDataModel,
-      ...modifiedValues,
-    }));
-    props.nextPhu();
+      // Kiểm tra dữ liệu FormData trước khi gửi
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value); // Xem các giá trị của FormData
+      }
+
+      setDataPhienBan(formData);
+      props.nextPhu();
+    } catch (error) {
+      console.error("Error during form submission:", error);
+    }
   };
 
   useEffect(() => {
     props.registerFormSubmit(form.submit);
   }, [form]);
-  console.log(dataModel);
 
   return (
     <Form {...formItemLayout} form={form} onFinish={handleFormSubmit}>
@@ -297,14 +331,6 @@ const UpdatePhienBan = (props) => {
           </>
         )}
       </Form.List>
-      {/* <hr />
-      <div className="khung-btn_xacnhan">
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Xác nhận
-          </Button>
-        </Form.Item>
-      </div> */}
     </Form>
   );
 };

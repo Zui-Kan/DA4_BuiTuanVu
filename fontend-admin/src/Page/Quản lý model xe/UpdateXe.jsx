@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal, Select, Button, Form, Input, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
@@ -10,6 +10,7 @@ import { uploads } from "../../constant/api";
 import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { modelState } from "../../constant/recoil";
+import MyCKEditorComponent from "../../Component/MyCKEditor";
 
 const formItemLayout = {
   labelCol: { xs: { span: 5 }, sm: { span: 5 } },
@@ -22,6 +23,7 @@ const UpdateXe = (props) => {
   const [fileList, setFileList] = useState([]);
   const [fileLists, setFileLists] = useState([]);
   const [dataModel, setDataModel] = useRecoilState(modelState);
+  const [moTa, setMoTa] = useState("");
   const loadDataUpdate = async (id) => {
     const res = await apiGetModelXe(id);
     if (res?.status_code === 200) {
@@ -45,6 +47,7 @@ const UpdateXe = (props) => {
         }));
         setFileLists(files);
       }
+      setMoTa(res.data.MoTa || "");
     }
   };
 
@@ -64,10 +67,29 @@ const UpdateXe = (props) => {
   }, [props.maModelXe]);
 
   const handleChange = ({ fileList }) => setFileList(fileList);
-  const handleListChange = ({ fileList }) => setFileLists(fileList);
+  // const handleListChange = ({ fileList }) => setFileLists(fileList);
 
-  const handleFinishChange = (values) => {
-    setDataModel(values);
+  const handleListChange = ({ fileList }) => {
+    setFileLists(fileList);
+  };
+  const handleFinishChange = async (values) => {
+    const dulieu = await {
+      TenModel: values.TenModel,
+      MaHang: values.MaHang,
+      MaLoaiXe: values.MaLoaiXe,
+      NamSanXuat: values.NamSanXuat,
+      Gia: values.Gia,
+      L100: values.L100,
+      NhienLieu: values.NhienLieu,
+      HopSo: values.HopSo,
+      MoTa: moTa,
+      HinhAnhXe: values.HinhAnhXeF.file,
+      DSHinhAnhXe: values.DSHinhAnhXeF.fileList.map(
+        (file) => file.originFileObj
+      ),
+    };
+    debugger;
+    setDataModel(dulieu);
     props.nextPhu();
   };
 
@@ -168,7 +190,7 @@ const UpdateXe = (props) => {
 
       <Form.Item
         label="Hình ảnh"
-        name="HinhAnhXe"
+        name="HinhAnhXeF"
         rules={[{ required: true, message: "Vui lòng chọn hình ảnh!" }]}
       >
         <Upload
@@ -184,9 +206,19 @@ const UpdateXe = (props) => {
 
       <Form.Item
         label="Danh sách hình ảnh"
-        name="DSHinhAnhXe"
+        name="DSHinhAnhXeF"
         rules={[
           { required: true, message: "Vui lòng chọn danh sách hình ảnh!" },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (value && value.fileList.length >= 3) {
+                return Promise.resolve();
+              }
+              return Promise.reject(
+                new Error("Vui lòng chọn ít nhất 3 hình ảnh!")
+              );
+            },
+          }),
         ]}
       >
         <Upload
@@ -199,14 +231,9 @@ const UpdateXe = (props) => {
           <Button icon={<UploadOutlined />}>Tải lên danh sách hình ảnh</Button>
         </Upload>
       </Form.Item>
-      {/* <hr />
-      <div className="khung-btn_xacnhan">
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Xác nhận
-          </Button>
-        </Form.Item>
-      </div> */}
+      <Form.Item label="Mô tả" name="MoTa" className="khung-cke">
+        <MyCKEditorComponent value={moTa} onChange={setMoTa} />
+      </Form.Item>
     </Form>
   );
 };

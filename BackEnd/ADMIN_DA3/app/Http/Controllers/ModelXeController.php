@@ -8,8 +8,13 @@ use App\Models\MauNgoaiThat;
 use App\Models\MauNoiThat;
 use App\Models\ModelXe;
 use App\Models\PhienBanXe;
+use App\Models\ThongSoKyThuatXe;
 use App\Traits\TrangThaiTrait;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 class ModelXeController extends Controller
 {
@@ -83,8 +88,7 @@ class ModelXeController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-
-    public function save(Request $req)
+    public function saveModel(Request $req)
     {
         $id = $req->MaModelxe ?? null;
 
@@ -94,14 +98,13 @@ class ModelXeController extends Controller
 
         // Lưu thông tin ModelXe
         $modelXe = $id ? ModelXe::where('MaModel', $id)->first() : new ModelXe();
-
         $modelXe->TenModel = $req->TenModel;
         $modelXe->MaHang = $req->MaHang;
         $modelXe->MaLoaiXe = $req->MaLoaiXe;
         $modelXe->NamSanXuat = $req->NamSanXuat;
         $modelXe->Gia = $req->Gia;
         if ($file_name !== null) {
-            $modelXe->HinhAnhXe = $file_name;
+            $modelXe->HinhAnhXe = 'ModelXe/' . $file_name;
         }
         if (!empty($file_names)) {
             $modelXe->DSHinhAnhXe = json_encode($file_names);
@@ -112,55 +115,84 @@ class ModelXeController extends Controller
         $modelXe->MoTa = $req->MoTa;
         $modelXe->save();
 
-        // Lưu thông tin PhiênBanXe liên kết với ModelXe
-        $phienBans = $req->input('phienBans');
-        foreach ($phienBans as $phienBanData) {
-            $maphienban = $phienBanData['MaPhienBan'] ?? null;
-            $phienBan = $maphienban ? PhienBanXe::where('MaPhienBan', $maphienban)->first() : new PhienBanXe();
-            $phienBan->MaModel = $modelXe->MaModel;
-            $phienBan->TenPhienBan = $phienBanData['TenPhienBan'];
-            $phienBan->save();
-
-            // Lưu thông tin MauNgoaiThat liên kết với PhiênBanXe
-            $mauNgoaiThats = $phienBanData['mauNgoaiThats'];
-            foreach ($mauNgoaiThats as $mauNgoaiThatData) {
-                $mamaungoaithat = $mauNgoaiThatData['MaMauNgoaiThat'] ?? null;
-
-                $mauNgoaiThat = $mamaungoaithat ? MauNgoaiThat::where('MaMauNgoaiThat', $mamaungoaithat)->first() : new MauNgoaiThat();
-                $mauNgoaiThat->MaPhienBan = $phienBan->MaPhienBan;
-                $mauNgoaiThat->TenMauNgoaiThat = $mauNgoaiThatData['TenMauNgoaiThat'];
-
-                $file_maungoai = $this->uploadFile($req, 'HinhAnhMauNgoaiThat', 'uploads');
-                if ($file_maungoai !== null) {
-                    $mauNgoaiThat->HinhAnhMau = $file_maungoai;
-                }
-
-                $mauNgoaiThat->save();
-
-                // Lưu thông tin MauNoiThat liên kết với MauNgoaiThat
-                $mauNoiThats = $mauNgoaiThatData['mauNoiThats'];
-                foreach ($mauNoiThats as $mauNoiThatData) {
-                    $mamaunoithat = $mauNoiThatData['MaMauNoiThat'] ?? null;
-                    $mauNoiThat = $mamaunoithat ? MauNoiThat::where('MaMauNoiThat', $mamaunoithat)->first() : new MauNoiThat();
-                    $mauNoiThat->MaMauNgoaiThat = $mauNgoaiThat->MaMauNgoaiThat;
-                    $mauNoiThat->TenMauNoiThat = $mauNoiThatData['TenMauNoiThat'];
-
-                    $file_maunoi = $this->uploadFile($req, 'HinhAnhMauNoiThat', 'uploads');
-                    if ($file_maunoi !== null) {
-                        $mauNoiThat->HinhAnhMau = $file_maunoi;
-                    }
-                    $mauNoiThat->SoLuong = $mauNoiThatData['SoLuong'];
-
-                    $mauNoiThat->save();
-                }
-            }
-        }
-
-        return $modelXe ? $this->ok($modelXe) : $this->errors(null);
+        return $modelXe ? $this->ok($modelXe->MaModel) : $this->errors(null);
     }
 
 
+    public function savePhienBan(Request $req, $maModel = null)
+    {
+        try {
 
+            $phienBans = $req->input('phienBans');
+            foreach ($phienBans as $phienBanIndex => $phienBanData) {
+                $maphienban = $phienBanData['MaPhienBan'] ?? null;
+                $phienBan = $maphienban ? PhienBanXe::where('MaPhienBan', $maphienban)->first() : new PhienBanXe();
+                $phienBan->MaModel = $maModel ?? 46;
+                $phienBan->TenPhienBan = $phienBanData['TenPhienBan'];
+                $phienBan->save();
+
+                foreach ($phienBanData['mauNgoaiThats'] as $ngoaiThatIndex => $mauNgoaiThatData) {
+                    $mamaungoaithat = $mauNgoaiThatData['MaMauNgoaiThat'] ?? null;
+                    $mauNgoaiThat = $mamaungoaithat ? MauNgoaiThat::where('MaMauNgoaiThat', $mamaungoaithat)->first() : new MauNgoaiThat();
+                    $mauNgoaiThat->MaPhienBan = $phienBan->MaPhienBan;
+                    $mauNgoaiThat->TenMauNgoaiThat = $mauNgoaiThatData['TenMauNgoaiThat'];
+
+                    // Xử lý upload file cho HinhAnhMauNgoaiThat
+                    if ($req->hasFile("phienBans.{$phienBanIndex}.mauNgoaiThats.{$ngoaiThatIndex}.HinhAnhMauNgoaiThat")) {
+                        $file_maungoai = $this->uploadFile2($req->file("phienBans.{$phienBanIndex}.mauNgoaiThats.{$ngoaiThatIndex}.HinhAnhMauNgoaiThat"), 'HinhMau');
+                        if ($file_maungoai !== null) {
+                            $mauNgoaiThat->HinhAnhMauNgoaiThat = 'HinhMau/' . $file_maungoai;
+                        }
+                    }
+                    $mauNgoaiThat->save();
+
+                    foreach ($mauNgoaiThatData['mauNoiThats'] as $noiThatIndex => $mauNoiThatData) {
+                        $mamaunoithat = $mauNoiThatData['MaMauNoiThat'] ?? null;
+                        $mauNoiThat = $mamaunoithat ? MauNoiThat::where('MaMauNoiThat', $mamaunoithat)->first() : new MauNoiThat();
+                        $mauNoiThat->MaMauNgoaiThat = $mauNgoaiThat->MaMauNgoaiThat;
+                        $mauNoiThat->TenMauNoiThat = $mauNoiThatData['TenMauNoiThat'];
+
+                        // Xử lý upload file cho HinhAnhMauNoiThat
+                        if ($req->hasFile("phienBans.{$phienBanIndex}.mauNgoaiThats.{$ngoaiThatIndex}.mauNoiThats.{$noiThatIndex}.HinhAnhMauNoiThat")) {
+                            $file_maunoi = $this->uploadFile2($req->file("phienBans.{$phienBanIndex}.mauNgoaiThats.{$ngoaiThatIndex}.mauNoiThats.{$noiThatIndex}.HinhAnhMauNoiThat"), 'HinhMau');
+                            if ($file_maunoi !== null) {
+                                $mauNoiThat->HinhAnhMauNoiThat = $file_maunoi;
+                            }
+                        }
+                        $mauNoiThat->SoLuong = $mauNoiThatData['SoLuong'];
+                        $mauNoiThat->save();
+                    }
+                }
+            }
+            return response()->json(['success' => true], 200);
+        } catch (Exception $e) {
+            // Log the error or handle it accordingly
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function saveThongSoKyThuat(Request $req, $maModel = null)
+    {
+        $mathongso = $req->MaThongSoKyThuat ?? null;
+        $thongso = $mathongso ? ThongSoKyThuatXe::where('MaThongSo', $mathongso)->first() : new ThongSoKyThuatXe();
+        $thongso->MaModel = $maModel ?? 46;
+        $thongso->PhienBanXe = $req->PhienBanXe;
+        $thongso->LoaiDongCo = $req->LoaiDongCo;
+        $thongso->LoaiHieuDong = $req->LoaiHieuDong;
+        $thongso->MauSac = $req->MauSac;
+        $thongso->CongSuat = $req->CongSuat;
+        $thongso->MoMenXoan = $req->MoMenXoan;
+        $thongso->LoaiNhienLieu = $req->LoaiNhienLieu;
+        $thongso->KichThuoc = $req->KichThuoc;
+        $thongso->NhienLieuTieuThu100KM = $req->NhienLieuTieuThu100KM;
+        $thongso->HopSo = $req->HopSo;
+        $thongso->TuiKhi = $req->TuiKhi;
+        $thongso->TrongLuong = $req->TrongLuong;
+        $thongso->save();
+
+        return $thongso ? $this->ok($thongso) : $this->errors(null);
+    }
 
     public function getModelXe($id)
     {
