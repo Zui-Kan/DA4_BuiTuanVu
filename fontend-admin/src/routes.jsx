@@ -14,7 +14,9 @@ import NVNhanDonHang from "./Page/Quản lý đơn đặt/Nhận đơn/NVNhanDon
 import QuanLyDonByNV from "./Page/Quản lý đơn đặt/QuanLyDonByNV";
 import DonDaHuy from "./Page/Quản lý đơn đặt/Đơn đã huỷ/DonDaHuy";
 import ModelXe from "./Page/Quản lý model xe/ModelXe";
-import ModelXeUpdate from "./Page/Quản lý model xe/ModelXeUpdate";
+import AddModel from "./Page/Quản lý model xe/AddModel";
+import UpdateModelXe from "./Page/Quản lý model xe/UpdateModel";
+import HienThiThongKe from "./Page/HienThiThongKe";
 
 export const router = createBrowserRouter([
   {
@@ -60,10 +62,18 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/addmodel/:id?",
+        element: (
+          <ProtectedComponent>
+            <AddModel />
+          </ProtectedComponent>
+        ),
+      },
+      {
         path: "/updatemodelxe/:id?",
         element: (
           <ProtectedComponent>
-            <ModelXeUpdate />
+            <UpdateModelXe />
           </ProtectedComponent>
         ),
       },
@@ -99,6 +109,15 @@ export const router = createBrowserRouter([
           </ProtectedComponent>
         ),
       },
+      {
+        path: "/thongke",
+        element: (
+          <ProtectedComponent>
+            <HienThiThongKe />
+          </ProtectedComponent>
+        ),
+      },
+
       {
         path: "/taikhoan",
         element: (

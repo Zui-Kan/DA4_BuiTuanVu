@@ -49,6 +49,7 @@ export const uploads = () => "http://localhost:2810/";
 let isRefreshing = false;
 let failedQueue = [];
 
+// Xuất lý lưu token khi bi xử ra
 const processQueue = (error, token = null) => {
   failedQueue.forEach((prom) => {
     if (error) {
@@ -65,7 +66,9 @@ apiClient.interceptors.request.use(
   async function (config) {
     let token = JSON.parse(sessionStorage.getItem("token") || null);
     if (token) {
+      //Lấy thông tin thời gian hết hạn
       const expiration = JSON.parse(atob(token.split(".")[1])).exp;
+
       const now = Math.floor(Date.now() / 1000);
 
       // Kiểm tra xem token đã hết hạn chưa
@@ -79,6 +82,8 @@ apiClient.interceptors.request.use(
               JSON.stringify(newTokenData.access_token)
             );
             token = newTokenData.access_token;
+
+            // Xử lý các yêu cầu đã bị chặn lại trong khi làm mới token
             processQueue(null, newTokenData.access_token);
           } else {
             sessionStorage.removeItem("token");
@@ -86,7 +91,7 @@ apiClient.interceptors.request.use(
           }
           isRefreshing = false;
         }
-
+        // Trả về một Promise để chờ token mới
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
@@ -101,7 +106,8 @@ apiClient.interceptors.request.use(
 
       config.headers.Authorization = `Bearer ${token}`;
     }
-
+    
+    // Trả về cấu hình yêu cầu đã được cập nhật
     return config;
   },
   function (error) {

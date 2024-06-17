@@ -1,7 +1,7 @@
 import "../style/Cart.css";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import {
   getCartDetails,
   getTotalQuantity,
@@ -11,23 +11,23 @@ import {
 import { formatPrice } from "../shares/format";
 import { uploads } from "../constant/api";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import { Button, Popconfirm, message } from "antd";
+import { Button, Popconfirm, message, InputNumber } from "antd";
 import { Loading } from "../Components/Loading/Loading";
 import { useRecoilState } from "recoil";
 import { cartCheckout, cartState } from "../constant/recoil";
 import { Link, useNavigate } from "react-router-dom";
-import debounce from "lodash.debounce"; // Thêm lodash.debounce để sử dụng debounce
 
-const Cart = function () {
+const Cart = () => {
   document.title = "Giỏ hàng";
   const [data, setData] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [checkout, setcheckout] = useRecoilState(cartCheckout);
-  const [card, setCart] = useRecoilState(cartState);
+  const [checkout, setCheckout] = useRecoilState(cartCheckout);
   const navigate = useNavigate();
   const messageAPI = message;
+  const token = JSON.parse(localStorage.getItem("token") || null);
+
   const loadData = async () => {
     const details = await getCartDetails();
     setData(details);
@@ -39,17 +39,20 @@ const Cart = function () {
     loadData();
   }, []);
 
+
+  //Checkbox
   const handleCheckboxChange = (index) => {
     const newSelectedItems = [...selectedItems];
     newSelectedItems[index] = !newSelectedItems[index];
     setSelectedItems(newSelectedItems);
   };
 
+
+  //Checkbox tất cả
   const handleSelectAllChange = (event) => {
     const isChecked = event.target.checked;
     setSelectAll(isChecked);
-    const newSelectedItems = selectedItems.map(() => isChecked);
-    setSelectedItems(newSelectedItems);
+    setSelectedItems(selectedItems.map(() => isChecked));
   };
 
   const handleDeleteChange = async (maMauNoiThat) => {
@@ -59,26 +62,23 @@ const Cart = function () {
   };
 
   const handleDeleteAllChange = async () => {
-    const itemsToDelete = [];
-    selectedItems.forEach((isSelected, index) => {
-      if (isSelected) {
-        itemsToDelete.push(data.listCart[index].MaMauNoiThat);
-      }
-    });
+    const itemsToDelete = data.listCart
+      .filter((_, index) => selectedItems[index])
+      .map((item) => item.MaMauNoiThat);
 
     for (const maMauNoiThat of itemsToDelete) {
       await removeFromCart(maMauNoiThat);
     }
     messageAPI.success("Sản phẩm đã được xóa khỏi giỏ hàng.");
-
     loadData();
   };
-  const token = JSON.parse(localStorage.getItem("token") || null);
-  const handleCheckoputChange = async () => {
+
+
+  const handleCheckoutChange = async () => {
     const itemsCheckout = data.listCart.filter(
-      (item, index) => selectedItems[index]
+      (_, index) => selectedItems[index]
     );
-    setcheckout(itemsCheckout);
+    setCheckout(itemsCheckout);
 
     if (itemsCheckout.length < 1) {
       messageAPI.error("Vui lòng chọn xe cần thanh toán!!!");
@@ -89,22 +89,10 @@ const Cart = function () {
     }
   };
 
-  const updateQuantity = useCallback(
-    debounce((index, newQuantity) => {
-      const selectedNoiThat = data.listCart[index].MaMauNoiThat;
-      updateQuantityInCart(selectedNoiThat, newQuantity);
-      setData((prevData) => {
-        const newData = { ...prevData };
-        newData.listCart[index].SoLuong = newQuantity;
-        return newData;
-      });
-    }),
-    [data]
-  );
-
-  const handleQuantityChange = async (index, newQuantity) => {
-    await updateQuantity(index, newQuantity);
-    setCart(getTotalQuantity() || 0);
+  const onChangeQuantity = async (index, value) => {
+    updateQuantityInCart(index, value);
+    loadData();
+    navigate("/cart");
   };
 
   const calculateTotal = () => {
@@ -125,7 +113,6 @@ const Cart = function () {
   if (!isDataLoaded) {
     return <Loading />;
   }
-
   return (
     <>
       <main>
@@ -219,36 +206,15 @@ const Cart = function () {
                   <td className="inp-soluong_cart">{formatPrice(item.Gia)}</td>
 
                   <td>
-                    <div className="inp-soluong inp-soluong_cart">
-                      <button
-                        className="btn-secondary decrease-btn"
-                        onClick={() =>
-                          handleQuantityChange(
-                            index,
-                            item.SoLuong > 1 ? item.SoLuong - 1 : 1
-                          )
-                        }
-                      >
-                        -
-                      </button>
-                      <input
-                        type="number"
-                        className="quantity-input"
-                        value={item.SoLuong}
-                        min="1"
-                        onChange={(e) =>
-                          handleQuantityChange(index, parseInt(e.target.value))
-                        }
-                      />
-                      <button
-                        className="btn-secondary increase-btn"
-                        onClick={() =>
-                          handleQuantityChange(index, item.SoLuong + 1)
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
+                    <InputNumber
+                      size="large"
+                      min={1}
+                      max={100000}
+                      defaultValue={item.SoLuong}
+                      onChange={(value) =>
+                        onChangeQuantity(item.MaMauNoiThat, value)
+                      }
+                    />
                   </td>
                   <td className="inp-soluong_cart">
                     {formatPrice(item.SoLuong * item.Gia)}
@@ -289,7 +255,7 @@ const Cart = function () {
 
             <button
               className="btn-thanhtoan"
-              onClick={() => handleCheckoputChange()}
+              onClick={() => handleCheckoutChange()}
             >
               Thanh toán
             </button>

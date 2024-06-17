@@ -66,14 +66,12 @@ const UpdatePhienBan = (props) => {
             `phienBans[${phienBanIndex}][mauNgoaiThats][${ngoaiThatIndex}][TenMauNgoaiThat]`,
             mauNgoaiThat.TenMauNgoaiThat
           );
-
           if (mauNgoaiThat.HinhAnhMauNgoaiThat.file instanceof File) {
             formData.append(
               `phienBans[${phienBanIndex}][mauNgoaiThats][${ngoaiThatIndex}][HinhAnhMauNgoaiThat]`,
               mauNgoaiThat.HinhAnhMauNgoaiThat.file
             );
           }
-
           mauNgoaiThat.mauNoiThats.forEach((mauNoiThat, noiThatIndex) => {
             formData.append(
               `phienBans[${phienBanIndex}][mauNgoaiThats][${ngoaiThatIndex}][mauNoiThats][${noiThatIndex}][TenMauNoiThat]`,
@@ -94,15 +92,10 @@ const UpdatePhienBan = (props) => {
         });
       });
 
-      // Kiểm tra dữ liệu FormData trước khi gửi
-      for (let [key, value] of formData.entries()) {
-        console.log(key, value); // Xem các giá trị của FormData
-      }
-
       setDataPhienBan(formData);
       props.nextPhu();
     } catch (error) {
-      console.error("Error during form submission:", error);
+      console.error("Lỗi khi luu:", error);
     }
   };
 
@@ -112,13 +105,17 @@ const UpdatePhienBan = (props) => {
 
   return (
     <Form {...formItemLayout} form={form} onFinish={handleFormSubmit}>
+      {/* Quản lý danh sách các phiên bản */}
+
+      {/* Sử dụng destructuring  để add và remove */}
       <Form.List name="phienBans">
         {(fields, { add, remove }) => (
           <>
+            {/* Lặp qua các phần tử để thêm các phần tử tương ứng */}
             {fields.map(({ key, name, fieldKey, ...restField }) => (
               <div key={key} className="phien-ban">
                 <div className="header-phienban">
-                  Phiên bản {key + 1}
+                  Phiên bản {key + 1 + name}
                   <Button
                     type="text"
                     danger
@@ -139,7 +136,7 @@ const UpdatePhienBan = (props) => {
                 >
                   <Input placeholder="Tên phiên bản" />
                 </Form.Item>
-
+                {/* Quản lý màu ngoại thất */}
                 <Form.List name={[name, "mauNgoaiThats"]}>
                   {(fields, { add, remove }) => (
                     <div className="khungmaungoaithat">

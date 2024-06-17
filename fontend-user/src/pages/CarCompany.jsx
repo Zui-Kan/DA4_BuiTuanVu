@@ -334,7 +334,7 @@ function CarCompany(props) {
                       hinhAnhXe={item.HinhAnhXe}
                       tenModel={item.TenModel}
                       namSanXuat={item.NamSanXuat}
-                      nhienLieuTieuThu100KM={item["L/100"]}
+                      nhienLieuTieuThu100KM={item.L100}
                       loaiNhienLieu={item.NhienLieu}
                       hopSo={item.HopSo}
                       gia={formatPrice(item.Gia)}

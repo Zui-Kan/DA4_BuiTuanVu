@@ -86,8 +86,12 @@ button.ant-btn.ant-btn-danger:active {
   margin-bottom: 15px;
 }
 
-.khung-btn_xacnhan {
+.khung-btn_xacnhan,
+.khung-btn-suamodel {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+.khung-btn-suamodel button {
+  padding: 5px 10px;
 }

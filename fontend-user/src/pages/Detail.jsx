@@ -143,6 +143,7 @@ function Detail() {
       }));
     }
   }, [data]);
+
   //chức năng bình luận
   const handleSubmit = async () => {
     if (!formDataBinhLuan.NoiDung) {
@@ -187,6 +188,7 @@ function Detail() {
     }
   };
 
+  // Chọn phiên bản, màu ngoại thất và màu nội thất
   const handleVersionChange = (versionId) => {
     setSelectedVersion(versionId);
     const ngoaiThatData = allMauNgoaiThat.find(
@@ -198,6 +200,7 @@ function Detail() {
     setQuantity(1);
   };
 
+  // Chọn màu ngoại thất
   const handleNgoaiThatChange = (ngoaiThatId) => {
     setSelectedNgoaiThat(ngoaiThatId);
     const noiThatData = allMauNoiThat.find(
@@ -208,13 +211,7 @@ function Detail() {
     setQuantity(1);
   };
 
-  const getSoLuongTon = (noiThatId) => {
-    const noiThatItem = mauNoiThat.find(
-      (item) => item.MaMauNoiThat === noiThatId
-    );
-    return noiThatItem ? noiThatItem.SoLuong : null;
-  };
-
+  // Chọn màu nội thất và cập nhật số lượng
   const handleNoiThatChange = (noiThatId) => {
     setSelectedNoiThat(noiThatId);
     setFormDataGioHang((prevState) => ({
@@ -226,6 +223,13 @@ function Detail() {
     setSoLuongTon(soLuongTon);
   };
 
+  const getSoLuongTon = (noiThatId) => {
+    const noiThatItem = mauNoiThat.find(
+      (item) => item.MaMauNoiThat === noiThatId
+    );
+    return noiThatItem ? noiThatItem.SoLuong : null;
+  };
+
   const handleAddToCart = async () => {
     if (!selectedNoiThat) {
       messageApi.error(
@@ -233,9 +237,9 @@ function Detail() {
       );
       return;
     }
-
     await addToCart(selectedNoiThat, quantity);
-    setCart(getTotalQuantity() || 0);
+
+    navigate("/detail/" + id);
   };
 
   const handleBuyNowChange = async () => {
@@ -719,7 +723,7 @@ function Detail() {
                           hinhAnhXe={item.HinhAnhXe}
                           tenModel={item.TenModel}
                           namSanXuat={item.NamSanXuat}
-                          nhienLieuTieuThu100KM={item["L/100"]}
+                          nhienLieuTieuThu100KM={item.L100}
                           loaiNhienLieu={item.NhienLieu}
                           hopSo={item.HopSo}
                           gia={formatPrice(item.Gia)}

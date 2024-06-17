@@ -140,18 +140,23 @@ Route::group([
         Route::delete('/deletes', [ModelXeController::class, 'deletes'])->name('modelxe.deletes');
         Route::post('/save', [ModelXeController::class, 'save'])->name('modelxe.save');
 
-        
-        Route::post('/savemodel', [ModelXeController::class, 'saveModel']);
+
+        Route::post('/savemodel/{id?}', [ModelXeController::class, 'saveModel']);
         Route::post('/savephienban/{id?}', [ModelXeController::class, 'savePhienBan']);
         Route::post('/savethongso/{id?}', [ModelXeController::class, 'saveThongSoKyThuat']);
 
 
         Route::post('/search', [ModelXeController::class, 'search'])->name('modelxe.search');
+
+
+
+
         Route::post('/filtermodels', [ModelXeController::class, 'filterModels'])->name('modelxe.filterModels');
     });
 
     Route::get('/selecthangandloai', [ModelXeController::class, 'selectHangandLoai']);
 
+    Route::get('/thongketopxe', [ModelXeController::class, 'TopXeBanChay']);
 
     //Màu nội thất
     Route::group([

@@ -88,10 +88,8 @@ class ModelXeController extends Controller
         return $db ? $this->ok($db) : $this->errors(null);
     }
 
-    public function saveModel(Request $req)
+    public function saveModel(Request $req, $id = null)
     {
-        $id = $req->MaModelxe ?? null;
-
         // Upload HinhAnhXe và DSHinhAnhXe
         $file_name = $this->uploadFile($req, 'HinhAnhXe', 'ModelXe');
         $file_names = $this->uploadFiles($req, 'DSHinhAnhXe', 'ModelXe');
@@ -211,5 +209,19 @@ class ModelXeController extends Controller
         ];
 
         return $db ? $this->ok($db) : $this->errors(null);
+    }
+
+
+
+    public function TopXeBanChay()
+    {
+        $topCars = ModelXe::select('ModelXe.*', DB::raw('SUM(ChiTietDatHang.SoLuong) AS SoLuongXeDaBan'))
+            ->leftJoin('ChiTietDatHang', 'ModelXe.MaModel', '=', 'ChiTietDatHang.MaModel')
+            ->groupBy('ModelXe.MaModel')
+            ->orderBy('SoLuongXeDaBan', 'DESC')
+            ->limit(10)
+            ->get();
+
+        return $topCars ? $this->ok($topCars) : $this->errors(null);
     }
 }

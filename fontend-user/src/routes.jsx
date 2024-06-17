@@ -5,7 +5,7 @@ import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
-import CheckOut from "./pages/Checkout";
+import CheckOut from "./pages/Order";
 import CarCompany from "./pages/CarCompany";
 import AppLayout from "./shares/AppLayout";
 import ErrorBoundary from "./Components/Error/Error";

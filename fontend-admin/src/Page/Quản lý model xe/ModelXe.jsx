@@ -13,7 +13,7 @@ import {
   apiDeletesModelXe,
   apiSearchModelXe,
 } from "../../services/ModelXe.service";
-import ModelXeUpdate from "./ModelXeUpdate";
+import ModelXeUpdate from "./AddModel";
 import { Link, useNavigate } from "react-router-dom";
 
 const ModelXe = () => {
@@ -226,7 +226,7 @@ const ModelXe = () => {
             <Button
               type="primary"
               onClick={() => {
-                navigate(`/updatemodelxe`);
+                navigate(`/addmodel`);
               }}
             >
               Thêm mới

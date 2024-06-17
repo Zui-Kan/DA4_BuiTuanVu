@@ -15,8 +15,6 @@ const Header = function () {
   const [totalCart, setTotalCart] = useState(0);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [cart, setCart] = useRecoilState(cartState);
-
   const navigate = useNavigate();
   const profile = useMemo(
     () => JSON.parse(localStorage.getItem("profile") || "{}"),
@@ -40,10 +38,6 @@ const Header = function () {
     }
   }, []);
 
-  const loadTotal = useCallback(async () => {
-    setCart(getTotalQuantity() || 0);
-  }, []);
-
   const handleLogout = useCallback(async () => {
     const logOut = await apiLogout();
     if (logOut?.status_code === 200) {
@@ -64,9 +58,8 @@ const Header = function () {
     loadMenu();
     if (profile?.id) {
       loadData();
-      loadTotal();
     }
-  }, [profile, loadData, loadTotal]);
+  }, [profile, loadData]);
 
   return (
     <>
@@ -136,7 +129,7 @@ const Header = function () {
             <div className="control-cart">
               <img src="../IMAGE/icons8_add_shopping_cart_2.svg" alt="" />
               Giỏ hàng
-              <p className="total-cart">{cart}</p>
+              <p className="total-cart">{getTotalQuantity()}</p>
             </div>
           </Link>
           {!controlUser ? (

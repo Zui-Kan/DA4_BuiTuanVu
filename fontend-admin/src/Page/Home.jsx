@@ -13,7 +13,9 @@ import {
   Radio,
 } from "antd";
 import "../Style/home.css";
-
+import { apiThongKeTopXe } from "../services/ModelXe.service";
+import { Column } from "@ant-design/charts";
+import HienThiThongKe from "./HienThiThongKe";
 const count = [
   {
     today: "Today’s Sales",
@@ -75,6 +77,10 @@ const Home = () => {
             </Card>
           </Col>
         ))}
+
+        <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ marginTop: 25 }}>
+          <HienThiThongKe></HienThiThongKe>
+        </Col>
       </Row>
     </div>
   );

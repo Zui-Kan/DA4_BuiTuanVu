@@ -27,20 +27,6 @@ export const apiDeletesModelXe = async (data) => {
     console.error("Lỗi: ", error);
   }
 };
-export const apiSaveModelXe = async (data) => {
-  try {
-    debugger;
-
-    const res = await apiClient?.post(`/modelxe/save`, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return res?.data;
-  } catch (error) {
-    console.error("Lỗi: ", error);
-  }
-};
 
 export const apiGetModelXe = async (id) => {
   try {
@@ -60,14 +46,23 @@ export const apiSelectLoaiAndHang = async () => {
   }
 };
 
-export const apiModelSave = async (data) => {
+export const apiModelSave = async (id, data) => {
   try {
-    const res = await apiClient?.post(`/modelxe/savemodel`, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return res?.data;
+    if (!id) {
+      const res = await apiClient?.post(`/modelxe/savemodel`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return res?.data;
+    } else {
+      const res = await apiClient?.post(`/modelxe/savemodel/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return res?.data;
+    }
   } catch (error) {
     console.error("Lỗi: ", error);
   }
@@ -98,5 +93,14 @@ export const apiSaveThongSoKyThuat = async (id, data) => {
   } catch (error) {
     console.error("Lỗi: ", error);
     console.error("Chi tiết lỗi: ", error.response.data); // In chi tiết lỗi từ phản hồi server
+  }
+};
+
+export const apiThongKeTopXe = async () => {
+  try {
+    const res = await apiClient?.get(`/thongketopxe`);
+    return res?.data;
+  } catch (error) {
+    console.error("Lỗi: ", error);
   }
 };

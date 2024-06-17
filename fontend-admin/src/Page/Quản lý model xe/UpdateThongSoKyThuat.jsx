@@ -47,12 +47,15 @@ const UpdateThongSoKyThuat = (props) => {
         TrongLuong: convertToJsonArray(values.TrongLuong),
       };
 
-      // Gọi API lưu model
-      const req = await apiModelSave(dataModel);
+      // Gọi API lưu model'
+
+      const req = await apiModelSave(null, dataModel);
       if (req?.status_code === 200) {
         // Lưu phiên bản và thông số kỹ thuật
-        await apiSavePhienBan(req?.data, dataPhienBan);
-        const thongso = await apiSaveThongSoKyThuat(req?.data, convertedValues);
+        const [res, thongso] = await Promise.all([
+          apiSavePhienBan(req?.data, dataPhienBan),
+          apiSaveThongSoKyThuat(req?.data, convertedValues),
+        ]);
         if (thongso?.status_code === 200) {
           messageApi.success("Tạo thành công");
           navigate("/modelxe");

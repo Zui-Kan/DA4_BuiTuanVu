@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, Select, Button, Form, Input, Upload } from "antd";
+import { Modal, Select, Button, Form, Input, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 import {
   apiGetModelXe,
+  apiModelSave,
   apiSelectLoaiAndHang,
 } from "../../services/ModelXe.service";
 import { uploads } from "../../constant/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { modelState } from "../../constant/recoil";
 import MyCKEditorComponent from "../../Component/MyCKEditor";
@@ -24,6 +25,9 @@ const UpdateXe = (props) => {
   const [fileLists, setFileLists] = useState([]);
   const [dataModel, setDataModel] = useRecoilState(modelState);
   const [moTa, setMoTa] = useState("");
+  const navigate = useNavigate();
+  const messageApi = message;
+
   const loadDataUpdate = async (id) => {
     const res = await apiGetModelXe(id);
     if (res?.status_code === 200) {
@@ -67,12 +71,10 @@ const UpdateXe = (props) => {
   }, [props.maModelXe]);
 
   const handleChange = ({ fileList }) => setFileList(fileList);
-  // const handleListChange = ({ fileList }) => setFileLists(fileList);
+  const handleListChange = ({ fileList }) => setFileLists(fileList);
 
-  const handleListChange = ({ fileList }) => {
-    setFileLists(fileList);
-  };
   const handleFinishChange = async (values) => {
+    debugger;
     const dulieu = await {
       TenModel: values.TenModel,
       MaHang: values.MaHang,
@@ -83,14 +85,21 @@ const UpdateXe = (props) => {
       NhienLieu: values.NhienLieu,
       HopSo: values.HopSo,
       MoTa: moTa,
-      HinhAnhXe: values.HinhAnhXeF.file,
-      DSHinhAnhXe: values.DSHinhAnhXeF.fileList.map(
+      HinhAnhXe: values?.HinhAnhXeF?.file,
+      DSHinhAnhXe: values?.DSHinhAnhXeF?.fileList.map(
         (file) => file.originFileObj
       ),
     };
-    debugger;
-    setDataModel(dulieu);
-    props.nextPhu();
+    if (props.maModelXe && !props.nextPhu) {
+      const res = await apiModelSave(props.maModelXe, dulieu);
+      if (res?.status_code === 200) {
+        messageApi.success("Cập nhật thành công ok.");
+        navigate("/modelxe");
+      }
+    } else {
+      setDataModel(dulieu);
+      props.nextPhu();
+    }
   };
 
   useEffect(() => {
@@ -191,7 +200,11 @@ const UpdateXe = (props) => {
       <Form.Item
         label="Hình ảnh"
         name="HinhAnhXeF"
-        rules={[{ required: true, message: "Vui lòng chọn hình ảnh!" }]}
+        rules={
+          !props.maModelXe && [
+            { required: true, message: "Vui lòng chọn hình ảnh!" },
+          ]
+        }
       >
         <Upload
           beforeUpload={() => false}
@@ -207,19 +220,21 @@ const UpdateXe = (props) => {
       <Form.Item
         label="Danh sách hình ảnh"
         name="DSHinhAnhXeF"
-        rules={[
-          { required: true, message: "Vui lòng chọn danh sách hình ảnh!" },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (value && value.fileList.length >= 3) {
-                return Promise.resolve();
-              }
-              return Promise.reject(
-                new Error("Vui lòng chọn ít nhất 3 hình ảnh!")
-              );
-            },
-          }),
-        ]}
+        rules={
+          !props.maModelXe && [
+            { required: true, message: "Vui lòng chọn danh sách hình ảnh!" },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (value && value.fileList.length >= 3) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error("Vui lòng chọn ít nhất 3 hình ảnh!")
+                );
+              },
+            }),
+          ]
+        }
       >
         <Upload
           beforeUpload={() => false}

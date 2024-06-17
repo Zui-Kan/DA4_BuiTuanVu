@@ -117,6 +117,7 @@ const LoaiXe = () => {
     },
   ];
 
+  //load data
   useEffect(() => {
     loadData();
   }, [JSON.stringify(tableParams), valueSearch]);
@@ -125,6 +126,7 @@ const LoaiXe = () => {
     setValueSearch(value);
   };
 
+  
   const handleCancelModal = () => {
     setIsOpenModal(false);
   };
@@ -134,6 +136,7 @@ const LoaiXe = () => {
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
+  //chọn checkbox
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
