@@ -2,6 +2,13 @@
 
 Chào mừng các bạn đến với dự án **Website Đặt xe Ô tô**! Dự án này được xây dựng với mục tiêu cung cấp một nền tảng đặt xe trực tuyến dễ dàng và thuận tiện cho người dùng.
 
+## Một số giao diện Website
+1. Trang chủ
+![image](https://github.com/user-attachments/assets/bde86cfc-2f88-4e49-9445-16df58b16e3a)
+![image](https://github.com/user-attachments/assets/7a5d87bb-d540-47c1-a428-803b1bc953ae)
+![image](https://github.com/user-attachments/assets/8812856e-6a59-45cf-a33f-444766aa0925)
+
+
 ## Hướng dẫn chạy dự án
 
 Dưới đây là các bước để bạn có thể chạy dự án trên máy tính của mình:
