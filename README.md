@@ -19,15 +19,21 @@ Dưới đây là các bước để bạn có thể chạy dự án trên máy 
 ### Bước 1: Cài đặt và cấu hình cơ sở dữ liệu
 1. Mở MySQL và import file database có đuôi `.sql` vào cơ sở dữ liệu của bạn.
 
-### Bước 2: Cấu hình kết nối cơ sở dữ liệu
-2. Mở file `.env` trong thư mục `Backend_laravel` và chỉnh sửa biến `DB_CONNECTION` để phù hợp với cấu hình cơ sở dữ liệu của bạn.
+### Bước 2: Cài đặt Laravel
+2. Mở terminal mới và di chuyển đến thư mục Back-end Laravel, sau đó chạy lệnh sau để cài đặt các phụ thuộc:
+    ```bash
+     composer install
+     ```
 
-### Bước 3: Khởi chạy Backend (Laravel)
-3. Mở terminal và di chuyển đến thư mục `Backend_laravel`, sau đó chạy lệnh sau để khởi chạy server Laravel:
+### Bước 3: Cấu hình kết nối cơ sở dữ liệu
+3. Mở file `.env` trong thư mục `Backend_laravel` và chỉnh sửa biến `DB_CONNECTION` để phù hợp với cấu hình cơ sở dữ liệu của bạn.
+
+### Bước 4: Khởi chạy Backend (Laravel)
+4. Mở terminal và di chuyển đến thư mục `Backend_laravel`, sau đó chạy lệnh sau để khởi chạy server Laravel:
    ```bash
    php artisan serve --port=8099
-### Bước 4: Cài đặt Frontend (React)
-4. Mở terminal mới và di chuyển đến thư mục Front-end react, sau đó chạy lệnh sau để cài đặt các phụ thuộc:
+### Bước 5: Cài đặt Frontend (React)
+5. Mở terminal mới và di chuyển đến thư mục Front-end react, sau đó chạy lệnh sau để cài đặt các phụ thuộc:
    - Đối với thư mục đầu tiên:
      ```bash
      cd fontend-admin
@@ -39,7 +45,7 @@ Dưới đây là các bước để bạn có thể chạy dự án trên máy 
      npm install
      ```
 
-### Bước 5: Khởi chạy Frontend (React)
-5. Sau khi cài đặt xong, chạy lệnh sau trong từng thư mục để khởi chạy ứng dụng React:
+### Bước 6: Khởi chạy Frontend (React)
+6. Sau khi cài đặt xong, chạy lệnh sau trong từng thư mục để khởi chạy ứng dụng React:
    ```bash
    npm start
