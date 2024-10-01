@@ -1,8 +1,8 @@
-import { apiClient } from "../constant/api";
+import { apiClient,apiClientAuth } from "../constant/api";
 
 export const apiLogin = async (data) => {
   try {
-    const res = await apiClient?.post(`/auth/login`, data);
+    const res = await apiClientAuth?.post(`/auth/login`, data);
     return res?.data;
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
@@ -22,7 +22,7 @@ export const apiSignup = async (data) => {
 
 export const apiGetProfile = async () => {
   try {
-    const res = await apiClient?.get(`/auth/profile`);
+    const res = await apiClientAuth?.get(`/auth/profile`);
     return res?.data;
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
@@ -32,7 +32,7 @@ export const apiGetProfile = async () => {
 
 export const apiLogout = async () => {
   try {
-    const res = await apiClient?.post(`/auth/logout`);
+    const res = await apiClientAuth?.post(`/auth/logout`);
     return res?.data;
   } catch (error) {
     console.error("Lỗi khi đăng xuất:", error);

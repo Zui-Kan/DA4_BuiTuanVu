@@ -38,7 +38,7 @@ const NVXuLyHoSo = () => {
 
   const loadData = async () => {
     setLoading(true);
-    const getNV = await apiGetNhanVienbyTK(profile.id);
+    const getNV = await apiGetNhanVienbyTK(profile?.id);
     if (getNV && getNV.status_code === 200) {
       const results = await apiHienThiTrangThai_2({
         ...tableParams,

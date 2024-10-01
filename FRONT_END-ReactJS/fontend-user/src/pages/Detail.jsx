@@ -60,7 +60,7 @@ function Detail() {
   });
   const [formDataBinhLuan, setFormDataBinhLuan] = useState({
     MaModel: "",
-    TaiKhoanID: profile.id,
+    TaiKhoanID: profile?.id || "",
     NoiDung: "",
   });
 

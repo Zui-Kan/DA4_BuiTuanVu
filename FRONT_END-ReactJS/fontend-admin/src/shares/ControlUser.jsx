@@ -33,6 +33,7 @@ const ControlUser = () => {
   const [data, setData] = useState(null);
   const loadData = async () => {
     if (token) {
+      
       const res = await apiGetProfile();
       if (res) {
         sessionStorage.setItem("profile", JSON.stringify(res));
