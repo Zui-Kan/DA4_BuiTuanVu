@@ -34,14 +34,8 @@ Dưới đây là các bước để bạn có thể chạy dự án trên máy 
    php artisan serve --port=8099
 ### Bước 5: Cài đặt Frontend (React)
 5. Mở terminal mới và di chuyển đến thư mục Front-end react, sau đó chạy lệnh sau để cài đặt các phụ thuộc:
-   - Đối với thư mục đầu tiên:
      ```bash
      cd fontend-admin
-     npm install
-     ```
-   - Đối với thư mục thứ hai :
-     ```bash
-     cd fontend-user
      npm install
      ```
 
