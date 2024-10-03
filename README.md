@@ -35,7 +35,6 @@ Dưới đây là các bước để bạn có thể chạy dự án trên máy 
 ### Bước 5: Cài đặt Frontend (React)
 5. Mở terminal mới và di chuyển đến thư mục Front-end react, sau đó chạy lệnh sau để cài đặt các phụ thuộc:
      ```bash
-     cd fontend-admin
      npm install
      ```
 
