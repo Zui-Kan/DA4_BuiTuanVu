@@ -12,7 +12,6 @@ const formItemLayout = {
 const UpdateModelXe = () => {
   const { id } = useParams();
   const formSubmitRef = useRef(null);
-
   const handleSubmitClick = () => {
     if (formSubmitRef.current) {
       formSubmitRef.current();

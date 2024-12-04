@@ -15,6 +15,7 @@ import {
 } from "../../services/ModelXe.service";
 import ModelXeUpdate from "./AddModel";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "../../Component/Loading/Loading";
 
 const ModelXe = () => {
   document.title = "Quản lý xe ô tô";
@@ -189,7 +190,7 @@ const ModelXe = () => {
   return (
     <>
       {contextHolder}
-
+      {loading && <Loading />}
       <Breadcrumb
         style={{ margin: "16px 0" }}
         items={[

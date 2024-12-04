@@ -20,7 +20,6 @@ export const apiDeleteLoaiXe = async (id) => {
 
 export const apiDeletesLoaiXe = async (data) => {
   try {
-    debugger;
     const res = await apiClient?.delete(`/loaixe/deletes`, { data });
     return res?.data;
   } catch (error) {
@@ -29,8 +28,6 @@ export const apiDeletesLoaiXe = async (data) => {
 };
 export const apiSaveLoaiXe = async (data) => {
   try {
-    debugger;
-
     const res = await apiClient?.post(`/loaixe/save`, data, {
       headers: {
         "Content-Type": "multipart/form-data",

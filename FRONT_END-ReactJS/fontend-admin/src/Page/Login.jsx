@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Row, Col, Typography, Form, Input, notification } from "antd";
 import signinbg from "../assets/image/pngegg.png";
 import { apiLogin } from "../services/auth.service";
+import Loading from "../Component/Loading/Loading";
 
 const { Title } = Typography;
 
@@ -10,8 +11,10 @@ const Login = () => {
   document.title = "Trang đăng nhập";
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onFinish = async (values) => {
+    setIsLoading(true);
     const res = await apiLogin(values);
     if (res?.status_code === 200) {
       sessionStorage.setItem("token", JSON.stringify(res?.access_token));
@@ -22,6 +25,7 @@ const Login = () => {
         description: "Tên tài khoản hoặc mật khẩu không đúng.",
       });
     }
+    setIsLoading(false);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -30,6 +34,8 @@ const Login = () => {
 
   return (
     <>
+      {isLoading && <Loading />}
+
       {contextHolder}
       <Row gutter={[24, 0]} justify="space-around">
         <Col

@@ -14,14 +14,11 @@ export default function MyCKEditorComponent({ value, onChange }) {
           }}
           onChange={(event, editor) => {
             const data = editor.getData();
-            console.log({ event, editor, data });
             onChange(data); // Gọi hàm onChange được truyền từ component cha
           }}
           onBlur={(event, editor) => {
-            console.log("Blur.", editor);
           }}
           onFocus={(event, editor) => {
-            console.log("Focus.", editor);
           }}
         />
       </div>

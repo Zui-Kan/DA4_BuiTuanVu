@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Select, Button, Form, Input, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
@@ -8,6 +8,7 @@ import {
   apiSaveCTTaiKhoan,
   apiSaveTaiKhoan,
 } from "../../services/TaiKhoan.service";
+import Loading from "../../Component/Loading/Loading";
 
 const formItemLayout = {
   labelCol: { xs: { span: 5 }, sm: { span: 5 } },
@@ -16,8 +17,10 @@ const formItemLayout = {
 
 const CTTaiKhoanUpdate = (props) => {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
+    setLoading(true);
     try {
       const values = await form.validateFields();
       const formData = {
@@ -35,6 +38,8 @@ const CTTaiKhoanUpdate = (props) => {
       }
     } catch (error) {
       console.error("Lưu thất bại:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,6 +63,8 @@ const CTTaiKhoanUpdate = (props) => {
   };
 
   return (
+    <>
+      {loading && <Loading />}
     <Modal
       title="Cập nhật thông tin chi tiết Tài khoản"
       open={props.open}
@@ -123,6 +130,8 @@ const CTTaiKhoanUpdate = (props) => {
         </Form.Item>
       </Form>
     </Modal>
+    </>
+
   );
 };
 

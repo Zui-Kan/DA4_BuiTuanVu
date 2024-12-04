@@ -1,4 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
@@ -18,11 +19,22 @@ import Topic from "./pages/Topic";
 import Forum from "./pages/Forum";
 import Category from "./pages/Category";
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 export const router = createBrowserRouter([
   {
     path: "",
     element: (
       <>
+        <ScrollToTop />
         <AppLayout />
       </>
     ),

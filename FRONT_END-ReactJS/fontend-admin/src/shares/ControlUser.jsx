@@ -18,6 +18,7 @@ import {
 } from "../services/auth.service";
 import { apiGetCTTaiKhoan } from "../services/TaiKhoan.service";
 import { uploads } from "../constant/api";
+import Loading from "../Component/Loading/Loading";
 
 const formItemLayout = {
   labelCol: { xs: { span: 5 }, sm: { span: 5 } },
@@ -28,9 +29,11 @@ const ControlUser = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [api, contextHolder] = notification.useNotification();
-
+  const [loading, setLoading] = useState(false);
   const token = JSON.parse(sessionStorage.getItem("token"));
   const [data, setData] = useState(null);
+  const [form] = Form.useForm();
+
   const loadData = async () => {
     if (token) {
       
@@ -57,20 +60,23 @@ const ControlUser = () => {
     setOpen(true);
   };
   const handleChangePassword = async (values) => {
+    setLoading(true);
     const res = await apiChangePassword({ ...values, id: data?.TaiKhoanID });
-    debugger;
     if (res?.status_code === 200) {
       setOpen(false);
       api["success"]({
         message: "Thành công",
         description: "Bạn đã đổi mật khẩu thành công.",
       });
+      form.resetFields();
     } else {
       api["error"]({
         message: "Không thành công",
         description: res?.message,
       });
     }
+
+    setLoading(false);
   };
   const items = [
     {
@@ -96,7 +102,7 @@ const ControlUser = () => {
   return (
     <>
       {contextHolder}
-
+      {loading && <Loading />}
       <Dropdown
         menu={{
           items,
@@ -126,6 +132,7 @@ const ControlUser = () => {
       >
         <div className="modal-center">
           <Form
+            form={form}
             {...formItemLayout}
             style={{ width: "100%" }}
             layout="vertical"
@@ -181,7 +188,7 @@ const ControlUser = () => {
                   background: "#1890ff",
                 }}
               >
-                ĐĂNG NHẬP
+                ĐỔI MẬT KHẨU
               </Button>
             </Form.Item>
           </Form>

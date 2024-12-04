@@ -100,6 +100,7 @@ const NVNhanDonHang = () => {
           <Button
             title="Nhận đơn"
             onClick={() => {
+             
               setIsOpenModal(true);
               setMaDatHang(record.MaDatHang);
               setMaTrangThai(record.MaTrangThai);

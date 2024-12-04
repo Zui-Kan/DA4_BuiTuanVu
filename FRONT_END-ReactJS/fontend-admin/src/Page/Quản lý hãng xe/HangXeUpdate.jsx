@@ -3,6 +3,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Modal, Button, Form, Input, Upload, message } from "antd";
 import { apiGetHangXe, apiSaveHangXe } from "../../services/HangXe.service";
 import { uploads } from "../../constant/api";
+import Loading from "../../Component/Loading/Loading";
 
 const formItemLayout = {
   labelCol: {
@@ -18,8 +19,10 @@ const formItemLayout = {
 const HangXeUpdate = (props) => {
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const saveHangXe = async () => {
+    setLoading(true);
     try {
       const values = await form.validateFields();
 
@@ -39,6 +42,8 @@ const HangXeUpdate = (props) => {
       }
     } catch (error) {
       message.open("Lỗi: " + error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,6 +63,7 @@ const HangXeUpdate = (props) => {
         ]);
       }
     }
+
   };
 
   useEffect(() => {
@@ -75,7 +81,9 @@ const HangXeUpdate = (props) => {
   const handleChange = ({ fileList }) => setFileList(fileList);
 
   return (
-    <Modal
+    <>
+      {loading && <Loading />}
+   <Modal
       title="Cập nhật thông tin Hãng Xe"
       open={props.open}
       onOk={saveHangXe}
@@ -109,6 +117,8 @@ const HangXeUpdate = (props) => {
         </Form.Item>
       </Form>
     </Modal>
+    </>
+ 
   );
 };
 

@@ -20,7 +20,6 @@ export const apiDeleteHangXe = async (id) => {
 
 export const apiDeletesHangXe = async (data) => {
   try {
-    debugger;
     const res = await apiClient?.delete(`/hangxe/deletes`, { data });
     return res?.data;
   } catch (error) {
@@ -29,8 +28,6 @@ export const apiDeletesHangXe = async (data) => {
 };
 export const apiSaveHangXe = async (data) => {
   try {
-    debugger;
-
     const res = await apiClient?.post(`/hangxe/save`, data, {
       headers: {
         "Content-Type": "multipart/form-data",

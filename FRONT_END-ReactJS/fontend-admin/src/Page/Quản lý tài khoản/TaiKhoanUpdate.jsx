@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Select, Button, Form, Input } from "antd";
 import {
   apiGetTaiKhoan,
   apiSaveTaiKhoan,
 } from "../../services/TaiKhoan.service";
+import Loading from "../../Component/Loading/Loading";
 
 const formItemLayout = {
   labelCol: { xs: { span: 5 }, sm: { span: 5 } },
@@ -12,8 +13,9 @@ const formItemLayout = {
 
 const TaiKhoanUpdate = (props) => {
   const [form] = Form.useForm();
-
+  const [loading, setLoading] = useState(false);
   const handleSave = async () => {
+    setLoading(true);
     try {
       const values = await form.validateFields();
       const formData = {
@@ -33,6 +35,8 @@ const TaiKhoanUpdate = (props) => {
       // }
     } catch (error) {
       console.error("Lưu thất bại:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,6 +60,8 @@ const TaiKhoanUpdate = (props) => {
   };
 
   return (
+    <>
+      {loading && <Loading />}
     <Modal
       title="Cập nhật thông tin Tài khoản"
       open={props.open}
@@ -113,6 +119,8 @@ const TaiKhoanUpdate = (props) => {
         </Form.Item>
       </Form>
     </Modal>
+    </>
+
   );
 };
 

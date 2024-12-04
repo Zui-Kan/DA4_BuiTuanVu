@@ -20,7 +20,6 @@ export const apiDeleteModelXe = async (id) => {
 
 export const apiDeletesModelXe = async (data) => {
   try {
-    debugger;
     const res = await apiClient?.delete(`/modelxe/deletes`, { data });
     return res?.data;
   } catch (error) {

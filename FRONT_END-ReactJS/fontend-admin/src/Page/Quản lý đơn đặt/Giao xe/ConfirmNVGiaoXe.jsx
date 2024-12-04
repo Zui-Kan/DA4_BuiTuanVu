@@ -4,11 +4,14 @@ import { Modal, message, Table, Row, Col, Timeline } from "antd";
 import { apiNhanVienGiaoXe } from "../../../services/DatHang.service";
 import { apiGetNhanVienbyTK } from "../../../services/NhanVien.service";
 import ThongTinDonHang from "../ThongTinDonHang";
+import Loading from "../../../Component/Loading/Loading";
 
 const ConfirmNVGiaoXe = (props) => {
   const messageApi = message;
+  const [loading, setLoading] =   (false);
 
   const handleConfirmModal = async () => {
+    setLoading(true);
     const dulieu = {
       MaDatHang: props.maDatHang,
       MaTrangThai: props.maTrangThai,
@@ -19,6 +22,7 @@ const ConfirmNVGiaoXe = (props) => {
       handleCancelModal();
       props.loadData();
     }
+    setLoading(false);
   };
 
   const handleCancelModal = () => {
@@ -26,7 +30,9 @@ const ConfirmNVGiaoXe = (props) => {
   };
 
   return (
-    <Modal
+    <>
+      {loading && <Loading />}
+      <Modal
       title=""
       open={props.open}
       onOk={handleConfirmModal}
@@ -37,6 +43,7 @@ const ConfirmNVGiaoXe = (props) => {
     >
       <ThongTinDonHang maDatHang={props.maDatHang}></ThongTinDonHang>
     </Modal>
+    </>
   );
 };
 

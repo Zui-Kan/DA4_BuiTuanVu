@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\User;
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
 
 use App\Models\BinhLuan;
 use App\Models\HangXe;
@@ -34,7 +34,6 @@ class DetailController extends Controller
 
     public function getDetail($id = null)
     {
-
         $md = ModelXe::select('ModelXe.*', 'HangXe.TenHang')
             ->join('HangXe', 'HangXe.MaHang', '=', 'ModelXe.MaHang')
             ->where('ModelXe.MaModel', $id)
@@ -42,26 +41,44 @@ class DetailController extends Controller
 
         $phienban = PhienBanXe::where("MaModel", $id)->get();
         $tskt = ThongSoKyThuatXe::where("MaModel", $id)->first();
-
         $loaixe = ModelXe::where('ModelXe.MaLoaiXe', $md->MaLoaiXe)->get();
 
-        $binhluan = BinhLuan::select('binhluan.*', 'ctusers.HoVaTen', 'ctusers.AnhDaiDien')
-            ->join('users', 'binhluan.TaiKhoanID', '=', 'users.id')
-            ->join('ctusers', 'ctusers.TaiKhoanID', '=', 'users.id')
-            ->where('binhluan.MaModel', $id)
-            ->get();
+
+        // Fetch exterior and interior colors for all versions
+        $allMauNgoaiThat = [];
+        $allMauNoiThat = [];
+        foreach ($phienban as $version) {
+            $mauNgoaiThat = MauNgoaiThat::where('MaPhienBan', $version->MaPhienBan)->get();
+            $allMauNgoaiThat[$version->MaPhienBan] = $mauNgoaiThat;
+
+            foreach ($mauNgoaiThat as $ngoaiThat) {
+                $mauNoiThat = MauNoiThat::where('MaMauNgoaiThat', $ngoaiThat->MaMauNgoaiThat)->get();
+                $allMauNoiThat[$ngoaiThat->MaMauNgoaiThat] = $mauNoiThat;
+            }
+        }
 
         $db = [
             'modelXe' => $md,
             'thongSoKyThuat' => $tskt,
             'tuongTu' => $loaixe,
-            'binhLuan' => $binhluan,
-            'phienBan' => $phienban
+            'phienBan' => $phienban,
+            'allMauNgoaiThat' => $allMauNgoaiThat,
+            'allMauNoiThat' => $allMauNoiThat
         ];
 
         return $db ? $this->ok($db) : $this->errors(null);
     }
-
+    public function hienThiBinhLuan($id = null)
+    {
+        if ($id) {
+            $binhluan = BinhLuan::select('binhluan.*', 'ctusers.HoVaTen', 'ctusers.AnhDaiDien')
+            ->join('users', 'binhluan.TaiKhoanID', '=', 'users.id')
+            ->join('ctusers', 'ctusers.TaiKhoanID', '=', 'users.id')
+            ->where('binhluan.MaModel', $id)
+            ->get();
+            return $binhluan ? $this->ok($binhluan) : $this->errors(null);
+        }
+    }
     public function hienthingoaithat($id = null)
     {
         if ($id) {

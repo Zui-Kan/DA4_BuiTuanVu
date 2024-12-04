@@ -99,7 +99,7 @@ function CheckOut() {
       !selectedKhachHang.SDT ||
       !selectedKhachHang.DiaChi ||
       !selectedKhachHang.GioiTinh ||
-      !selectedKhachHang.GioiTinh ||
+      !selectedKhachHang.CMND ||
       !totalPrice
     ) {
       messageApi.error(

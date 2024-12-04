@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { modelState } from "../../constant/recoil";
 import MyCKEditorComponent from "../../Component/MyCKEditor";
+import Loading from "../../Component/Loading/Loading";
 
 const formItemLayout = {
   labelCol: { xs: { span: 5 }, sm: { span: 5 } },
@@ -27,9 +28,10 @@ const UpdateXe = (props) => {
   const [moTa, setMoTa] = useState("");
   const navigate = useNavigate();
   const messageApi = message;
-
+  const [loading, setLoading] = useState(false);
 
   const loadDataUpdate = async (id) => {
+    setLoading(true);
     const res = await apiGetModelXe(id);
     if (res?.status_code === 200) {
       form.setFieldsValue(res.data);
@@ -54,6 +56,7 @@ const UpdateXe = (props) => {
       }
       setMoTa(res.data.MoTa || "");
     }
+    setLoading(false);
   };
 
   const loadSelect = async () => {
@@ -75,6 +78,7 @@ const UpdateXe = (props) => {
   const handleListChange = ({ fileList }) => setFileLists(fileList);
 
   const handleFinishChange = async (values) => {
+    setLoading(true);
     const dulieu = await {
       TenModel: values.TenModel,
       MaHang: values.MaHang,
@@ -101,6 +105,7 @@ const UpdateXe = (props) => {
       setDataModel(dulieu);
       props.nextPhu();
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -108,7 +113,9 @@ const UpdateXe = (props) => {
   }, [form]);
 
   return (
-    <Form {...formItemLayout} form={form} onFinish={handleFinishChange}>
+    <>
+      {loading && <Loading />}
+<Form {...formItemLayout} form={form} onFinish={handleFinishChange}>
       <Form.Item
         label="Tên xe"
         name="TenModel"
@@ -148,11 +155,6 @@ const UpdateXe = (props) => {
         name="NamSanXuat"
         rules={[
           { required: true, message: "Vui lòng nhập năm sản xuất !" },
-          {
-            max: 4,
-            min: 4,
-            message: "Yêu cầu nhập 4 số",
-          },
         ]}
       >
         <Input type="number" />
@@ -251,6 +253,8 @@ const UpdateXe = (props) => {
         <MyCKEditorComponent value={moTa} onChange={setMoTa} />
       </Form.Item>
     </Form>
+    </>
+    
   );
 };
 

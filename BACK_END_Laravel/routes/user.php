@@ -104,6 +104,7 @@ Route::group([
         Route::get('/getdetail/{id?}', [DetailController::class, 'getdetail'])->name('detail.getdetail');
         Route::get('/hienthingoaithat/{id?}', [DetailController::class, 'hienthingoaithat'])->name('detail.hienthingoaithat');
         Route::get('/hienthinoithat/{id?}', [DetailController::class, 'hienthinoithat'])->name('detail.hienthinoithat');
+        Route::get('/hienThiBinhLuan/{id?}', [DetailController::class, 'hienThiBinhLuan'])->name('detail.hienThiBinhLuan');
     });
 
     Route::group([

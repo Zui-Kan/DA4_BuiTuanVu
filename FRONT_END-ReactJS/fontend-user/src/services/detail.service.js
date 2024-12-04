@@ -13,7 +13,10 @@ export const getMauNgoaiThat = async (id) => {
   const res = await apiClient?.get(`/detail/hienthingoaithat/` + id);
   return res?.data.data;
 };
-
+export const getBinhLuan = async (id) => {
+  const res = await apiClient?.get(`/detail/hienThiBinhLuan/` + id);
+  return res?.data.data;
+};
 export const saveBinhLuan = async (data) => {
   try {
     const res = await apiClient.post(`/detail/save_binhluan`, data);

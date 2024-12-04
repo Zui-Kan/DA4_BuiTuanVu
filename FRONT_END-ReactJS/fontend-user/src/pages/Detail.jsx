@@ -10,6 +10,7 @@ import { Loading } from "../Components/Loading/Loading";
 import { Comment } from "../Components/Comment/Comment";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import {
+  getBinhLuan,
   getDetail,
   getMauNgoaiThat,
   getMauNoiThat,
@@ -36,6 +37,7 @@ function Detail() {
 
   const { id } = useParams();
   const [data, setData] = useState(null);
+  const [binhLuan, setBinhLuan] = useState(null);
   const navigate = useNavigate();
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -65,7 +67,6 @@ function Detail() {
   });
 
   const [activeCommentId, setActiveCommentId] = useState(null);
-  const [cart, setCart] = useRecoilState(cartState);
   const [checkout, setcheckout] = useRecoilState(cartCheckout);
 
   const quangcao = {
@@ -104,28 +105,16 @@ function Detail() {
   };
 
   async function loadData(id) {
-    const [detail] = await Promise.all([getDetail(id)]);
+    const [detail, binhLuan] = await Promise.all([
+      getDetail(id),
+      getBinhLuan(id),
+    ]);
     setData(detail);
-
-    // Tải dữ liệu các phiên bản và màu sắc khi component mount
-    const versions = detail?.phienBan || [];
-    setVersions(versions);
-
-    // Tải trước dữ liệu màu ngoại thất và nội thất cho tất cả các phiên bản
-    const allMauNgoaiThat = await Promise.all(
-      versions.map((version) => getMauNgoaiThat(version.MaPhienBan))
-    );
-
-    const allMauNoiThat = await Promise.all(
-      allMauNgoaiThat
-        .flat()
-        .map((ngoaiThat) => getMauNoiThat(ngoaiThat.MaMauNgoaiThat))
-    );
-
-    setAllMauNgoaiThat(allMauNgoaiThat);
-    setAllMauNoiThat(allMauNoiThat);
-
+    setVersions(detail?.phienBan || []);
     setIsDataLoaded(true);
+    setAllMauNgoaiThat(detail.allMauNgoaiThat || []);
+    setAllMauNoiThat(detail.allMauNoiThat || []);
+    setBinhLuan(binhLuan || []);
   }
 
   useEffect(() => {
@@ -143,7 +132,10 @@ function Detail() {
       }));
     }
   }, [data]);
-
+  const loadNewComment = async () => {
+    const binhLuan = await getBinhLuan(id);
+    setBinhLuan(binhLuan || []);
+  };
   //chức năng bình luận
   const handleSubmit = async () => {
     if (!formDataBinhLuan.NoiDung) {
@@ -158,19 +150,15 @@ function Detail() {
 
       if (response && response.status_code === 200) {
         if (response.data) {
-          setData((prevData) => ({
-            ...prevData,
-            binhLuan: [...prevData.binhLuan, response.data],
-          }));
           setFormDataBinhLuan((prevState) => ({
             ...prevState,
             NoiDung: "",
           }));
+          loadNewComment();
           messageApi.open({
             type: "success",
             content: "Bình luận đã được gửi.",
           });
-          loadData(id); // Tải lại dữ liệu để cập nhật danh sách bình luận
         } else {
           throw new Error("Dữ liệu bình luận mới không hợp lệ.");
         }
@@ -191,10 +179,10 @@ function Detail() {
   // Chọn phiên bản, màu ngoại thất và màu nội thất
   const handleVersionChange = (versionId) => {
     setSelectedVersion(versionId);
-    const ngoaiThatData = allMauNgoaiThat.find(
-      (ngoaiThat) => ngoaiThat[0]?.MaPhienBan === versionId
-    );
-    setMauNgoaiThat(ngoaiThatData || []);
+
+    const ngoaiThatData = allMauNgoaiThat[versionId] || [];
+
+    setMauNgoaiThat(ngoaiThatData);
     setMauNoiThat([]);
     setSoLuongTon(1);
     setQuantity(1);
@@ -203,10 +191,8 @@ function Detail() {
   // Chọn màu ngoại thất
   const handleNgoaiThatChange = (ngoaiThatId) => {
     setSelectedNgoaiThat(ngoaiThatId);
-    const noiThatData = allMauNoiThat.find(
-      (noiThat) => noiThat[0]?.MaMauNgoaiThat === ngoaiThatId
-    );
-    setMauNoiThat(noiThatData || []);
+    const noiThatData = allMauNoiThat[ngoaiThatId] || [];
+    setMauNoiThat(noiThatData);
     setSoLuongTon(1);
     setQuantity(1);
   };
@@ -675,9 +661,8 @@ function Detail() {
               )}
 
               <div className="binhluan-cards">
-                {console.log(data.binhLuan)}
-                {data?.binhLuan && data.binhLuan.length > 0 ? (
-                  data?.binhLuan?.map((item) => (
+                {binhLuan && binhLuan.length > 0 ? (
+                  binhLuan?.map((item) => (
                     <Comment
                       key={item?.MaBinhLuan}
                       profile={profile}
@@ -695,7 +680,7 @@ function Detail() {
                             : item.MaBinhLuan
                         )
                       }
-                      loadData={() => loadData(id)}
+                      loadData={() => loadNewComment()}
                     />
                   ))
                 ) : (

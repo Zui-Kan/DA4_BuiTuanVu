@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { tokenState } from "../constant/recoil";
 import { apiLogin, getProfile } from "../services/auth.service";
+import Loading from "../Components/Loading/Loading";
 
 const Login = function () {
   document.title = "Đăng nhập";
@@ -22,7 +23,7 @@ const Login = function () {
     try {
       const response = await apiLogin(userName, password);
       if (response && response.access_token) {
-        await localStorage.setItem(
+        localStorage.setItem(
           "token",
           JSON.stringify(response.access_token)
         );

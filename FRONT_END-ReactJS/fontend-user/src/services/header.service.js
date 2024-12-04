@@ -21,3 +21,12 @@ export const getMenu = async () => {
     return null;
   }
 };
+export const apiChangePassword = async (data) => {
+  try {
+    const res = await apiClient?.post(`/taikhoan/changepassword`, data);
+    return res?.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy dữ liệu:", error);
+    return null;
+  }
+};

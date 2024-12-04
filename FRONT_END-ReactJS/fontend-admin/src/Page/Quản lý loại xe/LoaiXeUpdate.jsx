@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import { Modal, Button, Form, Input, Upload } from "antd";
 import { apiGetLoaiXe, apiSaveLoaiXe } from "../../services/LoaiXe.service";
+import Loading from "../../Component/Loading/Loading";
 
 const formItemLayout = {
   labelCol: {
@@ -17,8 +18,9 @@ const formItemLayout = {
 const LoaiXeUpdate = (props) => {
   const [form] = Form.useForm();
   // const [file, setFile] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   const handleSave = async () => {
+    setLoading(true);
     try {
       const values = await form.validateFields();
       const formData = new FormData();
@@ -37,6 +39,8 @@ const LoaiXeUpdate = (props) => {
       }
     } catch (error) {
       console.error("Failed to save LoaiXe:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,8 +64,10 @@ const LoaiXeUpdate = (props) => {
   };
 
   return (
-    <Modal
-      title="Cập nhật thông tin Hãng Xe"
+    <>
+      {loading && <Loading />}
+      <Modal
+        title="Cập nhật thông tin Hãng Xe"
       open={props.open}
       onOk={handleSave}
       onCancel={handleCancelModal}
@@ -87,7 +93,8 @@ const LoaiXeUpdate = (props) => {
           </Upload>
         </Form.Item>
       </Form>
-    </Modal>
+      </Modal>
+    </>
   );
 };
 

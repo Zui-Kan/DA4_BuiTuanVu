@@ -31,7 +31,7 @@ function PurchaseDetail() {
     try {
       const res = await apiGetPurchase(id);
       if (res?.status_code === 200) {
-        setData(res);
+        setData(res.data);
         setIsLoading(true);
       } else {
         messageApi.error("Có lỗi xảy ra.");
@@ -88,40 +88,42 @@ function PurchaseDetail() {
           <div className="purchasedetail-infor">
             <div className="purchasedetail-infor_title">
               <div className="infor-title_key">
-                MÃ ĐƠN HÀNG: {data.data.dathang.MaDatHang}
+                MÃ ĐƠN HÀNG: {data.dathang?.MaDatHang}
               </div>
               <div className="infor-title_key">
-                THỜI GIAN ĐẶT: {formatDatetime(data.data.dathang.NgayTao)}
+                THỜI GIAN ĐẶT: {formatDatetime(data.dathang?.NgayTao)}
               </div>
             </div>
             <div className="purchasedetail-infor_clients">
               <div className="infor-client_detail">
                 <div className="client-detail_name">
-                  {data.data.khachhang.HoVaTen}
+                  {data.khachhang?.HoVaTen}
                 </div>
                 <div className="client-detail_emailSDT">
                   <div className="emailSDT-email">
-                    {data.data.khachhang.Email}
+                    {data.khachhang?.Email}
                   </div>
-                  <div className="emailSDT-sdt">{data.data.khachhang.SDT}</div>
                   <div className="client-detail_sex">
-                    {data.data.khachhang.GioiTinh}
+                    {data.khachhang?.GioiTinh}
                   </div>
                 </div>
                 <div className="client-detail_cmnd">
-                  CMND: {data.data.khachhang.CMND}
+                  SĐT: {data.khachhang?.SDT}
+                </div>
+                <div className="client-detail_cmnd">
+                  CMND: {data.khachhang?.CMND}
                 </div>
               </div>
             </div>
             <div className="purchasedetail-infor_order">
               <div className="client-detail_address">
-                Địa chỉ: {data.data.khachhang.DiaChi}
+                Địa chỉ: {data.khachhang?.DiaChi}
               </div>
               <div className="infor-order_form">
-                Hình thức nhận: {data.data.dathang.HinhThucNhan}
+                Hình thức nhận: {data.dathang?.HinhThucNhan}
               </div>
               <div className="infor-order_receivingAddress">
-                Địa chỉ nhận: {data.data.dathang.DiaChiNhanXe}
+                Địa chỉ nhận: {data.dathang?.DiaChiNhanXe}
               </div>
             </div>
             <div className="purchasedetail-control">
@@ -137,19 +139,15 @@ function PurchaseDetail() {
                     }}
                   />
                 }
+                onConfirm={() =>
+                  handleRequestCancellation(
+                    data?.dathang?.MaDatHang,
+                    data?.trangthai?.[0]?.MaTrangThai
+                  )
+                }
               >
-                {data?.data?.trangthai?.[0]?.TrangThai ===
-                  "Chờ liên hệ xác nhận" && (
-                  <Button
-                    type="text"
-                    danger
-                    onClick={() =>
-                      handleRequestCancellation(
-                        data?.data?.dathang.MaDatHang,
-                        data?.data?.trangthai?.[0]?.MaTrangThai
-                      )
-                    }
-                  >
+                {data?.trangthai?.[0]?.TrangThai === "Chờ liên hệ xác nhận" && (
+                  <Button type="text" danger>
                     Yêu cầu huỷ
                   </Button>
                 )}
@@ -163,7 +161,7 @@ function PurchaseDetail() {
               <div className="carts-purchasedetail_title">
                 Chi tiết đơn hàng
               </div>
-              {data?.data?.chitietdathang?.map((ct, index) => (
+              {data?.chitietdathang?.map((ct, index) => (
                 <div className="cart-purchase" key={index}>
                   <div className="purchase-product_img">
                     <img src={uploads() + ct.HinhAnhXe} alt="oto" />
@@ -196,7 +194,7 @@ function PurchaseDetail() {
               <div className="frame-timline">
                 <Timeline
                   mode={"right"}
-                  items={data?.data?.trangthai?.map((status, index) => ({
+                  items={data?.trangthai?.map((status, index) => ({
                     label: formatDatetime(status.NgayTao),
                     children: status.TrangThai,
                   }))}
@@ -207,7 +205,7 @@ function PurchaseDetail() {
           <div className="purchasedetail-bill">
             <div className="purchasedetail-bill-left">Tiền hàng</div>
             <div className="purchasedetail-bill-right">
-              {formatPriceStringVND(data.data.dathang.TongTien)} đ
+              {formatPriceStringVND(data.dathang?.TongTien)} đ
             </div>
             <div className="purchasedetail-bill-left">Phí vận chuyển</div>
             <div className="purchasedetail-bill-right">0 đ</div>
@@ -219,7 +217,7 @@ function PurchaseDetail() {
             <div className="purchasedetail-bill-right">Thanh toán tiền mặt</div>
             <div className="purchasedetail-bill-left">Tổng tiền</div>
             <div className="purchasedetail-bill-right">
-              <span>{formatPriceStringVND(data.data.dathang.TongTien)} đ</span>
+              <span>{formatPriceStringVND(data.dathang?.TongTien)} đ</span>
             </div>
           </div>
         </div>

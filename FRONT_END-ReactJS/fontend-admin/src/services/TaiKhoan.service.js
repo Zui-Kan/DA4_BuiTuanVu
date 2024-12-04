@@ -28,8 +28,6 @@ export const apiDeletesTaiKhoan = async (data) => {
 };
 export const apiSaveTaiKhoan = async (data) => {
   try {
-    debugger;
-
     const res = await apiClient?.post(`/taikhoan/save`, data, {
       headers: {
         "Content-Type": "multipart/form-data",

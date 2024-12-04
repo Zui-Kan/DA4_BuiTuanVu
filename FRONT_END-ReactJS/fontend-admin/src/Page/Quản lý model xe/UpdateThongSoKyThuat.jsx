@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { modelState, phienBanState } from "../../constant/recoil";
+import Loading from "../../Component/Loading/Loading";
 
 const formItemLayout = {
   labelCol: { xs: { span: 5 }, sm: { span: 5 } },
@@ -22,13 +23,14 @@ const UpdateThongSoKyThuat = (props) => {
   const [dataPhienBan, setDataPhienBan] = useRecoilState(phienBanState);
   const messageApi = message;
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   // Hàm chuyển đổi chuỗi phân tách bằng dấu phẩy thành mảng JSON
   const convertToJsonArray = (str) => {
     return JSON.stringify(str.split(",").map((item) => item.trim()));
   };
 
   const handleFinishChange = async (values) => {
+    setLoading(true);
     try {
       // Chuyển đổi các chuỗi thành mảng JSON
       const convertedValues = {
@@ -69,6 +71,7 @@ const UpdateThongSoKyThuat = (props) => {
       messageApi.error("Lỗi khi gọi API: " + error.message);
       console.error("Lỗi chi tiết: ", error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -77,6 +80,7 @@ const UpdateThongSoKyThuat = (props) => {
 
   return (
     <div>
+      {loading && <Loading />}
       <Form {...formItemLayout} form={form} onFinish={handleFinishChange}>
         <Form.Item
           label="Tên phiên bản"

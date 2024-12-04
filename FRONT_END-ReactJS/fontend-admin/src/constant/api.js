@@ -9,7 +9,7 @@ const apiRefreshToken = async (token) => {
 
   try {
     const res = await axios.post(
-      `http://127.0.0.1:8099/api/auth/refresh`,
+      `http://127.0.0.1:8000/api/auth/refresh`,
       null,
       {
         headers: {
@@ -39,17 +39,17 @@ const apiRefreshToken = async (token) => {
 
 // Tạo instance axios với cấu hình mặc định
 export const apiClient = axios.create({
-  baseURL: "http://127.0.0.1:8099/api/admin",
+  baseURL: "http://127.0.0.1:8000/api/admin",
   timeout: 1000 * 60 * 30 * 3,
 });
 
 export const apiClientAuth = axios.create({
-  baseURL: "http://127.0.0.1:8099/api",
+  baseURL: "http://127.0.0.1:8000/api",
   timeout: 1000 * 60 * 30 * 3,
 });
 
 // URL cho uploads
-export const uploads = () => "http://localhost:8099/uploads/";
+export const uploads = () => "http://localhost:8000/uploads/";
 
 let isRefreshing = false;
 let failedQueue = [];

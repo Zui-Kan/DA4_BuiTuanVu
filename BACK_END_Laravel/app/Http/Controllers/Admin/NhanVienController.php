@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
 use App\Models\NhanVien;
 use App\Models\Users;
 use App\Traits\TrangThaiTrait;
@@ -77,7 +77,7 @@ class NhanVienController extends Controller
      */
     public function save(Request $res)
     {
-        $id = $res->MaNhanVien || null;
+        $id = $res->input('MaNhanVien') ?? null;
 
         $tk = $id ? NhanVien::where('MaNhanVien', $id)->first() : new NhanVien();
 
@@ -92,7 +92,6 @@ class NhanVienController extends Controller
         if ($file_name !== null) {
             $tk->AnhDaiDien = 'TaiKhoan/' . $file_name;
         }
-
 
         return $tk->save() ? $this->ok($tk) : $this->errors(null);
     }
@@ -109,9 +108,7 @@ class NhanVienController extends Controller
     {
         $db = NhanVien::find($id);
         return $db ? $this->ok($db) : $this->errors(null);
-    }
-
-    public function getNhanVienbyTK($id)
+    }    public function getNhanVienbyTK($id)
     {
         $db = NhanVien::where("TaiKhoanID", $id)->first();
         return $db ? $this->ok($db) : $this->errors(null);

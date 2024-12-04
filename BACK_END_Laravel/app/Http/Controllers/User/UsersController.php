@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\User;
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
 
 use App\Models\CTusers;
 use App\Models\Users;
@@ -70,15 +70,15 @@ class UsersController extends Controller
     {
         $db = Users::where('id', $res->id)->first();
 
-        if (!Hash::check($res->password, $db->password)) {
-            return $this->errors('Mật khẩu cũ không khớp !');
+        if (!$db) {
+            return response()->json(['error' => 'Người dùng không tồn tại.'], 404);
         }
-
-        $db->password = Hash::make($res->password);
-
-        return $db->save() ? $this->ok($db) : $this->errors(null);
+        if (!Hash::check($res->password, $db->password)) {
+            return response()->json(['error' => 'Mật khẩu cũ không khớp!'], 400);
+        }
+        $db->password = Hash::make($res->confirmPassword);
+        return $db->save() ? $this->ok("Đổi mật khẩu thành công.") : $this->errors(null);
     }
-
     /**
      * @OA\post(
      *     path="/api/taikhoan/updatectusers/{id}",
@@ -103,5 +103,5 @@ class UsersController extends Controller
     }
 
 
-   
+
 }

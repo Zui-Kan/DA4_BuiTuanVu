@@ -7,6 +7,7 @@ import {
   apiSaveKhachHang,
 } from "../../services/KhachHang.service";
 import { uploads } from "../../constant/api";
+import Loading from "../../Component/Loading/Loading";
 
 const formItemLayout = {
   labelCol: {
@@ -24,7 +25,9 @@ const KhachHangUpdate = (props) => {
   const messageApi = message;
   const [fileList, setFileList] = useState([]);
   const [dataTaiKhoan, setDataTaiKhoan] = useState([]);
+  const [loading, setLoading] = useState(false);
   const saveKhachHang = async () => {
+    setLoading(true);
     try {
       const values = await form.validateFields();
 
@@ -43,6 +46,8 @@ const KhachHangUpdate = (props) => {
       }
     } catch (error) {
       messageApi.error("Lỗi: " + error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,12 +77,15 @@ const KhachHangUpdate = (props) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     form.resetFields();
     setFileList([]);
     loadDataTK();
     if (props.maKhachHang !== "") {
       loadDataUpdate(props.maKhachHang);
     }
+    setLoading(false);
+
   }, [props.maKhachHang]);
 
   const handleCancelModal = () => {
@@ -87,8 +95,10 @@ const KhachHangUpdate = (props) => {
   const handleChange = ({ fileList }) => setFileList(fileList);
 
   return (
-    <Modal
-      title="Cập nhật thông tin khách hàng"
+    <>
+      {loading && <Loading />}
+      <Modal
+        title="Cập nhật thông tin khách hàng"
       open={props.open}
       onOk={saveKhachHang}
       onCancel={handleCancelModal}
@@ -178,6 +188,7 @@ const KhachHangUpdate = (props) => {
         </Form.Item>
       </Form>
     </Modal>
+</>
   );
 };
 

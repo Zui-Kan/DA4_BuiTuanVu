@@ -52,11 +52,11 @@ const NVXuLyHoSo = () => {
         });
         setData(results?.data?.data);
 
-        setLoading(false);
       } else {
         console.error("Lỗi rồi:", results?.message);
       }
     }
+    setLoading(false);
   };
 
   const columns = [

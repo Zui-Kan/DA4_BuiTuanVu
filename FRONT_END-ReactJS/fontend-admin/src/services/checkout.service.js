@@ -14,7 +14,6 @@ export const getKhachHang = async (id, token) => {
 };
 export const apiDatXe = async (data, token) => {
   try {
-    debugger;
     const res = await apiClient?.post(`/checkout/datxe`, data, {
       headers: {
         Authorization: `bearer ${token}`,

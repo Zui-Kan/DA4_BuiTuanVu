@@ -7,6 +7,7 @@ import {
   apiSaveNhanVien,
 } from "../../services/NhanVien.service";
 import { uploads } from "../../constant/api";
+import Loading from "../../Component/Loading/Loading";
 
 const formItemLayout = {
   labelCol: {
@@ -21,13 +22,14 @@ const formItemLayout = {
 
 const NhanVienUpdate = (props) => {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
   const messageApi = message;
   const [fileList, setFileList] = useState([]);
   const [dataTaiKhoan, setDataTaiKhoan] = useState([]);
   const saveNhanVien = async () => {
+    setLoading(true);
     try {
       const values = await form.validateFields();
-
       const formData = {
         MaNhanVien: props.maNhanVien || null,
         ...values,
@@ -44,6 +46,8 @@ const NhanVienUpdate = (props) => {
       }
     } catch (error) {
       messageApi.error("Lỗi: " + error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -88,7 +92,9 @@ const NhanVienUpdate = (props) => {
   const handleChange = ({ fileList }) => setFileList(fileList);
 
   return (
-    <Modal
+    <>
+      {loading && <Loading />}
+          <Modal
       title="Cập nhật thông tin khách hàng"
       open={props.open}
       onOk={saveNhanVien}
@@ -176,6 +182,8 @@ const NhanVienUpdate = (props) => {
         </Form.Item>
       </Form>
     </Modal>
+    </>
+
   );
 };
 

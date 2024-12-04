@@ -1,4 +1,3 @@
-
 <?php
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -6,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group([
-    'prefix' => 'auth'
+    'prefix' => 'auth',
+    'middleware' => 'throttle:60,1'
 ], function ($router) {
 
     Route::post('login', [AuthController::class, 'login']);

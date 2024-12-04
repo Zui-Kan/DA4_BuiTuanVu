@@ -182,7 +182,7 @@ function CarCompany(props) {
                       alt=""
                     />
                   </div>
-                  <div className="col-9 blueDark-c">Dòng xe</div>
+                  <div className="col-9 blueDark-c">DÒNG XE</div>
                   <div className="col-1">
                     {showBrands ? (
                       <img src="../IMAGE/icons8_chevron_up.svg" alt="" />
