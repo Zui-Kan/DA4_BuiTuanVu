@@ -43,19 +43,20 @@ class ModelXeController extends Controller
         $search = $request->input('search');
         $totalPage = $request->input('pageSize');
         $page = $request->input('page');
-
-
+    
         $query = ModelXe::query();
+        
         if ($search) {
             $query->where(function ($query) use ($search) {
                 $query->where('TenModel', 'like', '%' . $search . '%')
                     ->orWhere('MaModel', 'like', '%' . $search . '%');
             });
         }
-
+    
+        $query->orderBy('NgayTao', 'DESC'); // Sắp xếp theo NgayTao giảm dần
+    
         $db = $query->paginate($totalPage ?? ($page ?? 1));
-
-
+    
         return $db->total() > 0 ? $this->ok($db) : $this->errors(null);
     }
 
