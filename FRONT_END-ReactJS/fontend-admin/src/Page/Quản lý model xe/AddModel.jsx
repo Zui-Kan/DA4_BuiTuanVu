@@ -42,6 +42,7 @@ const AddModel = () => {
 
 
   const steps = [
+
     {
       title: "Xe ô tô",
       content: (
@@ -71,6 +72,7 @@ const AddModel = () => {
         />
       ),
     },
+   
   ];
 
   const items = steps.map((item) => ({
